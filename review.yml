@@ -1,0 +1,692 @@
+aid: propertyme
+name: PropertyMe
+review:
+  question: What is PropertyMe's real, publicly reachable API surface, what does a
+    developer have to sign or join to use it, and what is its RESO posture?
+  date: '2026-07-26'
+  reviewer: API Evangelist
+  homeMarket: Australia
+  secondaryMarket: New Zealand
+  tier: property-management
+  primaryDomain: propertyme.com.au
+  summary: |
+    PropertyMe inverts the pattern seen everywhere else in this sector. In the
+    United States the contract is mandated by RESO and the endpoint is locked
+    behind an MLS agreement. At PropertyMe the CONTRACT IS OPEN and the
+    CREDENTIALS are closed. A complete Swagger 2.0 document — 75 paths, 86
+    operations, 296 definitions, 266,274 bytes — is served to an anonymous
+    client with no login, no token and no referer at
+    https://app.propertyme.com/api/openapi.json, and rendered by a public
+    Swagger UI titled "PropertyMe APIs" at
+    https://app.propertyme.com/api/swagger-ui/. The OpenID Connect discovery
+    document at https://login.propertyme.com/.well-known/openid-configuration is
+    likewise served anonymously and enumerates the entire scope catalogue. Both
+    were harvested verbatim.
+
+    What is NOT public is the way in. There is no developer signup, no app
+    registration route, no client-credential self-issuance page and no published
+    partner API application form anywhere on propertyme.com.au or
+    app.propertyme.com. Every developer/developers/docs/api subdomain on both
+    propertyme.com and propertyme.com.au fails DNS resolution. The only
+    first-party developer artifact outside the spec is a sample .NET OAuth app
+    the company publishes at github.com/PropertyMe/HelloPropertyMe.NET, whose
+    appsettings.json hard-codes the two real hosts and whose HomeController
+    hard-codes a real authorize URL and scope string. A developer therefore has
+    to approach PropertyMe and be issued a client_id and client_secret by a
+    human — application-approval — and then each individual agency customer must
+    connect their own portfolio, which they can sever at any time through
+    DELETE /v1/portfolios/disconnect.
+
+    RESO does not appear anywhere. That is the correct Australian answer.
+    Australia has no MLS and no NAR, so there is nothing to certify against; the
+    closest thing to a mandated national machine-readable property rail here is
+    PEXA electronic conveyancing, and PropertyMe is a property management system
+    that sits nowhere near settlement.
+
+resoPosture:
+  certified: false
+  posture: No RESO reference found anywhere in PropertyMe's OpenAPI, OpenID Connect
+    discovery document, corporate site or public GitHub organisation; RESO is a
+    North American NAR/MLS construct and Australia has no MLS to certify against.
+  webApiCertification: none found
+  dataDictionaryCertification: none found
+  dataDictionaryVersion: null
+  directoryEvidence: |
+    https://www.reso.org/certificates/ was fetched anonymously on 2026-07-26
+    (HTTP 200, 416,233 bytes). A case-insensitive search for "propertyme"
+    returned zero matches, and a case-insensitive search for "australia"
+    returned zero matches — no Australian organisation of any kind appears in
+    the RESO certification directory.
+  odataEndpoint: none
+  metadataDocument: |
+    Probed https://app.propertyme.com/$metadata (HTTP 404, 2,463 bytes of HTML)
+    and https://app.propertyme.com/api/v1/$metadata (HTTP 404, 0 bytes). No
+    OData service document or $metadata exists. A case-insensitive grep for
+    "odata" across the harvested 266KB Swagger document returned zero hits. The
+    API is a plain JSON REST surface described by Swagger 2.0, not OData.
+  universalPropertyIdentifier: |
+    No UPI. Identifiers in the contract are opaque per-portfolio GUIDs — lot Id,
+    contact Id, tenancy Id, inspection Id, job task Id — unique only inside the
+    one customer portfolio the token is connected to. There is no global,
+    cross-tenant property identifier and no parcel or title reference exposed.
+  idxVowLicence: |
+    Not applicable. IDX and VOW are US MLS display-licence constructs. PropertyMe
+    is not a listing syndication product; it manages the rent roll, not the
+    shopfront.
+  wordBoundaryGrep: |
+    Case-insensitive grep for reso, odata, "universal property identifier", upi,
+    webhook and subscription across openapi/propertyme-openapi.json returned:
+    zero for reso as a word (the single case-insensitive "resO" hit is the
+    substring inside "CustomerSupportExpiresOn"), zero for odata, zero for UPI,
+    zero for webhook, and thirteen hits for "Subscription" which are all
+    product-subscription models (GetProductSubscriptionsRequest,
+    ProductSubscriptionsResponse, ProductSubscriptionDto, SubscriptionStatus),
+    not event subscriptions.
+  marketNote: |
+    Australia is a portal duopoly — REA Group's realestate.com.au and Domain —
+    sitting over progressively privatised state land registries plus PEXA, which
+    settles the overwhelming majority of Australian property transactions and is
+    effectively mandated in most states. PEXA, not RESO, is this market's
+    required machine-readable rail, and it is a settlement rail rather than a
+    listing rail. Valuation is concentrated in PropTrack (REA-owned) and
+    CoreLogic. PropertyMe touches none of those four surfaces: it is the system
+    of record for the rental portfolio, one layer below the portals and one
+    layer away from settlement. The consequence is that the richest structured
+    tenancy, inspection and maintenance data in Australian residential real
+    estate lives in a property management vendor's per-tenant database, described
+    by an open Swagger document that nobody can call without being let in.
+
+accessGate:
+  gate: application-approval
+  gated: true
+  selfServe: false
+  gateNuance: |
+    Three things must be held apart. The DOCUMENTATION gate is open: the Swagger
+    UI and the raw Swagger JSON are anonymous, and so is the OIDC discovery
+    document. The CREDENTIAL gate is application-approval: no route exists to
+    self-issue an OAuth client, so a client_id and client_secret must be issued
+    to you by PropertyMe. The DATA gate is customer consent: even holding valid
+    credentials, no agency data is reachable until that agency connects its
+    portfolio, and the connection is revocable by
+    DELETE /v1/portfolios/disconnect. Classified application-approval because
+    that is the first gate a developer cannot pass unaided.
+  whatYouMustSignOrJoin: |
+    You do not have to join an MLS, a board, an association, or hold a real
+    estate licence — none of those constructs gate software integration in
+    Australia. You must obtain OAuth client credentials from PropertyMe, which
+    in practice means an integration/partner conversation with the company; the
+    marketing site routes all commercial contact through
+    https://www.propertyme.com.au/contact and https://www.propertyme.com.au/request-a-demo,
+    and lists finished integrations on https://www.propertyme.com.au/integrations
+    and services partners on https://www.propertyme.com.au/partner-directory.
+    Neither page publishes an API application form or developer terms. A page at
+    https://www.propertyme.com.au/apiterms was indexed by search engines but now
+    HTTP 302s to the homepage, so no API-specific terms document is currently
+    published; the general Terms at https://www.propertyme.com.au/terms were
+    fetched (HTTP 200, 134,594 bytes) and contain zero occurrences of the word
+    "API".
+  credentialIssuance: |
+    Human-issued. No /register, /signup, /apps, /developers or /integrations
+    route exists on app.propertyme.com — all probed and all HTTP 404. The
+    company's own sample application (github.com/PropertyMe/HelloPropertyMe.NET)
+    presents ClientId and ClientSecret as values the developer already possesses
+    and types into a form; it never explains where they come from, which is the
+    tell that they are handed out rather than self-served.
+  productionAccess: |
+    A PropertyMe customer (the agency) authorises the integration through the
+    authorization code flow at https://login.propertyme.com/connect/authorize,
+    granting the scopes the client requests, and thereby connects one portfolio.
+    All subsequent calls act on that portfolio. The customer or the integration
+    can sever it with DELETE /v1/portfolios/disconnect.
+  commercialContact: https://www.propertyme.com.au/contact
+  partnerProgram: https://www.propertyme.com.au/integrations
+  docsAreOpen: |
+    Genuinely open, and this is the finding. Anonymous, unauthenticated GET of
+    https://app.propertyme.com/api/openapi.json returns the complete contract.
+    In a sector where the mandated-contract markets serve their specs only to
+    licensed members, an Australian property management vendor with no mandate
+    at all publishes its spec to the open internet.
+
+openData:
+  publishesOpenData: false
+  note: |
+    PropertyMe publishes no open, unlicensed, publicly callable dataset. Every
+    record behind the API is one agency customer's private rent roll — owners,
+    tenants, tenancy balances, trust bills, inspection reports — and it is
+    reachable only with that customer's granted consent. Australia's genuinely
+    open property data sits elsewhere and in government hands: state land
+    registry and valuer-general releases, the ABS, and data.gov.au. None of it
+    is operated by PropertyMe, and PropertyMe does not republish any of it.
+
+authModel:
+  scheme: OAuth 2.0 / OpenID Connect, bearer tokens on the API
+  identityProvider: |
+    Self-hosted IdentityServer (Duende/IdentityServer4 lineage). The company's
+    GitHub organisation contains forks of IdentityServer4 and of
+    servicestack-authentication-identityserver, and the discovery document's
+    endpoint layout (/connect/authorize, /connect/token, /connect/userinfo,
+    /connect/checksession, /connect/endsession, /connect/revocation,
+    /connect/introspect, /connect/deviceauthorization, /connect/ciba,
+    /connect/par) is the IdentityServer signature.
+  discoveryDocument: |
+    https://login.propertyme.com/.well-known/openid-configuration — fetched
+    anonymously 2026-07-26, HTTP 200, application/json, 3,255 bytes, parses.
+    Saved verbatim to authentication/propertyme-openid-configuration.json.
+    The JWKS at
+    https://login.propertyme.com/.well-known/openid-configuration/jwks also
+    returned HTTP 200.
+  issuer: https://login.propertyme.com
+  authorizationEndpoint: https://login.propertyme.com/connect/authorize
+  tokenEndpoint: https://login.propertyme.com/connect/token
+  userinfoEndpoint: https://login.propertyme.com/connect/userinfo
+  jwksUri: https://login.propertyme.com/.well-known/openid-configuration/jwks
+  revocationEndpoint: https://login.propertyme.com/connect/revocation
+  introspectionEndpoint: https://login.propertyme.com/connect/introspect
+  endSessionEndpoint: https://login.propertyme.com/connect/endsession
+  deviceAuthorizationEndpoint: https://login.propertyme.com/connect/deviceauthorization
+  backchannelAuthenticationEndpoint: https://login.propertyme.com/connect/ciba
+  pushedAuthorizationRequestEndpoint: https://login.propertyme.com/connect/par
+  requirePushedAuthorizationRequests: false
+  pkce:
+  - S256
+  - plain
+  tokenEndpointAuthMethods:
+  - client_secret_basic
+  - client_secret_post
+  idTokenSigningAlgs:
+  - RS256
+  apiSecurityDefinition: |
+    The Swagger document declares exactly one security definition: a "Bearer"
+    apiKey carried in the Authorization header. Tokens are minted by the
+    IdentityServer above, so the effective scheme is OAuth 2.0 bearer.
+  grantTypesAdvertised:
+  - authorization_code
+  - client_credentials
+  - refresh_token
+  - implicit
+  - password
+  - urn:ietf:params:oauth:grant-type:device_code
+  - urn:openid:params:grant-type:ciba
+  - mcp_customer_switch
+  - on_behalf_of
+  grantTypeNote: |
+    Two non-standard grant types are advertised verbatim in the discovery
+    document and are worth recording: "mcp_customer_switch" and "on_behalf_of".
+    The former is the only Model Context Protocol-shaped signal found anywhere
+    in PropertyMe's public surface — it appears in the identity layer, not in the
+    API contract, and no MCP server endpoint, tool list or MCP documentation was
+    found. Recorded as observed, not interpreted.
+  scopesAdvertisedByDiscovery:
+  - openid
+  - profile
+  - email
+  - ids:admin
+  - property:read
+  - property:write
+  - contact:read
+  - contact:write
+  - activity:read
+  - activity:write
+  - communication:read
+  - communication:write
+  - transaction:read
+  - transaction:write
+  - tenancy:write
+  - customer:read
+  - customer:write
+  - form:write
+  - org-portal:api
+  - offline_access
+  scopesReferencedInTheOpenAPI:
+  - activity:read
+  - activity:write
+  - communication:read
+  - contact:read
+  - contact:write
+  - property:read
+  - property:write
+  - transaction:read
+  - transaction:write
+  scopesInTheSampleAppAuthorizeUrl:
+  - contact:read
+  - property:read
+  - communication:read
+  - transaction:read
+  - offline_access
+  scopeNote: |
+    The identity server advertises twenty scopes; the published API contract
+    only ever names nine of them in its operation descriptions; and the
+    first-party sample application requests five read scopes plus
+    offline_access. The gap (ids:admin, customer:read, customer:write,
+    tenancy:write, form:write, org-portal:api, communication:write) points at
+    internal or partner-only surfaces that are not described by the public
+    Swagger document. A third-party Python wrapper's documentation states that
+    write operations "require additional API scopes that are not typically
+    available", which is consistent with, but not proof of, tiered scope
+    issuance. Recorded as an observation with its source, not as a PropertyMe
+    statement.
+  productSecurityControls: |
+    From https://www.propertyme.com.au/security (HTTP 200): 256-bit TLS in
+    transit and encryption at rest, layered architecture with core systems not
+    internet-exposed, optional TOTP two-factor authentication via Google
+    Authenticator, automatic logout, automatic 15-minute lockout after three
+    failed logins, full activity logging of material data changes, sign-in and
+    sensitive-change notification emails, and four granular user access levels
+    with remote logout, password reset, 2FA reset and device expiry. No
+    certification claim (no SOC 2, ISO 27001 or IRAP statement) appears on that
+    page, and https://www.propertyme.com.au/.well-known/security.txt is HTTP 404.
+
+apiFamily:
+  segmentationUsedByTheContract: |
+    The Swagger document tags every operation twice: once with a coarse
+    "Scope: X" group (Activities, Bills, Contacts, Messages, Properties) and
+    once with a fine resource tag (Comments, Connection, Contacts, Dashboards,
+    Documents, Images, Inspections, JobTasks, Members, Properties, Tasks,
+    Tenancies). The eleven entries in apis.yml mirror the fine resource tags,
+    merging Comments/Documents/Images into a single file surface because they
+    exist only as sub-resources of the other entities. No family was invented.
+  listingsSearch: |
+    No. There is no market-wide listings search and no public property search.
+    GET /v1/lots/sales lists the connected agency's own active sales and
+    GET /v1/lots/rentals its own rentals. PropertyMe is not a portal and does
+    not syndicate to one through this API.
+  propertyRecords: |
+    Yes, and it is the core. Lots with detail, images, contact alerts, the
+    managing member, and rental / sales / vacancy / archived views, all
+    pollable by changed-since timestamp.
+  valuationAVM: |
+    None. No AVM, no appraisal, no valuation endpoint, and no reference to
+    PropTrack or CoreLogic anywhere in the contract. Valuation in this market
+    sits with REA Group's PropTrack and with CoreLogic, not with the property
+    management vendor.
+  transactions: |
+    Thin and one-directional. POST /v1/bills creates a bill with its document
+    against the trust ledger, and the transactions dashboard reads aggregates.
+    There is no payments API, no rent receipting endpoint, no disbursement
+    endpoint and no trust reconciliation surface in the public contract, even
+    though trust accounting and the MePay payments product are headline
+    PropertyMe features.
+  documents: |
+    Yes, as sub-resources. Documents can be created against contacts, lots,
+    owner and tenant folios, inspections, tasks, jobs and job quotations; images
+    can be listed for contacts, lots, inspections, tasks and jobs.
+  tenancy: |
+    Yes — tenancies and tenancy balances, read-only in the public contract, even
+    though the identity server advertises a tenancy:write scope that the
+    published contract never uses.
+  payments: |
+    No payments API. MePay is a real PropertyMe product — the site footer
+    identifies the operating entity as MePay Holdings Pty Ltd, AFCA member ID
+    81095, AFS licence no. 528836 — but no MePay endpoint, webhook or contract is
+    published.
+  maintenance: |
+    The strongest surface. Job tasks exist in both v1 and v2, with quotations,
+    supplier assignment, approve/reject/complete/reopen transitions and document
+    and image attachment. This is what the third-party integrator ecosystem
+    (SyncEzy, Properteasy, ServiceM8, simPRO connectors) is actually built on.
+  inspections: |
+    Twenty operations covering the complete routine and entry/exit inspection
+    lifecycle including reports — unusually deep, and absent from every
+    listing-oriented API in this sector.
+
+harvest:
+  fetchDate: '2026-07-26'
+  openapiHarvested: true
+  specsCount: 1
+  artifactsSaved:
+  - path: openapi/propertyme-openapi.json
+    sourceURL: https://app.propertyme.com/api/openapi.json
+    httpStatus: 200
+    contentType: application/json; charset=utf-8
+    bytes: 266274
+    format: Swagger 2.0
+    parsed: true
+    paths: 75
+    operations: 86
+    definitions: 296
+    host: app.propertyme.com
+    basePath: /api
+    schemes:
+    - https
+    infoTitle: PropertyMe
+    infoVersion: '1.0'
+    note: Saved verbatim, byte-for-byte, unmodified. Fetched anonymously with no
+      credentials, no cookies and no referer. Validated by json.load and by
+      walking every path item.
+  - path: authentication/propertyme-openid-configuration.json
+    sourceURL: https://login.propertyme.com/.well-known/openid-configuration
+    httpStatus: 200
+    contentType: application/json; charset=UTF-8
+    bytes: 3255
+    format: OpenID Connect Discovery 1.0
+    parsed: true
+    note: Saved verbatim, unmodified. Fetched anonymously.
+  howTheSpecWasFound: |
+    Not by guessing. The Swagger UI path was named in the documentation of an
+    independent Python wrapper (pypropertyme.garyj.dev), which pointed at
+    https://app.propertyme.com/api/swagger-ui/. That page returned HTTP 200 with
+    the title "PropertyMe APIs" but is an old swagger-ui build whose inline
+    JavaScript resolves the spec URL to the Petstore demo when no ?url= is
+    supplied, so it discloses no spec location itself. The real document was then
+    found at https://app.propertyme.com/api/openapi.json — the conventional
+    sibling path — and confirmed by content, not by status code. The API host and
+    versioned path were independently corroborated by PropertyMe's own sample
+    app: appsettings.json sets PropertyMeApiEndPoint to
+    https://app.propertyme.com and AuthorityUrl to https://login.propertyme.com,
+    and ContactController.cs calls
+    {endpoint}/api/v1/contacts?TimeStamp={timestamp} with a bearer header.
+    GET https://app.propertyme.com/api/v1/contacts anonymously returns HTTP 401,
+    confirming a live, authenticated production surface.
+
+probes:
+- url: https://propertyme.com.au/
+  status: 200
+  note: Redirects to https://www.propertyme.com.au/ (127,671 bytes, WordPress).
+- url: https://www.propertyme.com.au/
+  status: 200
+- url: https://www.propertyme.com/
+  status: 200
+  note: Global/entry domain.
+- url: https://www.propertyme.com/nz/
+  status: 200
+  note: New Zealand market site, 129,361 bytes.
+- url: https://www.propertyme.com.au/api
+  status: 200
+  note: Soft hit only — HTTP 302 to https://www.propertyme.com.au/ and serves the
+    identical 127,671-byte homepage. Not a developer page.
+- url: https://www.propertyme.com.au/developers
+  status: 200
+  note: Same soft redirect to the homepage. No developers page exists.
+- url: https://www.propertyme.com.au/apiterms
+  status: 200
+  note: Indexed by search engines with a PropertyMe title, but now redirects to
+    the homepage and serves the same 127,671 bytes. Any API terms document that
+    once lived here has been withdrawn.
+- url: https://developer.propertyme.com
+  status: '000'
+  note: Does not resolve.
+- url: https://developers.propertyme.com
+  status: '000'
+  note: Does not resolve.
+- url: https://api.propertyme.com
+  status: '000'
+  note: Does not resolve. dig returns no answer.
+- url: https://developer.propertyme.com.au
+  status: '000'
+  note: Does not resolve.
+- url: https://developers.propertyme.com.au
+  status: '000'
+  note: Does not resolve.
+- url: https://api.propertyme.com.au
+  status: '000'
+  note: Does not resolve.
+- url: https://docs.propertyme.com.au
+  status: '000'
+  note: Does not resolve.
+- url: https://help.propertyme.com.au
+  status: '000'
+  note: Does not resolve.
+- url: http://docs.propertyme.com
+  status: 200
+  note: Resolves to an Amazon S3 bucket serving a 2,062-byte placeholder page
+    last modified 2014-10-15, branded PropertyMe with a Squarespace-hosted logo.
+    Abandoned, not documentation. HTTPS on the same host fails (no TLS on the S3
+    website endpoint).
+- url: https://app.propertyme.com/
+  status: 200
+  note: The application host, and also the API host.
+- url: https://app.propertyme.com/api/swagger-ui/
+  status: 200
+  note: 4,843 bytes. Public Swagger UI titled "PropertyMe APIs". No login, no
+    token. An old swagger-ui build; its inline script overwrites any ?url=
+    parameter with the Petstore demo URL, so it does not itself disclose the
+    spec path.
+- url: https://app.propertyme.com/api/swagger-ui/index.html
+  status: 200
+  note: 4,800 bytes, same page.
+- url: https://app.propertyme.com/api/openapi.json
+  status: 200
+  note: THE ARTIFACT. 266,274 bytes of Swagger 2.0, served anonymously. Harvested.
+- url: https://app.propertyme.com/api/v1/contacts
+  status: 401
+  note: Live production endpoint refusing an anonymous caller — confirms the API
+    described by the spec is real and running.
+- url: https://app.propertyme.com/api/v1
+  status: 404
+- url: https://app.propertyme.com/api/openapi.yaml
+  status: 404
+- url: https://app.propertyme.com/api/v1/openapi.json
+  status: 404
+- url: https://app.propertyme.com/api/v2/openapi.json
+  status: 404
+- url: https://app.propertyme.com/api/swagger-ui/swagger.json
+  status: 404
+- url: https://app.propertyme.com/api/swagger-ui/openapi.json
+  status: 404
+- url: https://app.propertyme.com/api/swagger.json
+  status: 404
+- url: https://app.propertyme.com/api/v1/swagger.json
+  status: 404
+- url: https://app.propertyme.com/swagger/v1/swagger.json
+  status: 404
+- url: https://app.propertyme.com/swagger/index.html
+  status: 404
+- url: https://app.propertyme.com/swagger
+  status: 404
+- url: https://app.propertyme.com/openapi.json
+  status: 404
+- url: https://app.propertyme.com/api-docs
+  status: 404
+- url: https://app.propertyme.com/api/docs
+  status: 404
+- url: 'https://app.propertyme.com/$metadata'
+  status: 404
+  note: No OData. RESO-style $metadata does not exist here.
+- url: 'https://app.propertyme.com/api/v1/$metadata'
+  status: 404
+- url: https://app.propertyme.com/developers
+  status: 404
+  note: No developer signup route on the application host.
+- url: https://app.propertyme.com/apps
+  status: 404
+  note: No app registration route.
+- url: https://app.propertyme.com/integrations
+  status: 404
+- url: https://app.propertyme.com/.well-known/openid-configuration
+  status: 404
+  note: The API host is not the identity host; discovery lives on login.propertyme.com.
+- url: https://login.propertyme.com/
+  status: 200
+  note: The identity server login page (Cloudflare-fronted, 2,503 bytes).
+- url: https://login.propertyme.com/.well-known/openid-configuration
+  status: 200
+  note: Harvested verbatim. IdentityServer-shaped OIDC discovery document.
+- url: https://login.propertyme.com/.well-known/openid-configuration/jwks
+  status: 200
+- url: https://crm.propertyme.com/
+  status: 200
+  note: Grow CRM SPA. Every path returns the same 3,035-byte shell, so route-level
+    200s here are not evidence of a page; /api/openapi.json and /api/swagger-ui/
+    both return that shell, not a spec.
+- url: https://my.propertyme.com/api/openapi.json
+  status: 401
+  note: Owner/tenant portal host. Refuses anonymous callers; no public contract.
+- url: https://my.propertyme.com/api/swagger-ui/
+  status: 401
+- url: https://status.propertyme.com/
+  status: 200
+  note: Public status page.
+- url: https://support.propertyme.com/hc/en-us
+  status: 200
+  note: Zendesk help centre. Anonymous search is Cloudflare-challenged (HTTP 403
+    on /hc/en-us/search) and the Zendesk Help Center API at
+    /api/v2/help_center/en-us/articles/search.json returns HTTP 401, so the
+    knowledge base could not be enumerated programmatically.
+- url: https://www.propertyme.com.au/integrations
+  status: 200
+  note: 177,383 bytes listing built integrations by category (Payments,
+    Inspections, Safety, Maintenance, Utilities, Documents, Marketing). A
+    case-insensitive scan of the rendered text found ZERO occurrences of "API"
+    and no "become an integration partner" or developer call to action.
+- url: https://www.propertyme.com.au/partner-directory
+  status: 200
+  note: 138,320 bytes of SERVICES partners — outsourcing, trust accounting,
+    training, virtual assistants. Not a technology or API partner programme.
+- url: https://www.propertyme.com.au/about
+  status: 200
+  note: Founded 2013 by three founders; 1.7 million properties managed across
+    Australia and New Zealand; footer identifies MePay Holdings Pty Ltd, AFCA
+    member ID 81095, AFS licence no. 528836.
+- url: https://www.propertyme.com.au/security
+  status: 200
+  note: Product security controls; no compliance certification claimed.
+- url: https://www.propertyme.com.au/terms
+  status: 200
+  note: 134,594 bytes. Zero occurrences of "API".
+- url: https://www.propertyme.com.au/pricing
+  status: 200
+- url: https://www.propertyme.com.au/blog
+  status: 200
+- url: https://www.propertyme.com.au/feed
+  status: 200
+  note: WordPress RSS feed.
+- url: https://www.propertyme.com.au/llms.txt
+  status: 404
+  note: No machine-readable site index. Returns the WordPress 404 page.
+- url: https://www.propertyme.com.au/.well-known/security.txt
+  status: 404
+- url: https://www.propertyme.com.au/sitemap.xml
+  status: 200
+  note: 950 bytes, a Yoast sitemap index only.
+- url: https://github.com/PropertyMe
+  status: 200
+  note: Public GitHub organisation, seven repositories. Only one is a developer
+    resource; the rest are forks (ServiceStack.Text, ServiceStack.OrmLite,
+    IdentityServer4, servicestack-authentication-identityserver) and unrelated
+    projects.
+- url: https://github.com/PropertyMe/HelloPropertyMe.NET
+  status: 200
+  note: First-party OAuth 2.0 sample in .NET, last updated 2025-09-02. Its
+    appsettings.json, HomeController.cs and ContactController.cs are the only
+    published PropertyMe prose describing how to authenticate and call the API.
+- url: https://www.reso.org/certificates/
+  status: 200
+  note: 416,233 bytes. Zero matches for "propertyme"; zero matches for
+    "australia".
+
+webhooksEventsSdksPostman:
+  webhooks: |
+    None. Zero occurrences of "webhook" in the 266KB contract, no subscription
+    or callback endpoint, no signing key surface, and no webhook documentation
+    anywhere on the site. Integrations poll instead: nearly every collection
+    endpoint takes a TimeStamp parameter and returns records changed since it,
+    and the contacts endpoint documents that a timestamp older than one month
+    returns everything. Polling-by-timestamp is the integration pattern here,
+    and its absence of events is a real limitation for the maintenance and
+    inspection workflows that third parties build on.
+  events: |
+    No AsyncAPI, no event bus, no WebSocket surface, no server-sent events, no
+    streaming. The contract is HTTPS request/response only, schemes ["https"].
+  mcp: |
+    No MCP server, no tool list, no MCP documentation. The only MCP-shaped
+    signal in the entire public surface is the non-standard grant type
+    "mcp_customer_switch" advertised in the OIDC discovery document, recorded
+    verbatim above and deliberately not interpreted.
+  sdks: |
+    No first-party SDK on npm, NuGet or PyPI was found under a PropertyMe
+    namespace. The only first-party code is the HelloPropertyMe.NET sample. A
+    third-party Python wrapper, PyPropertyMe (pypropertyme.garyj.dev), exists and
+    is explicit that it supports GET endpoints only.
+  postman: No official Postman collection or workspace found.
+  graphql: None. No GraphQL endpoint documented or discovered.
+  changelog: |
+    No developer-facing changelog or API release notes. The company publishes
+    product release content through https://www.propertyme.com.au/the-loop and
+    the blog, not a versioned API changelog.
+  statusPage: Yes — https://status.propertyme.com/ (HTTP 200).
+  rateLimits: |
+    None published. No rate limit documentation on the site and no rate-limit
+    headers or 429 responses described in the contract.
+  sandbox: |
+    None found. No sandbox host, no demo portfolio, no test credentials. Every
+    documented call acts on a live customer portfolio.
+  deprecationPolicy: |
+    None published. Versioning is path-based and visible in the contract — job
+    tasks exist at both /v1/jobtasks and /v2/jobtasks with v1 still present —
+    but no deprecation policy, sunset header or migration guide is documented.
+  versioning: Path-based, /v1 and /v2, with both live simultaneously for job tasks.
+
+findings:
+- The headline is an inversion of this sector's central tension. Everywhere RESO
+  mandates a contract, the contract is served only to licensed members. Here
+  there is no mandate at all, and the contract is served to anyone — 266KB of
+  Swagger 2.0 at a stable, anonymous URL — while the credentials are handed out
+  by a human. Openness of the spec and openness of access are genuinely
+  independent variables, and PropertyMe is the clean proof.
+- RESO is absent and that is correct, not a gap. Australia has no MLS and no NAR.
+  The RESO certification directory contains zero Australian organisations of any
+  kind. The market's mandated machine-readable rail is PEXA electronic
+  conveyancing, which is a settlement rail; a property management vendor sits
+  nowhere near it.
+- The identity server advertises eleven more scopes than the published contract
+  ever names, including ids:admin, customer:write, tenancy:write, form:write and
+  org-portal:api. The public Swagger document is therefore a subset view of a
+  larger internal surface, and the size of that gap is itself the finding.
+- Two non-standard OAuth grant types are advertised — mcp_customer_switch and
+  on_behalf_of. The first is the only MCP-shaped artifact in PropertyMe's entire
+  public surface, and it lives in the identity layer with no corresponding
+  server, tool or documentation.
+- Absence is a finding — no webhooks, no events, no AsyncAPI, no GraphQL, no
+  sandbox, no rate limits, no deprecation policy, no changelog, no Postman
+  workspace, no first-party SDK, no llms.txt, no security.txt, no open data, and
+  no API terms document (the one at /apiterms has been withdrawn to a redirect).
+- The integration ecosystem is real but invisible from the developer's side. The
+  integrations page lists dozens of live partner products and never once uses the
+  word "API"; the partner directory is entirely services firms. A developer
+  arriving at propertyme.com.au has no path to the API at all — the spec is only
+  reachable if you already know the app host.
+- Where the API is deep, it is deep in the places listing-oriented real estate
+  APIs are empty — twenty inspection operations with a full state machine,
+  twenty-five job-task operations with supplier quotations, and tenancy
+  balances. Where
+  it is thin is money — a single POST /v1/bills against a trust-accounting
+  platform whose operator holds an AFS licence and runs its own payments product.
+- The consent model is explicit and revocable. Every token is bound to one
+  connected portfolio and DELETE /v1/portfolios/disconnect severs it, which makes
+  this per-customer integration rather than market-wide data access — the same
+  shape as an MLS-gated feed, arrived at by a completely different route.
+
+sources:
+- url: https://app.propertyme.com/api/openapi.json
+  type: OpenAPI
+  note: Swagger 2.0, 266,274 bytes, anonymous HTTP 200. The primary artifact.
+- url: https://app.propertyme.com/api/swagger-ui/
+  type: APIReference
+  note: Public Swagger UI titled "PropertyMe APIs". No login.
+- url: https://login.propertyme.com/.well-known/openid-configuration
+  type: Authentication
+  note: OIDC discovery, anonymous HTTP 200, harvested verbatim. Full scope and
+    grant-type catalogue.
+- url: https://github.com/PropertyMe/HelloPropertyMe.NET
+  type: SampleCode
+  note: First-party OAuth sample. appsettings.json gives the API and identity
+    hosts; HomeController.cs gives the authorize URL and requested scopes;
+    ContactController.cs gives the /api/v1/contacts call shape.
+- url: https://www.propertyme.com.au/about
+  type: About
+  note: Founded 2013, 1.7M properties AU+NZ, MePay Holdings Pty Ltd, AFS licence
+    528836.
+- url: https://www.propertyme.com.au/security
+  type: Security
+  note: Product security controls; no certification claimed.
+- url: https://www.propertyme.com.au/integrations
+  type: Integrations
+  note: Live partner integrations by category; zero occurrences of "API".
+- url: https://www.reso.org/certificates/
+  type: Certification
+  note: Searched for "propertyme" and for "australia" — zero matches for either.
+- url: https://pypropertyme.garyj.dev/
+  type: ThirdPartySDK
+  note: Independent Python wrapper. Named the Swagger UI path that led to the
+    spec, and states that write scopes are "not typically available". Third-party
+    claim, recorded as such.
