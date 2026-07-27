@@ -1,0 +1,145 @@
+arazzo: 1.0.1
+info:
+  title: Raise, quote, approve and complete a PropertyMe maintenance job
+  version: 1.0.0
+  description: >-
+    The maintenance work-order flow, using the v2 job-task shape for create and read and the shared
+    v1 sub-resources for quotations, transitions and attachments. Requires activity:read and
+    activity:write, plus contact:read to resolve the supplier. There is no idempotency key on the
+    create step — reconcile before any retry.
+sourceDescriptions:
+  - name: propertyme
+    url: ../openapi/propertyme-openapi.json
+    type: openapi
+workflows:
+  - workflowId: raise-quote-and-complete-job
+    summary: Create a maintenance job against a property, attach a supplier quote, approve, assign and complete it.
+    inputs:
+      type: object
+      properties:
+        lotId:
+          type: string
+          description: GUID of the lot (property) the work is against.
+        jobId:
+          type: string
+          description: GUID of an existing job task, when driving an already-created job.
+        quoteId:
+          type: string
+          description: GUID of a quotation on the job.
+      required: [lotId]
+    steps:
+      - stepId: find-supplier
+        description: Resolve the supplier contact. Pages with Offset and Limit; there is no total count.
+        operationId: QuerySuppliersRequestcontactssuppliers_Get
+        parameters:
+          - name: Accept
+            in: header
+            value: application/json
+          - name: Offset
+            in: query
+            value: 0
+          - name: Limit
+            in: query
+            value: 50
+        successCriteria:
+          - condition: $statusCode == 200
+      - stepId: create-job
+        description: >-
+          Create the work order. NO Idempotency-Key exists on this operation — on a timeout, do not
+          blind-retry; re-read with SearchJobTaskV2Requestjobtaskssearch_Get filtered on
+          DateCreatedMin/DateCreatedMax and confirm before trying again.
+        operationId: AddJobV2Requestjobtasks_Post
+        parameters:
+          - name: Accept
+            in: header
+            value: application/json
+        successCriteria:
+          - condition: $statusCode == 200
+      - stepId: read-job
+        description: Read the job back to confirm its current state before transitioning.
+        operationId: JobTaskV2RequestjobtasksId_Get
+        parameters:
+          - name: Accept
+            in: header
+            value: application/json
+          - name: Id
+            in: path
+            value: $inputs.jobId
+        successCriteria:
+          - condition: $statusCode == 200
+      - stepId: add-quotation
+        description: Record the supplier's quote against the job.
+        operationId: AddJobTasksQuotationRequestjobtasksIdquotation_Post
+        parameters:
+          - name: Accept
+            in: header
+            value: application/json
+          - name: Id
+            in: path
+            value: $inputs.jobId
+        successCriteria:
+          - condition: $statusCode == 200
+      - stepId: attach-quotation-document
+        description: Attach the supplier's quote document to the quotation.
+        operationId: AddJobTasksQuotationDocumentRequestjobtasksIdquotationQuoteIddocuments_Post
+        parameters:
+          - name: Accept
+            in: header
+            value: application/json
+          - name: Id
+            in: path
+            value: $inputs.jobId
+          - name: QuoteId
+            in: path
+            value: $inputs.quoteId
+        successCriteria:
+          - condition: $statusCode == 200
+      - stepId: approve-job
+        description: >-
+          Approve the job. A 400 here means the transition is not valid from the job's current state,
+          not a transient failure — do not retry it.
+        operationId: ApproveJobTaskRequestjobtasksIdapprove_Post
+        parameters:
+          - name: Accept
+            in: header
+            value: application/json
+          - name: Id
+            in: path
+            value: $inputs.jobId
+        successCriteria:
+          - condition: $statusCode == 200
+      - stepId: assign-job
+        description: Assign the approved job to the supplier or agency member.
+        operationId: AssignTaskRequestjobtasksIdassign_Post
+        parameters:
+          - name: Accept
+            in: header
+            value: application/json
+          - name: Id
+            in: path
+            value: $inputs.jobId
+        successCriteria:
+          - condition: $statusCode == 200
+      - stepId: attach-completion-images
+        description: Attach completion photos before closing the job out.
+        operationId: AddJobImagesRequestjobtasksIdimages_Post
+        parameters:
+          - name: Accept
+            in: header
+            value: application/json
+          - name: Id
+            in: path
+            value: $inputs.jobId
+        successCriteria:
+          - condition: $statusCode == 200
+      - stepId: complete-job
+        operationId: CompleteJobTaskRequestjobtasksIdcomplete_Post
+        parameters:
+          - name: Accept
+            in: header
+            value: application/json
+          - name: Id
+            in: path
+            value: $inputs.jobId
+        successCriteria:
+          - condition: $statusCode == 200

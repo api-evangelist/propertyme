@@ -1,0 +1,98 @@
+generated: '2026-07-26'
+method: generated
+source: openapi/propertyme-openapi.json
+notes: >-
+  Five packaged Agent Skills covering PropertyMe's marquee flows. Every operationId referenced was
+  grepped verbatim out of the published Swagger 2.0 contract. PropertyMe publishes no AGENTS.md, no
+  skill files and no agent guidance of its own — a search of propertyme.com.au, app.propertyme.com
+  and github.com/PropertyMe found none — so these are generated from the contract plus the captured
+  conventions, scopes and error artifacts in this repo. Each skill carries the two facts an agent
+  most needs and the contract does not state plainly: change detection is polling, and there is no
+  idempotency key on any write.
+skills:
+  - file: propertyme-connect-and-sync-portfolio.md
+    name: Connect a PropertyMe portfolio and keep it in sync
+    api: openapi/propertyme-openapi.json
+    scopes: [contact:read, property:read, activity:read, offline_access]
+    operations:
+      - ChangedContactsRequestcontacts_Get
+      - ChangedLotRequestlots_Get
+      - ChangedInspectionsRequestinspections_Get
+      - ChangedJobTaskRequestjobtasks_Get
+      - ChangedTasksRequesttasks_Get
+      - TenancyRequesttenancies_Get
+      - MembersRequestmembers_Get
+      - AgencyRequestcontactsagency_Get
+      - DisconnectPortfolioRequestportfoliosdisconnect_Delete
+  - file: propertyme-maintenance-job-lifecycle.md
+    name: Run a PropertyMe maintenance job end to end
+    api: openapi/propertyme-openapi.json
+    scopes: [activity:read, activity:write, contact:read]
+    operations:
+      - AddJobV2Requestjobtasks_Post
+      - ChangedJobTaskV2Requestjobtasks_Get
+      - SearchJobTaskV2Requestjobtaskssearch_Get
+      - JobTaskV2RequestjobtasksId_Get
+      - UpdateJobV2RequestjobtasksId_Post
+      - AddJobTasksQuotationRequestjobtasksIdquotation_Post
+      - GetJobTasksQuotationRequestjobtasksIdquotations_Get
+      - UpdateJobTasksQuotationRequestjobtasksIdquotationQuoteId_Post
+      - AddJobTasksQuotationDocumentRequestjobtasksIdquotationQuoteIddocuments_Post
+      - ApproveJobTaskRequestjobtasksIdapprove_Post
+      - AssignTaskRequestjobtasksIdassign_Post
+      - CompleteJobTaskRequestjobtasksIdcomplete_Post
+      - RejectJobTaskRequestjobtasksIdreject_Post
+      - ReopenJobTaskRequestjobtasksIdreopen_Post
+      - AddJobCommentRequestjobtasksIdcomments_Post
+      - AddJobDocumentsRequestjobtasksIddocuments_Post
+      - AddJobImagesRequestjobtasksIdimages_Post
+      - JobTaskManagerRequestjobtasksIdmembers_Get
+  - file: propertyme-inspection-lifecycle.md
+    name: Schedule, conduct and close a PropertyMe inspection
+    api: openapi/propertyme-openapi.json
+    scopes: [activity:read, activity:write]
+    operations:
+      - AddInspectionRequestinspections_Post
+      - ChangedInspectionsRequestinspections_Get
+      - GetInspectionRequestinspectionsId_Get
+      - UpdateInspectionRequestinspectionsid_Post
+      - DeleteInspectionRequestinspectionsid_Delete
+      - SearchInspectionsRequestinspectionssearch_Get
+      - QueryInspectionRequestinspectionsquery_Get
+      - GetInspectionsRequestinspectionsstatusStatus_Get
+      - ScheduleInspectionRequestinspectionsidschedule_Post
+      - RescheduleInspectionRequestinspectionsidreschedule_Post
+      - InspectInspectionRequestinspectionsidinspect_Post
+      - CloseInspectionRequestinspectionsidclose_Post
+      - ReopenInspectionRequestinspectionsidreopen_Post
+      - CreateInspectionReportRequestinspectionsIdreport_Post
+      - UpdateInspectionReportRequestinspectionsIdreport_Create
+      - GetInspectionReportRequestinspectionsreportsId_Get
+      - GetInspectionManagerRequestinspectionsMembersId_Get
+  - file: propertyme-tenancy-arrears-review.md
+    name: Review PropertyMe tenancies and arrears
+    api: openapi/propertyme-openapi.json
+    scopes: [property:read, contact:read, transaction:read]
+    operations:
+      - TenancyRequesttenancies_Get
+      - TenancyBalanceRequesttenanciesbalances_Get
+      - SingleTenancyBalanceRequesttenanciesbalancesid_Get
+      - LotRentalsRequestlotsrentals_Get
+      - LotVacantSalesRequestlotsvacancy_Get
+      - LotDetailRequestlotsIddetail_Get
+      - ContactTenantsRequestcontactstenants_Get
+      - ContactOwnershipsRequestcontactsownerships_Get
+      - GetContactAlertsRequestcontactsIdalertsType_Get
+      - LotManagerRequestlotsIdmembers_Get
+      - TransactionDashboardRequestdashboardstransactionsType_Get
+  - file: propertyme-post-supplier-bill.md
+    name: Post a supplier bill to the PropertyMe trust ledger
+    api: openapi/propertyme-openapi.json
+    scopes: [transaction:write, transaction:read, contact:read, property:read]
+    operations:
+      - AddBillRequestbills_Post
+      - QuerySuppliersRequestcontactssuppliers_Get
+      - LotRequestlotsId_Get
+      - GetJobTasksQuotationRequestjobtasksIdquotations_Get
+      - TransactionDashboardRequestdashboardstransactionsType_Get
+      - AddLotFolioDocumentRequestlotsIdfoliodocuments_Post

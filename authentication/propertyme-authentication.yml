@@ -1,0 +1,88 @@
+generated: '2026-07-26'
+method: searched
+source: https://login.propertyme.com/.well-known/openid-configuration
+supplemental_source: openapi/propertyme-openapi.json
+docs: https://github.com/PropertyMe/HelloPropertyMe.NET
+notes: >-
+  The Swagger 2.0 contract understates PropertyMe's auth model badly: it declares one `Bearer`
+  securityDefinition typed `apiKey` in the Authorization header, which is how a great many .NET
+  Swashbuckle documents describe a bearer token. The real model is full OpenID Connect on an
+  IdentityServer-family deployment at login.propertyme.com, whose discovery document is served
+  anonymously and is unusually complete — PAR, DPoP signing algorithms, CIBA backchannel auth, device
+  code, front- and back-channel logout, token revocation and introspection, and dynamic client
+  registration at /connect/dcr. Two non-standard grant types are advertised: `mcp_customer_switch`
+  and `on_behalf_of`. The gate is not the protocol, it is issuance — there is no self-serve developer
+  signup anywhere on propertyme.com.au or app.propertyme.com, and no developer/docs/api subdomain
+  resolves, so a client_id and client_secret must be issued by PropertyMe directly. Every issued
+  token is additionally scoped to the single customer portfolio the agency has connected, and the
+  agency can sever that connection at any time.
+summary:
+  types: [openIdConnect, oauth2, http]
+  api_key_in: []
+  oauth2_flows: [authorizationCode, clientCredentials, implicit, password, deviceCode, ciba, refreshToken]
+  token_placement: 'Authorization: Bearer <access_token>'
+  pkce: [S256, plain]
+  self_serve_registration: false
+  dynamic_client_registration_endpoint: https://login.propertyme.com/connect/dcr
+schemes:
+  - name: PropertyMeOIDC
+    type: openIdConnect
+    openIdConnectUrl: https://login.propertyme.com/.well-known/openid-configuration
+    issuer: https://login.propertyme.com
+    jwks_uri: https://login.propertyme.com/.well-known/openid-configuration/jwks
+    id_token_signing_alg: [RS256]
+    subject_types: [public]
+    sources: [https://login.propertyme.com/.well-known/openid-configuration]
+    endpoints:
+      authorization: https://login.propertyme.com/connect/authorize
+      token: https://login.propertyme.com/connect/token
+      userinfo: https://login.propertyme.com/connect/userinfo
+      introspection: https://login.propertyme.com/connect/introspect
+      revocation: https://login.propertyme.com/connect/revocation
+      end_session: https://login.propertyme.com/connect/endsession
+      check_session: https://login.propertyme.com/connect/checksession
+      device_authorization: https://login.propertyme.com/connect/deviceauthorization
+      backchannel_authentication: https://login.propertyme.com/connect/ciba
+      pushed_authorization_request: https://login.propertyme.com/connect/par
+      registration: https://login.propertyme.com/connect/dcr
+    grant_types:
+      - authorization_code
+      - client_credentials
+      - refresh_token
+      - implicit
+      - password
+      - urn:ietf:params:oauth:grant-type:device_code
+      - urn:openid:params:grant-type:ciba
+      - mcp_customer_switch
+      - on_behalf_of
+    client_auth_methods: [client_secret_basic, client_secret_post]
+    require_pushed_authorization_requests: false
+    dpop_signing_alg_values: [RS256, RS384, RS512, PS256, PS384, PS512, ES256, ES384, ES512]
+    prompt_values: [none, login, consent, select_account]
+    scopes_ref: scopes/propertyme-scopes.yml
+  - name: Bearer
+    type: http
+    scheme: bearer
+    in: header
+    parameter: Authorization
+    sources: [openapi/propertyme-openapi.json]
+    note: >-
+      Declared in the Swagger document as type apiKey with name Authorization in header. This is a
+      Swashbuckle description of an OIDC bearer token, not a static API key — PropertyMe issues no
+      long-lived API keys.
+consent:
+  model: per-customer portfolio connection
+  granularity: one connected portfolio per integration per agency
+  revocation:
+    by_agency: The agency disconnects the integration from within PropertyMe.
+    by_integration: DELETE /v1/portfolios/disconnect
+    note: Disconnecting invalidates the current access token; the portfolio user must choose to reconnect.
+non_standard_grants:
+  - grant: mcp_customer_switch
+    observed: https://login.propertyme.com/.well-known/openid-configuration
+    reading: >-
+      Switches the acting customer portfolio for an already-authenticated session. Strong evidence of
+      an internal Model Context Protocol surface — see mcp/propertyme-mcp.yml.
+  - grant: on_behalf_of
+    observed: https://login.propertyme.com/.well-known/openid-configuration
+    reading: Token exchange so a service can act for a specific user or customer.

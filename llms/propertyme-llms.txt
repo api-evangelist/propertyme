@@ -1,0 +1,78 @@
+# PropertyMe
+
+> PropertyMe is an Australian cloud property management and trust accounting platform for residential real estate agencies, operated by MePay Holdings Pty Ltd, with roughly 1.7 million properties under management across Australia and New Zealand. It sits on the property-management rail — the system of record for the rental portfolio (lots, tenancies, owners, tenants, suppliers, trust transactions, inspections, maintenance jobs and documents) — not the listings or conveyancing rails. Its Swagger 2.0 contract (75 paths, 86 operations, 296 definitions) and its OpenID Connect discovery document are both served anonymously; the credentials to use them are not. There is no self-serve developer signup and no developer subdomain: a client_id and client_secret must be issued by PropertyMe, and every token is scoped to one customer portfolio an agency has connected and can disconnect.
+
+## Machine-readable contract
+
+- [OpenAPI (Swagger 2.0)](https://app.propertyme.com/api/openapi.json): the full published contract, served anonymously with no login. Note the filename says openapi but the document declares "swagger":"2.0".
+- [Swagger UI](https://app.propertyme.com/api/swagger-ui/): the public rendering of that contract. This is the API reference — PropertyMe publishes no other developer documentation.
+- [OpenID Connect discovery](https://login.propertyme.com/.well-known/openid-configuration): anonymous, and the authoritative source for the scope list. Also served at /.well-known/oauth-authorization-server (byte-identical).
+- [JWKS](https://login.propertyme.com/.well-known/openid-configuration/jwks)
+
+## Authentication
+
+- Issuer: https://login.propertyme.com — OpenID Connect, RS256, PKCE (S256), PAR, device code, CIBA, revocation, introspection, dynamic client registration at /connect/dcr.
+- Token placement: `Authorization: Bearer <access_token>`. The Swagger document types this as apiKey; it is an OIDC bearer token, not a static API key.
+- Two non-standard grant types are advertised: `mcp_customer_switch` and `on_behalf_of`.
+- Scopes: property:read, property:write, contact:read, contact:write, activity:read, activity:write, transaction:read, transaction:write, communication:read, communication:write, tenancy:write, customer:read, customer:write, form:write, ids:admin, org-portal:api, plus openid, profile, email, offline_access.
+- Consent is per-portfolio and revocable. `DELETE /v1/portfolios/disconnect` severs the connection and invalidates the current access token.
+
+## API surfaces
+
+- Contacts — owners, tenants, suppliers, the agency contact, ownerships, contact alerts and images. `contact:read` / `contact:write`.
+- Properties (lots) — the property record, with rentals, active sales, vacancy and archived filters, lot detail and the managing member. `property:read` / `property:write`.
+- Tenancies — tenancies and tenancy balances. Read-only. `property:read`.
+- Inspections — the full routine and entry/exit lifecycle: create, search, query by status, and the schedule / reschedule / inspect / close / reopen transitions, plus inspection reports. `activity:read` / `activity:write`.
+- Job tasks — maintenance work orders in a v1 and a v2 shape, with approve / assign / complete / reject / reopen transitions and supplier quotations. The largest write surface. `activity:read` / `activity:write`.
+- Tasks — general property-management tasks distinct from maintenance jobs. `activity:read` / `activity:write`.
+- Bills — `POST /v1/bills` against the trust accounting ledger. The only transaction write in the contract. `transaction:write`.
+- Dashboards — typed aggregates over activities, communications, lots and transactions.
+- Documents and images — sub-resources of contacts, lots, folios, inspections, tasks and jobs.
+- Members — the agency staff directory and the responsible member for a lot, task, job or inspection. `contact:read`.
+- Portfolio connection — the consent seam.
+
+## Conventions that matter
+
+- Change detection is polling, not push. Six collection endpoints take a REQUIRED int64 `Timestamp` and return records changed after it. There are no webhooks, no events and no AsyncAPI.
+- There is NO idempotency contract. No Idempotency-Key header exists on any operation, including the bill write against the trust ledger.
+- There is no request-id or correlation header.
+- Pagination is `Offset` / `Limit` on 12 of 86 operations; the rest return unbounded arrays with no total, cursor or next link.
+- The `Accept: application/json` header is a required global parameter.
+- Errors reuse the success schema — no RFC 9457 problem+json, no error-code registry. Declared statuses are 200, 202, 400, 500 and a non-standard 502 for missing required query parameters.
+- No rate-limit policy or headers are documented; no 429 is declared.
+- Versioning is uri-path; v1 and v2 run side by side on job tasks with neither deprecated.
+
+## Repository artifacts
+
+- [apis.yml](https://raw.githubusercontent.com/api-evangelist/propertyme/refs/heads/main/apis.yml)
+- [OpenAPI](https://raw.githubusercontent.com/api-evangelist/propertyme/refs/heads/main/openapi/propertyme-openapi.json)
+- [Authentication profile](https://raw.githubusercontent.com/api-evangelist/propertyme/refs/heads/main/authentication/propertyme-authentication.yml)
+- [OAuth scopes](https://raw.githubusercontent.com/api-evangelist/propertyme/refs/heads/main/scopes/propertyme-scopes.yml)
+- [API conventions](https://raw.githubusercontent.com/api-evangelist/propertyme/refs/heads/main/conventions/propertyme-conventions.yml)
+- [Error catalogue](https://raw.githubusercontent.com/api-evangelist/propertyme/refs/heads/main/errors/propertyme-problem-types.yml)
+- [Data model](https://raw.githubusercontent.com/api-evangelist/propertyme/refs/heads/main/data-model/propertyme-data-model.yml)
+- [Lifecycle](https://raw.githubusercontent.com/api-evangelist/propertyme/refs/heads/main/lifecycle/propertyme-lifecycle.yml)
+- [Conformance](https://raw.githubusercontent.com/api-evangelist/propertyme/refs/heads/main/conformance/propertyme-conformance.yml)
+- [Well-known index](https://raw.githubusercontent.com/api-evangelist/propertyme/refs/heads/main/well-known/propertyme-well-known.yml)
+- [MCP candidate manifest](https://raw.githubusercontent.com/api-evangelist/propertyme/refs/heads/main/mcp/propertyme-mcp.yml)
+- [Tool crosswalk](https://raw.githubusercontent.com/api-evangelist/propertyme/refs/heads/main/mcp/propertyme-tool-crosswalk.yml)
+- [Agent skills](https://raw.githubusercontent.com/api-evangelist/propertyme/refs/heads/main/skills/_index.yml)
+- [Packages](https://raw.githubusercontent.com/api-evangelist/propertyme/refs/heads/main/packages/propertyme-packages.yml)
+- [Domain security](https://raw.githubusercontent.com/api-evangelist/propertyme/refs/heads/main/security/propertyme-domain-security.yml)
+- [Agentic access](https://raw.githubusercontent.com/api-evangelist/propertyme/refs/heads/main/agentic-access/propertyme-agentic-access.yml)
+
+## Company
+
+- [Website](https://www.propertyme.com.au/)
+- [Pricing](https://www.propertyme.com.au/pricing)
+- [Security](https://www.propertyme.com.au/security)
+- [Status](https://status.propertyme.com/)
+- [Support](https://support.propertyme.com/hc/en-us)
+- [Integrations](https://www.propertyme.com.au/integrations)
+- [Partner directory](https://www.propertyme.com.au/partner-directory)
+- [GitHub](https://github.com/PropertyMe)
+- [Sample OAuth app](https://github.com/PropertyMe/HelloPropertyMe.NET)
+
+## Not published
+
+PropertyMe publishes no client SDK in any language, no CLI, no Postman collection, no sandbox or test environment, no embeddable UI components, no webhooks or AsyncAPI, no API changelog or release notes, no roadmap, no SLA or uptime target, no rate-limit policy, no security.txt, no api-catalog, no vulnerability disclosure programme, no trust centre and no named security certification. It is not RESO certified and has no OData service — expected for an Australian property-management platform, since RESO is a North American NAR/MLS construct.

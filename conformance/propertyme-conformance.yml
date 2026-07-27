@@ -1,0 +1,115 @@
+generated: '2026-07-26'
+method: derived
+source: openapi/propertyme-openapi.json
+supplemental_source: https://login.propertyme.com/.well-known/openid-configuration
+notes: >-
+  PropertyMe conforms strongly on the identity side and weakly on the API side. The identity provider
+  implements a broad slice of the OAuth 2.x / OIDC RFC family — discovery, PKCE, PAR, device code,
+  CIBA, revocation, introspection, dynamic client registration, DPoP algorithms. The API itself is a
+  plain Swagger 2.0 CRUD surface: no RFC 9457 problem details, no conditional requests, no Sunset
+  headers, no idempotency contract, no RFC 9116 security.txt, no RFC 9727 api-catalog. RESO — the
+  North American real estate data standard — is absent and expected to be: PropertyMe does not appear
+  in the RESO certification directory, there is no OData service, no $metadata document and no
+  Universal Property Identifier, because RESO is an NAR/MLS construct with no Australian counterpart
+  and PropertyMe sits on the property-management rail rather than the listings rail.
+standards:
+  - id: oauth2
+    conforms: true
+    evidence: >-
+      login.propertyme.com advertises authorization_code, client_credentials, refresh_token, implicit,
+      password and device_code grants at /connect/authorize and /connect/token.
+  - id: openid-connect-core
+    conforms: true
+    evidence: id_token issuance, userinfo endpoint, RS256 signing, public subject types.
+  - id: openid-connect-discovery
+    conforms: true
+    evidence: https://login.propertyme.com/.well-known/openid-configuration returns 200 application/json.
+  - id: rfc8414-oauth-authorization-server-metadata
+    conforms: true
+    evidence: /.well-known/oauth-authorization-server returns 200, byte-identical to the OIDC document.
+  - id: rfc7636-pkce
+    conforms: true
+    evidence: code_challenge_methods_supported = [plain, S256].
+  - id: rfc9126-pushed-authorization-requests
+    conforms: true
+    evidence: pushed_authorization_request_endpoint = /connect/par (require_pushed_authorization_requests false).
+  - id: rfc8628-device-authorization-grant
+    conforms: true
+    evidence: device_authorization_endpoint = /connect/deviceauthorization.
+  - id: openid-ciba
+    conforms: true
+    evidence: backchannel_authentication_endpoint = /connect/ciba, poll delivery mode.
+  - id: rfc7009-token-revocation
+    conforms: true
+    evidence: revocation_endpoint = /connect/revocation.
+  - id: rfc7662-token-introspection
+    conforms: true
+    evidence: introspection_endpoint = /connect/introspect.
+  - id: rfc7591-dynamic-client-registration
+    conforms: partial
+    evidence: >-
+      registration_endpoint = /connect/dcr is advertised, but there is no self-serve developer signup
+      and no public documentation of how to obtain the initial registration credential — the endpoint
+      exists, the path to it does not.
+  - id: rfc9449-dpop
+    conforms: partial
+    evidence: >-
+      dpop_signing_alg_values_supported is advertised, but no PropertyMe documentation requires or
+      describes DPoP-bound tokens for API clients.
+  - id: rfc9068-jwt-access-tokens
+    conforms: unknown
+    evidence: Access tokens are not anonymously inspectable; no published statement of token format.
+  - id: openapi-3
+    conforms: false
+    evidence: >-
+      The published contract is Swagger 2.0, not OpenAPI 3.x — https://app.propertyme.com/api/openapi.json
+      declares "swagger":"2.0" despite the filename.
+  - id: rfc9457-problem-details
+    conforms: false
+    evidence: >-
+      No application/problem+json anywhere in the contract. Error responses reuse the success schema —
+      see errors/propertyme-problem-types.yml.
+  - id: rfc8594-sunset-header
+    conforms: false
+    evidence: No Sunset or Deprecation header documented; zero operations carry deprecated:true.
+  - id: rfc9116-security-txt
+    conforms: false
+    evidence: /.well-known/security.txt is 404 on app.propertyme.com and www.propertyme.com.au.
+  - id: rfc9727-api-catalog
+    conforms: false
+    evidence: /.well-known/api-catalog is 404 on the API host.
+  - id: json-api
+    conforms: false
+    evidence: Plain JSON arrays and objects; no JSON:API document structure.
+  - id: odata
+    conforms: false
+    evidence: No $metadata document, no OData query options.
+  - id: reso-data-dictionary
+    conforms: false
+    evidence: >-
+      PropertyMe is not listed in the RESO certification directory; no RESO Web API, no Data Dictionary
+      field names, no Universal Property Identifier. Expected for an Australian property-management
+      platform — RESO has no Australian counterpart.
+  - id: asyncapi
+    conforms: false
+    evidence: No event, streaming or webhook surface is published; change detection is timestamp polling.
+  - id: idempotency-key
+    conforms: false
+    evidence: >-
+      No Idempotency-Key header or equivalent parameter appears in any of the 86 operations, including
+      POST /v1/bills against the trust ledger.
+  - id: pagination
+    conforms: partial
+    evidence: >-
+      Offset and Limit query parameters exist on a subset of list operations; most list operations use
+      a required change-since Timestamp instead and return unbounded arrays.
+compliance_program:
+  published: false
+  certifications: []
+  evidence: >-
+    https://www.propertyme.com.au/security documents encryption in transit and at rest, two-factor
+    authentication, session lockout and activity logging, but names no certification — no SOC 2, no
+    ISO 27001, no PCI DSS, no penetration-test attestation, and no trust centre. trust.propertyme.com
+    and trust.propertyme.com.au do not resolve. PropertyMe's parent MePay Holdings Pty Ltd does hold
+    AFS licence no. 528836 and AFCA membership 81095 for its payments product, which is financial
+    licensing rather than an information-security certification.

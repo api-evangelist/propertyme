@@ -1,0 +1,63 @@
+generated: '2026-07-26'
+method: searched
+source: npm, PyPI, NuGet, RubyGems, Packagist, crates.io, pkg.go.dev, github.com/PropertyMe
+notes: >-
+  PropertyMe ships NO first-party client SDK for its API in any language. Every public registry was
+  searched: npm returns zero results for "propertyme"; PyPI 404s on propertyme, pypropertyme,
+  property-me and propertyme-api; RubyGems, Packagist and crates.io return nothing relevant. NuGet has
+  exactly one package authored by PropertyMe — PropertyMe.MassTransit.MySqlOutbox — but that is an
+  internal messaging-infrastructure library (a MassTransit transactional outbox for MySQL), not an API
+  client, so it does NOT constitute an SDK for the PropertyMe API and this repo deliberately does not
+  claim an SDKs pointer on the strength of it. The github.com/PropertyMe organisation holds seven
+  public repositories, six of which are forks of third-party .NET libraries (ServiceStack.Text,
+  ServiceStack.OrmLite, IdentityServer4, Kavita) or internal infrastructure. The one thing that IS
+  first-party and API-facing is HelloPropertyMe.NET, a sample application demonstrating the OAuth 2.0
+  connection — sample code, not a library. The only client library that exists is third-party:
+  PyPropertyMe, a Python wrapper generated from PropertyMe's own OpenAPI document with Microsoft
+  Kiota, published as documentation at pypropertyme.garyj.dev and not distributed on PyPI.
+first_party_sdk: false
+packages:
+  - language: csharp
+    registry: nuget
+    name: PropertyMe.MassTransit.MySqlOutbox
+    version: 1.0.1
+    url: https://www.nuget.org/packages/PropertyMe.MassTransit.MySqlOutbox
+    install: dotnet add package PropertyMe.MassTransit.MySqlOutbox
+    official: true
+    api_client: false
+    description: >-
+      MassTransit transactional outbox/inbox implementation for MySQL, published by PropertyMe.
+      Infrastructure the company open-sourced from its own stack — it does not talk to the PropertyMe
+      API and is not a client library for it.
+    source: https://github.com/PropertyMe/masstransit-mysql-outbox
+  - language: csharp
+    registry: github
+    name: HelloPropertyMe.NET
+    url: https://github.com/PropertyMe/HelloPropertyMe.NET
+    install: git clone https://github.com/PropertyMe/HelloPropertyMe.NET
+    official: true
+    api_client: false
+    kind: sample-application
+    description: >-
+      First-party sample .NET application demonstrating how to connect to PropertyMe with OAuth 2.0.
+      The closest thing PropertyMe publishes to a getting-started guide for the API.
+  - language: python
+    registry: none
+    name: PyPropertyMe
+    url: https://pypropertyme.garyj.dev/
+    install: null
+    official: false
+    api_client: true
+    description: >-
+      Third-party Python API wrapper for the PropertyMe API, generated from PropertyMe's published
+      OpenAPI document using Microsoft Kiota, with OAuth 2.0 handling. Documented at
+      pypropertyme.garyj.dev; not published to PyPI (all candidate PyPI names return 404).
+registries_checked:
+  - {registry: npm, query: propertyme, results: 0}
+  - {registry: pypi, query: 'propertyme / pypropertyme / property-me / propertyme-api', results: 0}
+  - {registry: nuget, query: propertyme, results: 1, first_party: 1, api_clients: 0}
+  - {registry: rubygems, query: propertyme, results: 0}
+  - {registry: packagist, query: propertyme, results: 0}
+  - {registry: crates.io, query: propertyme, results: 0}
+  - {registry: pkg.go.dev, query: propertyme, results: 0}
+  - {registry: 'github.com/PropertyMe', repos: 7, api_clients: 0, samples: 1}

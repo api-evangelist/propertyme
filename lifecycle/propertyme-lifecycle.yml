@@ -1,0 +1,68 @@
+generated: '2026-07-26'
+method: searched
+source: https://status.propertyme.com/api/v2/summary.json
+supplemental_source: openapi/propertyme-openapi.json
+notes: >-
+  PropertyMe versions in the URI path and runs v1 and v2 side by side today: the job-task (maintenance
+  work order) resource is the only one with a v2 shape, and both generations are live in the same
+  contract with neither marked deprecated. That is the whole of the published versioning story — there
+  is no versioning policy page, no deprecation policy, no Sunset or Deprecation header, no changelog
+  or release-notes feed for the API, no roadmap, and no published SLA or uptime target. The one
+  operational commitment PropertyMe does publish is an Atlassian Statuspage, which exposes a machine-
+  readable summary API and has recorded 100% uptime on both monitored components over the trailing 90
+  days.
+versioning:
+  scheme: uri-path
+  current: v1
+  versions_live: [v1, v2]
+  v2_surface:
+    resource: jobtasks
+    operations:
+      - JobTaskV2RequestjobtasksId_Get
+      - UpdateJobV2RequestjobtasksId_Post
+      - SearchJobTaskV2Requestjobtaskssearch_Get
+      - ChangedJobTaskV2Requestjobtasks_Get
+      - AddJobV2Requestjobtasks_Post
+    note: >-
+      v2 is additive and scoped to job tasks only. The v1 job-task operations remain published and
+      undeprecated alongside it.
+  policy_url: null
+deprecation:
+  policy_url: null
+  sunset_header: false
+  deprecation_header: false
+  note: >-
+    Zero of the 86 published operations carry deprecated:true, and no Sunset/Deprecation header
+    behaviour is documented. PropertyMe publishes no deprecation policy.
+sla:
+  url: null
+  uptime_target: null
+  observed_uptime_90d: '100.0%'
+  observed_source: https://status.propertyme.com/
+status_page:
+  url: https://status.propertyme.com/
+  provider: Atlassian Statuspage
+  page_id: 125fw644t3bh
+  api: https://status.propertyme.com/api/v2/summary.json
+  time_zone: Australia/Sydney
+  components:
+    - name: PropertyMe
+      description: PropertyMe web application
+      status: operational
+      monitored_since: '2015-11-20'
+    - name: my.propertyme.com
+      description: Client access for owners and tenants
+      status: operational
+      monitored_since: '2018-04-19'
+  note: >-
+    The status page monitors the web application and the owner/tenant portal. There is no separate
+    component for the API surface at app.propertyme.com/api, and no RSS or Atom incident feed
+    (/history.rss and /history.atom both 404) — the JSON summary API is the only machine-readable feed.
+changelog:
+  url: null
+  note: >-
+    No API changelog, release-notes page or product-updates feed was found on propertyme.com.au. The
+    marketing blog at https://www.propertyme.com.au/blog is product marketing, not release notes.
+roadmap:
+  url: null
+deprecated_operations: []

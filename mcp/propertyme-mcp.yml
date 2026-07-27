@@ -1,0 +1,621 @@
+generated: '2026-07-26'
+method: derived
+status: candidate
+source: openapi/propertyme-openapi.json
+notes: 'PropertyMe publishes no hosted MCP server: mcp.propertyme.com and mcp.propertyme.com.au do not
+  resolve, app.propertyme.com/mcp returns 404, and no MCP server appears in any public registry. HOWEVER
+  the anonymous OpenID Connect discovery document at https://login.propertyme.com/.well-known/openid-configuration
+  advertises two non-standard grant types — "mcp_customer_switch" and "on_behalf_of" — alongside the standard
+  set. That is direct, first-party evidence that PropertyMe operates an MCP surface behind its identity
+  provider (almost certainly bound to the AiMe assistant product), with a grant purpose-built for switching
+  the acting customer portfolio mid-session. It is not publicly reachable and no tools/list is anonymously
+  introspectable. The tools below are a CANDIDATE set derived one-per-operation from the published Swagger
+  2.0 contract, not PropertyMe''s own tool names.'
+evidence:
+- source: https://login.propertyme.com/.well-known/openid-configuration
+  status: 200
+  finding: grant_types_supported includes "mcp_customer_switch" and "on_behalf_of"
+- source: https://mcp.propertyme.com/
+  status: NXDOMAIN
+- source: https://app.propertyme.com/mcp
+  status: 404
+server:
+  name: propertyme
+  transport: http
+  url: null
+  auth: OAuth 2.0 / OIDC at https://login.propertyme.com (client_id + client_secret issued by PropertyMe
+    on request)
+tool_count: 86
+tools:
+- name: create_bills
+  description: Create a new bill including a document
+  source_operation: openapi/propertyme-openapi.json#AddBillRequestbills_Post
+  http: POST /v1/bills
+  scopes:
+  - transaction:write
+  read_only: false
+- name: list_contacts
+  description: Find any contacts changed since a given timestamp
+  source_operation: openapi/propertyme-openapi.json#ChangedContactsRequestcontacts_Get
+  http: GET /v1/contacts
+  scopes:
+  - contact:read
+  read_only: true
+- name: list_contacts_agency
+  description: Returns an agency contact
+  source_operation: openapi/propertyme-openapi.json#AgencyRequestcontactsagency_Get
+  http: GET /v1/contacts/agency
+  scopes:
+  - contact:read
+  read_only: true
+- name: list_contacts_ownerships
+  description: List of all owners in relation to the contact
+  source_operation: openapi/propertyme-openapi.json#ContactOwnershipsRequestcontactsownerships_Get
+  http: GET /v1/contacts/ownerships
+  scopes:
+  - contact:read
+  read_only: true
+- name: list_contacts_suppliers
+  description: List of all suppliers in relation to the contact
+  source_operation: openapi/propertyme-openapi.json#QuerySuppliersRequestcontactssuppliers_Get
+  http: GET /v1/contacts/suppliers
+  scopes:
+  - contact:read
+  read_only: true
+- name: list_contacts_tenants
+  description: List of all tenants in relation to the contact
+  source_operation: openapi/propertyme-openapi.json#ContactTenantsRequestcontactstenants_Get
+  http: GET /v1/contacts/tenants
+  scopes:
+  - contact:read
+  read_only: true
+- name: get_contacts
+  description: Find a contact by Id
+  source_operation: openapi/propertyme-openapi.json#ContactRequestcontactsId_Get
+  http: GET /v1/contacts/{Id}
+  scopes:
+  - contact:read
+  read_only: true
+- name: get_contacts_alerts
+  description: List of all Contact alerts for a given contact and filtered by contact alert type
+  source_operation: openapi/propertyme-openapi.json#GetContactAlertsRequestcontactsIdalertsType_Get
+  http: GET /v1/contacts/{Id}/alerts/{Type}
+  scopes:
+  - contact:read
+  read_only: true
+- name: create_contacts_comments
+  description: Create a new comment for a given contact
+  source_operation: openapi/propertyme-openapi.json#AddContactCommentRequestcontactsIdcomments_Post
+  http: POST /v1/contacts/{Id}/comments
+  scopes:
+  - contact:write
+  read_only: false
+- name: create_contacts_documents
+  description: Create a new document for a given contact
+  source_operation: openapi/propertyme-openapi.json#AddContactDocumentRequestcontactsIddocuments_Post
+  http: POST /v1/contacts/{Id}/documents
+  scopes:
+  - contact:write
+  read_only: false
+- name: list_contacts_images
+  description: List all images for a given contact
+  source_operation: openapi/propertyme-openapi.json#GetContactImagescontactsIdimages_Get
+  http: GET /v1/contacts/{Id}/images
+  scopes:
+  - contact:read
+  read_only: true
+- name: get_dashboards_activities
+  description: List dashboard activities by a given type
+  source_operation: openapi/propertyme-openapi.json#ActivityDashboardRequestdashboardsactivitiesType_Get
+  http: GET /v1/dashboards/activities/{Type}
+  scopes:
+  - communication:read
+  read_only: true
+- name: get_dashboards_communications
+  description: Get communication dashboard item by type
+  source_operation: openapi/propertyme-openapi.json#CommunicationDashboardRequestdashboardscommunicationsType_Get
+  http: GET /v1/dashboards/communications/{Type}
+  scopes:
+  - activity:read
+  read_only: true
+- name: get_dashboards_lots
+  description: Get dashboard item by type
+  source_operation: openapi/propertyme-openapi.json#LotDashboardRequestdashboardslotsType_Get
+  http: GET /v1/dashboards/lots/{Type}
+  scopes:
+  - property:read
+  read_only: true
+- name: get_dashboards_transactions
+  description: Get activity dashboard item by type
+  source_operation: openapi/propertyme-openapi.json#TransactionDashboardRequestdashboardstransactionsType_Get
+  http: GET /v1/dashboards/transactions/{Type}
+  scopes:
+  - transaction:read
+  read_only: true
+- name: list_inspections
+  description: List all inspections changed since a given timestamp
+  source_operation: openapi/propertyme-openapi.json#ChangedInspectionsRequestinspections_Get
+  http: GET /v1/inspections
+  scopes:
+  - activity:read
+  read_only: true
+- name: create_inspections
+  description: Create a new inspection
+  source_operation: openapi/propertyme-openapi.json#AddInspectionRequestinspections_Post
+  http: POST /v1/inspections
+  scopes:
+  - activity:write
+  read_only: false
+- name: get_inspections_members
+  description: Find an inspection manager by id
+  source_operation: openapi/propertyme-openapi.json#GetInspectionManagerRequestinspectionsMembersId_Get
+  http: GET /v1/inspections/Members/{Id}
+  scopes:
+  - activity:read
+  read_only: true
+- name: list_inspections_query
+  description: Query all inspections
+  source_operation: openapi/propertyme-openapi.json#QueryInspectionRequestinspectionsquery_Get
+  http: GET /v1/inspections/query
+  scopes:
+  - activity:read
+  read_only: true
+- name: get_inspections_reports
+  description: Find an inspection report by id
+  source_operation: openapi/propertyme-openapi.json#GetInspectionReportRequestinspectionsreportsId_Get
+  http: GET /v1/inspections/reports/{Id}
+  scopes:
+  - activity:read
+  read_only: true
+- name: list_inspections_search
+  description: Search all inspections by contact id and/or lot id
+  source_operation: openapi/propertyme-openapi.json#SearchInspectionsRequestinspectionssearch_Get
+  http: GET /v1/inspections/search
+  scopes:
+  - activity:read
+  read_only: true
+- name: get_inspections_status
+  description: List all inspections
+  source_operation: openapi/propertyme-openapi.json#GetInspectionsRequestinspectionsstatusStatus_Get
+  http: GET /v1/inspections/status/{Status}
+  scopes:
+  - activity:read
+  read_only: true
+- name: get_inspections
+  description: Find an inspection by id
+  source_operation: openapi/propertyme-openapi.json#GetInspectionRequestinspectionsId_Get
+  http: GET /v1/inspections/{Id}
+  scopes:
+  - activity:read
+  read_only: true
+- name: create_inspections_comments
+  description: Create a new comment for a given inspection
+  source_operation: openapi/propertyme-openapi.json#AddInspectionCommentRequestinspectionsIdcomments_Post
+  http: POST /v1/inspections/{Id}/comments
+  scopes:
+  - activity:write
+  read_only: false
+- name: create_inspections_documents
+  description: Create a new document for a given inspection
+  source_operation: openapi/propertyme-openapi.json#AddInspectionDocumentRequestinspectionsIddocuments_Post
+  http: POST /v1/inspections/{Id}/documents
+  scopes: []
+  read_only: false
+- name: list_inspections_images
+  description: List all images for a given inspection
+  source_operation: openapi/propertyme-openapi.json#GetInspectionsImagesinspectionsIdimages_Get
+  http: GET /v1/inspections/{Id}/images
+  scopes:
+  - activity:read
+  read_only: true
+- name: create_inspections_report
+  description: Create a new inspection report
+  source_operation: openapi/propertyme-openapi.json#CreateInspectionReportRequestinspectionsIdreport_Post
+  http: POST /v1/inspections/{Id}/report
+  scopes:
+  - activity:write
+  read_only: false
+- name: update_inspections_report
+  description: Update an existing inspection report
+  source_operation: openapi/propertyme-openapi.json#UpdateInspectionReportRequestinspectionsIdreport_Create
+  http: PUT /v1/inspections/{Id}/report
+  scopes:
+  - activity:write
+  read_only: false
+- name: delete_inspections
+  description: Delete the inspection
+  source_operation: openapi/propertyme-openapi.json#DeleteInspectionRequestinspectionsid_Delete
+  http: DELETE /v1/inspections/{id}
+  scopes:
+  - activity:write
+  read_only: false
+- name: create_inspections
+  description: Update an existing inspection
+  source_operation: openapi/propertyme-openapi.json#UpdateInspectionRequestinspectionsid_Post
+  http: POST /v1/inspections/{id}
+  scopes:
+  - activity:write
+  read_only: false
+- name: create_inspections_close
+  description: Close the inspection
+  source_operation: openapi/propertyme-openapi.json#CloseInspectionRequestinspectionsidclose_Post
+  http: POST /v1/inspections/{id}/close
+  scopes:
+  - activity:write
+  read_only: false
+- name: create_inspections_inspect
+  description: Inspect the inspection
+  source_operation: openapi/propertyme-openapi.json#InspectInspectionRequestinspectionsidinspect_Post
+  http: POST /v1/inspections/{id}/inspect
+  scopes:
+  - activity:write
+  read_only: false
+- name: create_inspections_reopen
+  description: Reopen the closed inspection
+  source_operation: openapi/propertyme-openapi.json#ReopenInspectionRequestinspectionsidreopen_Post
+  http: POST /v1/inspections/{id}/reopen
+  scopes:
+  - activity:write
+  read_only: false
+- name: create_inspections_reschedule
+  description: Reschedule the inspection
+  source_operation: openapi/propertyme-openapi.json#RescheduleInspectionRequestinspectionsidreschedule_Post
+  http: POST /v1/inspections/{id}/reschedule
+  scopes:
+  - activity:write
+  read_only: false
+- name: create_inspections_schedule
+  description: Change the inspection status to scheduled
+  source_operation: openapi/propertyme-openapi.json#ScheduleInspectionRequestinspectionsidschedule_Post
+  http: POST /v1/inspections/{id}/schedule
+  scopes:
+  - activity:write
+  read_only: false
+- name: list_jobtasks
+  description: List all job tasks changed since a given timestamp
+  source_operation: openapi/propertyme-openapi.json#ChangedJobTaskRequestjobtasks_Get
+  http: GET /v1/jobtasks
+  scopes:
+  - activity:read
+  read_only: true
+- name: create_jobtasks
+  description: Create a new job
+  source_operation: openapi/propertyme-openapi.json#AddJobRequestjobtasks_Post
+  http: POST /v1/jobtasks
+  scopes:
+  - activity:write
+  read_only: false
+- name: list_jobtasks_search
+  description: Search job task based on due date, created date and status
+  source_operation: openapi/propertyme-openapi.json#SearchJobTaskRequestjobtaskssearch_Get
+  http: GET /v1/jobtasks/search
+  scopes:
+  - activity:read
+  read_only: true
+- name: get_jobtasks
+  description: Find a job task by id
+  source_operation: openapi/propertyme-openapi.json#JobTaskRequestjobtasksId_Get
+  http: GET /v1/jobtasks/{Id}
+  scopes:
+  - activity:read
+  read_only: true
+- name: create_jobtasks
+  description: Update an existing job
+  source_operation: openapi/propertyme-openapi.json#UpdateJobRequestjobtasksId_Post
+  http: POST /v1/jobtasks/{Id}
+  scopes:
+  - activity:write
+  read_only: false
+- name: create_jobtasks_approve
+  description: Update the job task status to Approved
+  source_operation: openapi/propertyme-openapi.json#ApproveJobTaskRequestjobtasksIdapprove_Post
+  http: POST /v1/jobtasks/{Id}/approve
+  scopes: []
+  read_only: false
+- name: create_jobtasks_assign
+  description: Update the supplier of a job
+  source_operation: openapi/propertyme-openapi.json#AssignTaskRequestjobtasksIdassign_Post
+  http: POST /v1/jobtasks/{Id}/assign
+  scopes: []
+  read_only: false
+- name: create_jobtasks_comments
+  description: Create a new comment for a given job
+  source_operation: openapi/propertyme-openapi.json#AddJobCommentRequestjobtasksIdcomments_Post
+  http: POST /v1/jobtasks/{Id}/comments
+  scopes:
+  - activity:write
+  read_only: false
+- name: create_jobtasks_complete
+  description: Update the job task status to Complete
+  source_operation: openapi/propertyme-openapi.json#CompleteJobTaskRequestjobtasksIdcomplete_Post
+  http: POST /v1/jobtasks/{Id}/complete
+  scopes: []
+  read_only: false
+- name: list_jobtasks_documents
+  description: List all documents for a given job
+  source_operation: openapi/propertyme-openapi.json#GetJobDocumentsjobtasksIddocuments_Get
+  http: GET /v1/jobtasks/{Id}/documents
+  scopes:
+  - activity:read
+  read_only: true
+- name: create_jobtasks_documents
+  description: Create a new document for a given job
+  source_operation: openapi/propertyme-openapi.json#AddJobDocumentsRequestjobtasksIddocuments_Post
+  http: POST /v1/jobtasks/{Id}/documents
+  scopes: []
+  read_only: false
+- name: list_jobtasks_images
+  description: List all images for a given job
+  source_operation: openapi/propertyme-openapi.json#GetJobImagesjobtasksIdimages_Get
+  http: GET /v1/jobtasks/{Id}/images
+  scopes:
+  - activity:read
+  read_only: true
+- name: create_jobtasks_images
+  description: Create a new image for a given job
+  source_operation: openapi/propertyme-openapi.json#AddJobImagesRequestjobtasksIdimages_Post
+  http: POST /v1/jobtasks/{Id}/images
+  scopes: []
+  read_only: false
+- name: list_jobtasks_members
+  description: Find a job task manager by job id
+  source_operation: openapi/propertyme-openapi.json#JobTaskManagerRequestjobtasksIdmembers_Get
+  http: GET /v1/jobtasks/{Id}/members
+  scopes:
+  - activity:read
+  read_only: true
+- name: create_jobtasks_quotation
+  description: Create a new quotation for the job task
+  source_operation: openapi/propertyme-openapi.json#AddJobTasksQuotationRequestjobtasksIdquotation_Post
+  http: POST /v1/jobtasks/{Id}/quotation
+  scopes:
+  - activity:write
+  read_only: false
+- name: create_jobtasks_quotation
+  description: Update an existing quotation for the job task
+  source_operation: openapi/propertyme-openapi.json#UpdateJobTasksQuotationRequestjobtasksIdquotationQuoteId_Post
+  http: POST /v1/jobtasks/{Id}/quotation/{QuoteId}
+  scopes:
+  - activity:write
+  read_only: false
+- name: create_jobtasks_quotation_documents
+  description: Add a document to an existing quotation for the job task
+  source_operation: openapi/propertyme-openapi.json#AddJobTasksQuotationDocumentRequestjobtasksIdquotationQuoteIddocuments_Post
+  http: POST /v1/jobtasks/{Id}/quotation/{QuoteId}/documents
+  scopes:
+  - activity:write
+  read_only: false
+- name: list_jobtasks_quotations
+  description: List all the quotation for a job task
+  source_operation: openapi/propertyme-openapi.json#GetJobTasksQuotationRequestjobtasksIdquotations_Get
+  http: GET /v1/jobtasks/{Id}/quotations
+  scopes:
+  - activity:read
+  read_only: true
+- name: create_jobtasks_reject
+  description: Update the job task status to Rejected
+  source_operation: openapi/propertyme-openapi.json#RejectJobTaskRequestjobtasksIdreject_Post
+  http: POST /v1/jobtasks/{Id}/reject
+  scopes: []
+  read_only: false
+- name: create_jobtasks_reopen
+  description: Update the job task status to Reopened
+  source_operation: openapi/propertyme-openapi.json#ReopenJobTaskRequestjobtasksIdreopen_Post
+  http: POST /v1/jobtasks/{Id}/reopen
+  scopes: []
+  read_only: false
+- name: list_lots
+  description: List all lots that have changed since a given timestamp
+  source_operation: openapi/propertyme-openapi.json#ChangedLotRequestlots_Get
+  http: GET /v1/lots
+  scopes:
+  - property:read
+  read_only: true
+- name: list_lots_archived
+  description: List of all lots described as archived lots
+  source_operation: openapi/propertyme-openapi.json#LotArchivedRequestlotsarchived_Get
+  http: GET /v1/lots/archived
+  scopes:
+  - property:read
+  read_only: true
+- name: list_lots_rentals
+  description: List all rentals described as rentals
+  source_operation: openapi/propertyme-openapi.json#LotRentalsRequestlotsrentals_Get
+  http: GET /v1/lots/rentals
+  scopes:
+  - property:read
+  read_only: true
+- name: list_lots_sales
+  description: List of all lots describing active sales
+  source_operation: openapi/propertyme-openapi.json#LotActiveSalesRequestlotssales_Get
+  http: GET /v1/lots/sales
+  scopes:
+  - property:read
+  read_only: true
+- name: list_lots_vacancy
+  description: List of all lots described as vacant
+  source_operation: openapi/propertyme-openapi.json#LotVacantSalesRequestlotsvacancy_Get
+  http: GET /v1/lots/vacancy
+  scopes:
+  - property:read
+  read_only: true
+- name: get_lots
+  description: Find a lot by id
+  source_operation: openapi/propertyme-openapi.json#LotRequestlotsId_Get
+  http: GET /v1/lots/{Id}
+  scopes:
+  - property:read
+  read_only: true
+- name: get_lots_alerts
+  description: List all contact alerts for a given lot by contact alert type
+  source_operation: openapi/propertyme-openapi.json#GetContactAlertsRequestlotsIdalertsType_Get
+  http: GET /v1/lots/{Id}/alerts/{Type}
+  scopes:
+  - property:read
+  read_only: true
+- name: create_lots_comments
+  description: Create a new comment for a given lot
+  source_operation: openapi/propertyme-openapi.json#AddLotCommentRequestlotsIdcomments_Post
+  http: POST /v1/lots/{Id}/comments
+  scopes:
+  - property:write
+  read_only: false
+- name: list_lots_detail
+  description: Find a lot by id
+  source_operation: openapi/propertyme-openapi.json#LotDetailRequestlotsIddetail_Get
+  http: GET /v1/lots/{Id}/detail
+  scopes:
+  - property:read
+  read_only: true
+- name: create_lots_documents
+  description: Create a new document for a given lot
+  source_operation: openapi/propertyme-openapi.json#AddLotDocumentRequestlotsIddocuments_Post
+  http: POST /v1/lots/{Id}/documents
+  scopes:
+  - property:write
+  read_only: false
+- name: create_lots_folio_documents
+  description: Create a new document for a given owner or tenant
+  source_operation: openapi/propertyme-openapi.json#AddLotFolioDocumentRequestlotsIdfoliodocuments_Post
+  http: POST /v1/lots/{Id}/folio/documents
+  scopes:
+  - property:write
+  read_only: false
+- name: list_lots_images
+  description: List all images for a given lot
+  source_operation: openapi/propertyme-openapi.json#GetLotImageslotsIdimages_Get
+  http: GET /v1/lots/{Id}/images
+  scopes:
+  - property:read
+  read_only: true
+- name: list_lots_members
+  description: Find a lot manager by lot id
+  source_operation: openapi/propertyme-openapi.json#LotManagerRequestlotsIdmembers_Get
+  http: GET /v1/lots/{Id}/members
+  scopes:
+  - property:read
+  read_only: true
+- name: list_members
+  description: List all members
+  source_operation: openapi/propertyme-openapi.json#MembersRequestmembers_Get
+  http: GET /v1/members
+  scopes:
+  - contact:read
+  read_only: true
+- name: delete_portfolios_disconnect
+  description: Disconnect from current portfolio
+  source_operation: openapi/propertyme-openapi.json#DisconnectPortfolioRequestportfoliosdisconnect_Delete
+  http: DELETE /v1/portfolios/disconnect
+  scopes: []
+  read_only: false
+- name: list_tasks
+  description: List all tasks changed since a given timestamp
+  source_operation: openapi/propertyme-openapi.json#ChangedTasksRequesttasks_Get
+  http: GET /v1/tasks
+  scopes:
+  - activity:read
+  read_only: true
+- name: create_tasks
+  description: Create a new task
+  source_operation: openapi/propertyme-openapi.json#AddTaskRequesttasks_Post
+  http: POST /v1/tasks
+  scopes:
+  - activity:write
+  read_only: false
+- name: get_tasks
+  description: Find a Task by id
+  source_operation: openapi/propertyme-openapi.json#GetTaskRequesttasksId_Get
+  http: GET /v1/tasks/{Id}
+  scopes:
+  - activity:read
+  read_only: true
+- name: create_tasks
+  description: update an existing task
+  source_operation: openapi/propertyme-openapi.json#UpdateTaskRequesttasksId_Post
+  http: POST /v1/tasks/{Id}
+  scopes:
+  - activity:write
+  read_only: false
+- name: create_tasks_comments
+  description: Create a new comment for a given task
+  source_operation: openapi/propertyme-openapi.json#AddTaskCommentRequesttasksIdcomments_Post
+  http: POST /v1/tasks/{Id}/comments
+  scopes:
+  - activity:write
+  read_only: false
+- name: create_tasks_documents
+  description: Create a new document for a given task
+  source_operation: openapi/propertyme-openapi.json#AddTaskDocumentRequesttasksIddocuments_Post
+  http: POST /v1/tasks/{Id}/documents
+  scopes: []
+  read_only: false
+- name: list_tasks_images
+  description: List all images for a given task
+  source_operation: openapi/propertyme-openapi.json#GetTaskImagestasksIdimages_Get
+  http: GET /v1/tasks/{Id}/images
+  scopes:
+  - activity:read
+  read_only: true
+- name: list_tasks_members
+  description: Find a Task manager by task id
+  source_operation: openapi/propertyme-openapi.json#GetTaskManagerRequesttasksIdmembers_Get
+  http: GET /v1/tasks/{Id}/members
+  scopes:
+  - activity:read
+  read_only: true
+- name: list_tenancies
+  description: List of all tenancies
+  source_operation: openapi/propertyme-openapi.json#TenancyRequesttenancies_Get
+  http: GET /v1/tenancies
+  scopes:
+  - property:read
+  read_only: true
+- name: list_tenancies_balances
+  description: List of all tenancy balances
+  source_operation: openapi/propertyme-openapi.json#TenancyBalanceRequesttenanciesbalances_Get
+  http: GET /v1/tenancies/balances
+  scopes:
+  - property:read
+  read_only: true
+- name: get_tenancies_balances
+  description: Find a tenancy balance record by Id
+  source_operation: openapi/propertyme-openapi.json#SingleTenancyBalanceRequesttenanciesbalancesid_Get
+  http: GET /v1/tenancies/balances/{id}
+  scopes:
+  - property:read
+  read_only: true
+- name: list_v2_jobtasks
+  description: List all job tasks changed since a given timestamp
+  source_operation: openapi/propertyme-openapi.json#ChangedJobTaskV2Requestjobtasks_Get
+  http: GET /v2/jobtasks
+  scopes:
+  - activity:read
+  read_only: true
+- name: create_v2_jobtasks
+  description: Create a new job
+  source_operation: openapi/propertyme-openapi.json#AddJobV2Requestjobtasks_Post
+  http: POST /v2/jobtasks
+  scopes:
+  - activity:write
+  read_only: false
+- name: list_v2_jobtasks_search
+  description: Search job task based on due date, created date and status
+  source_operation: openapi/propertyme-openapi.json#SearchJobTaskV2Requestjobtaskssearch_Get
+  http: GET /v2/jobtasks/search
+  scopes:
+  - activity:read
+  read_only: true
+- name: get_v2_jobtasks
+  description: Find a job task by id
+  source_operation: openapi/propertyme-openapi.json#JobTaskV2RequestjobtasksId_Get
+  http: GET /v2/jobtasks/{Id}
+  scopes:
+  - activity:read
+  read_only: true
+- name: create_v2_jobtasks
+  description: Update an existing job
+  source_operation: openapi/propertyme-openapi.json#UpdateJobV2RequestjobtasksId_Post
+  http: POST /v2/jobtasks/{Id}
+  scopes:
+  - activity:write
+  read_only: false

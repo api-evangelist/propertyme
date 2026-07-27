@@ -1,0 +1,79 @@
+generated: '2026-07-26'
+method: searched
+source: live probes of every PropertyMe host in apis.yml plus the OpenAPI servers host
+notes: >-
+  PropertyMe's entire anonymous discovery surface lives on the identity host, login.propertyme.com,
+  not on the API host. app.propertyme.com — the host the Swagger 2.0 contract declares and every
+  baseURL points at — returns 404 for the whole /.well-known/ tree, including security.txt. The
+  marketing host www.propertyme.com.au also has no security.txt. Note the trap on
+  login.propertyme.com: it is a single-page app with a catch-all route, so EVERY /.well-known/ path
+  returns HTTP 200 with an HTML shell. Only two paths return real JSON — openid-configuration and
+  oauth-authorization-server — and they are byte-identical to each other. Everything else recorded
+  as 200 below is the SPA shell and was verified as HTML, not a discovery document.
+hosts:
+  - https://login.propertyme.com
+  - https://app.propertyme.com
+  - https://www.propertyme.com.au
+documents:
+  - host: https://login.propertyme.com
+    path: /.well-known/openid-configuration
+    status: 200
+    content_type: application/json
+    real: true
+    file: propertyme-openid-configuration.json
+  - host: https://login.propertyme.com
+    path: /.well-known/oauth-authorization-server
+    status: 200
+    content_type: application/json
+    real: true
+    file: propertyme-oauth-authorization-server.json
+    note: byte-identical to the openid-configuration document
+  - host: https://login.propertyme.com
+    path: /.well-known/openid-configuration/jwks
+    status: 200
+    content_type: application/json
+    real: true
+    file: propertyme-jwks.json
+  - host: https://login.propertyme.com
+    path: /.well-known/security.txt
+    status: 200
+    real: false
+    note: SPA catch-all — returns HTML, not RFC 9116 text
+  - host: https://login.propertyme.com
+    path: /.well-known/api-catalog
+    status: 200
+    real: false
+    note: SPA catch-all — returns HTML, not RFC 9727 linkset
+  - host: https://login.propertyme.com
+    path: /.well-known/oauth-protected-resource
+    status: 200
+    real: false
+    note: SPA catch-all — returns HTML
+  - host: https://login.propertyme.com
+    path: /.well-known/ai-plugin.json
+    status: 200
+    real: false
+    note: SPA catch-all — returns HTML
+  - host: https://app.propertyme.com
+    path: /.well-known/security.txt
+    status: 404
+  - host: https://app.propertyme.com
+    path: /.well-known/openid-configuration
+    status: 404
+  - host: https://app.propertyme.com
+    path: /.well-known/oauth-authorization-server
+    status: 404
+  - host: https://app.propertyme.com
+    path: /.well-known/oauth-protected-resource
+    status: 404
+  - host: https://app.propertyme.com
+    path: /.well-known/api-catalog
+    status: 404
+  - host: https://app.propertyme.com
+    path: /.well-known/ai-plugin.json
+    status: 404
+  - host: https://www.propertyme.com.au
+    path: /.well-known/security.txt
+    status: 404
+security_txt: false
+api_catalog: false

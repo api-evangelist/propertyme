@@ -1,0 +1,35 @@
+generated: '2026-07-26'
+method: generated
+source: openapi/propertyme-openapi.json
+notes: >-
+  Native Arazzo 1.0.1 workflows stitching PropertyMe's own operations into real multi-step use cases.
+  Every operationId was grepped verbatim from the published Swagger 2.0 contract. No sandbox exists —
+  PropertyMe publishes no test environment, no test credentials and no magic test values — so these
+  workflows carry no seeded example inputs and must be run against a live connected portfolio with
+  care, particularly the write paths.
+workflows:
+  - file: propertyme-connect-and-sync.yml
+    workflowId: connect-and-sync-portfolio
+    title: Connect a PropertyMe portfolio and run a change-since sync
+    summary: >-
+      Seed a full read of a connected portfolio — agency, members, contacts, lots, tenancies,
+      inspections, job tasks and tasks — then advance the int64 change cursor. PropertyMe has no
+      webhooks; this polling loop is the sync.
+  - file: propertyme-connect-and-sync.yml
+    workflowId: disconnect-portfolio
+    title: Disconnect a PropertyMe portfolio
+    summary: >-
+      Sever the integration's connection to the customer's portfolio. Cannot be undone; invalidates
+      the current access token.
+  - file: propertyme-maintenance-job.yml
+    workflowId: raise-quote-and-complete-job
+    title: Raise, quote, approve and complete a PropertyMe maintenance job
+    summary: >-
+      Resolve the supplier, create a v2 job task against a lot, record and document a quotation, then
+      approve, assign, photograph and complete the work order.
+  - file: propertyme-inspection-cycle.yml
+    workflowId: schedule-inspect-report-close
+    title: Schedule, conduct, report and close a PropertyMe inspection
+    summary: >-
+      The full routine and entry/exit inspection cycle including the report create/update/read path
+      and document attachment.

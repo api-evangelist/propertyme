@@ -1,0 +1,150 @@
+generated: '2026-07-26'
+method: derived
+source: openapi/propertyme-openapi.json
+notes: Derived from the 296 Swagger 2.0 definitions. PropertyMe carries relationships as flat GUID reference
+  fields (LotId, ContactId, FolioId, …) rather than $ref-embedded sub-objects, so the graph below is reconstructed
+  from those id fields. Every record is additionally scoped to CustomerId — the single portfolio the token
+  is connected to. There are no published id prefixes; ids are bare GUIDs.
+id_format: GUID (uuid), no type prefix
+tenancy_model: single connected customer portfolio per token; CustomerId present on nearly every schema
+entities:
+- name: Bill
+  description: A payable posted against the trust ledger. The only transaction write in the contract.
+- name: Comment
+  description: A note attached to a contact, lot, inspection, task or job.
+- name: Contact
+  description: 'A person or organisation: owner, tenant, supplier, strata manager, or the agency itself.'
+- name: Customer
+  description: The PropertyMe customer (agency) that owns the connected portfolio. Every record carries
+    CustomerId.
+- name: Document
+  description: A file attached to a contact, lot, folio, inspection, task or job.
+- name: Folio
+  description: A trust-accounting ledger — an owner folio or a tenant folio — against which transactions
+    post.
+- name: InspectionReport
+  description: The report produced by an inspection.
+- name: InspectionTask
+  description: A routine or entry/exit inspection with a schedule → inspect → close lifecycle.
+- name: Listing
+  description: A rental or sale listing linked from a lot.
+- name: Lot
+  description: The property record (PropertyMe calls a property a "lot"). Root of the rental portfolio.
+- name: Member
+  description: An agency staff member (property manager) inside the connected portfolio.
+- name: Ownership
+  description: The ownership agreement between a lot and its owner contact(s).
+- name: Portfolio
+  description: The single connected customer portfolio the OAuth token is scoped to.
+- name: Quotation
+  description: A supplier quote attached to a job task.
+- name: SaleAgreement
+  description: The sale agreement linked from a lot.
+- name: Statement
+  description: An owner/tenant statement referenced from financial records.
+- name: Task
+  description: A general property-management task, distinct from a maintenance job.
+- name: Tenancy
+  description: The lease held against a lot, with its own balance ledger.
+relationships:
+- via: CustomerId
+  target: Customer
+  kind: belongs_to
+  schemas_carrying_field: 64
+- via: ContactId
+  target: Contact
+  kind: belongs_to
+  schemas_carrying_field: 37
+- via: LotId
+  target: Lot
+  kind: belongs_to
+  schemas_carrying_field: 34
+- via: ManagerMemberId
+  target: Member
+  kind: belongs_to
+  schemas_carrying_field: 20
+- via: FolioId
+  target: Folio
+  kind: belongs_to
+  schemas_carrying_field: 18
+- via: TenantContactId
+  target: Contact
+  kind: belongs_to
+  schemas_carrying_field: 18
+- via: OwnerContactId
+  target: Contact
+  kind: belongs_to
+  schemas_carrying_field: 16
+- via: MainPhotoDocumentId
+  target: Document
+  kind: belongs_to
+  schemas_carrying_field: 12
+- via: MemberId
+  target: Member
+  kind: belongs_to
+  schemas_carrying_field: 12
+- via: ActiveOwnershipId
+  target: Ownership
+  kind: belongs_to
+  schemas_carrying_field: 9
+- via: InspectionTaskId
+  target: InspectionTask
+  kind: belongs_to
+  schemas_carrying_field: 9
+- via: ActiveManagerMemberId
+  target: Member
+  kind: belongs_to
+  schemas_carrying_field: 7
+- via: ActiveRentalListingId
+  target: Listing
+  kind: belongs_to
+  schemas_carrying_field: 7
+- via: ActiveSaleAgreementId
+  target: SaleAgreement
+  kind: belongs_to
+  schemas_carrying_field: 7
+- via: ActiveSaleListingId
+  target: Listing
+  kind: belongs_to
+  schemas_carrying_field: 7
+- via: ActiveTenancyId
+  target: Tenancy
+  kind: belongs_to
+  schemas_carrying_field: 7
+- via: StrataManagerContactId
+  target: Contact
+  kind: belongs_to
+  schemas_carrying_field: 7
+- via: ListingId
+  target: Listing
+  kind: belongs_to
+  schemas_carrying_field: 6
+- via: QuoteId
+  target: Quotation
+  kind: belongs_to
+  schemas_carrying_field: 6
+- via: InspectionReportId
+  target: InspectionReport
+  kind: belongs_to
+  schemas_carrying_field: 4
+- via: TaskId
+  target: Task
+  kind: belongs_to
+  schemas_carrying_field: 4
+- via: DocumentStorageId
+  target: Document
+  kind: belongs_to
+  schemas_carrying_field: 3
+- via: OwnershipId
+  target: Ownership
+  kind: belongs_to
+  schemas_carrying_field: 3
+- via: StatementId
+  target: Statement
+  kind: belongs_to
+  schemas_carrying_field: 3
+- via: SupplierContactId
+  target: Contact
+  kind: belongs_to
+  schemas_carrying_field: 3
+definition_count: 296

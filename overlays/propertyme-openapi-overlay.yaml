@@ -1,0 +1,95 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for PropertyMe
+  version: 1.0.0
+extends: openapi/propertyme-openapi.json
+x-generated: '2026-07-26'
+x-method: generated
+x-source: >-
+  API Evangelist enrichment round 2026-07-26. Captures our annotations over PropertyMe's published
+  Swagger 2.0 document without mutating it. The base document is genuinely Swagger 2.0 despite being
+  served at a path named openapi.json, so JSONPath targets below address Swagger 2.0 structures
+  (securityDefinitions, definitions) rather than OpenAPI 3 components.
+actions:
+  - target: $.info
+    description: Record the API Evangelist provenance and the surrounding artifact set.
+    update:
+      x-apievangelist-slug: propertyme
+      x-apievangelist-repo: https://github.com/api-evangelist/propertyme
+      x-apievangelist-apis-yml: https://raw.githubusercontent.com/api-evangelist/propertyme/refs/heads/main/apis.yml
+      x-spec-format: swagger-2.0
+      x-spec-source: https://app.propertyme.com/api/openapi.json
+      x-spec-access: anonymous
+      x-credential-access: issued-by-provider
+      x-artifacts:
+        authentication: authentication/propertyme-authentication.yml
+        scopes: scopes/propertyme-scopes.yml
+        conventions: conventions/propertyme-conventions.yml
+        errors: errors/propertyme-problem-types.yml
+        data_model: data-model/propertyme-data-model.yml
+        lifecycle: lifecycle/propertyme-lifecycle.yml
+        conformance: conformance/propertyme-conformance.yml
+        mcp: mcp/propertyme-mcp.yml
+        skills: skills/_index.yml
+        agentic_access: agentic-access/propertyme-agentic-access.yml
+  - target: $.securityDefinitions.Bearer
+    description: >-
+      Correct the understated security definition. The published document types this as apiKey; it is
+      an OpenID Connect bearer token issued by login.propertyme.com, not a static API key.
+    update:
+      x-actual-scheme: openIdConnect
+      x-openIdConnectUrl: https://login.propertyme.com/.well-known/openid-configuration
+      x-issuer: https://login.propertyme.com
+      x-token-endpoint: https://login.propertyme.com/connect/token
+      x-authorization-endpoint: https://login.propertyme.com/connect/authorize
+      x-scopes-artifact: scopes/propertyme-scopes.yml
+      x-self-serve-registration: false
+  - target: $
+    description: Record the cross-cutting semantics the base document leaves implicit or omits entirely.
+    update:
+      x-apievangelist-conventions:
+        change_detection:
+          style: change-since-polling
+          param: Timestamp
+          type: int64
+          required: true
+          operations: 6
+        pagination:
+          style: offset-limit
+          params: [Offset, Limit]
+          operations: 12
+          total_count: false
+          cursor: false
+          next_link: false
+        idempotency:
+          supported: false
+          note: >-
+            No Idempotency-Key or client-reference parameter exists on any write, including
+            POST /v1/bills against the trust accounting ledger.
+        request_tracing:
+          request_id_header: null
+        rate_limiting:
+          documented: false
+          declared_429: false
+        errors:
+          problem_json: false
+          envelope: success schema reused for 4xx/5xx
+          declared_statuses: [200, 202, 400, 500, 502]
+          note: 502 is used for missing required query parameters on the dashboard and task collections.
+        webhooks:
+          supported: false
+        conditional_requests:
+          etag: false
+          last_modified: false
+      x-apievangelist-tenancy:
+        model: single connected customer portfolio per token
+        disconnect_operation: DisconnectPortfolioRequestportfoliosdisconnect_Delete
+        note: >-
+          No customer or portfolio path parameter exists — the token carries the portfolio, and the
+          agency can sever the connection at any time.
+      x-apievangelist-versioning:
+        scheme: uri-path
+        live: [v1, v2]
+        v2_resource: jobtasks
+        deprecated_operations: 0
+        sunset_header: false

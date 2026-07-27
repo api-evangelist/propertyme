@@ -1,0 +1,139 @@
+generated: '2026-07-26'
+method: searched
+source: https://login.propertyme.com/.well-known/openid-configuration
+supplemental_source: openapi/propertyme-openapi.json
+notes: >-
+  PropertyMe's Swagger 2.0 document declares only a single apiKey-style `Bearer` security definition,
+  so an OpenAPI-only derivation yields zero scopes — the mechanical derive pass found none. The real
+  scope surface is published anonymously in two places instead: the `scopes_supported` array of the
+  OpenID Connect discovery document at login.propertyme.com, and the prose of every operation
+  description in the contract ("The auth token must contain a scope of property:read."). This file
+  reconciles both: `scopes[]` is the authoritative advertised list, and `operations` counts how many
+  of the 86 published operations actually require each scope. PropertyMe publishes no scope reference
+  page — there is no developer portal — so the discovery document IS the reference. Eight advertised
+  scopes are never exercised by any published operation; they belong to surfaces PropertyMe has not
+  exposed in the public contract (org portal, forms, customer administration, messaging writes).
+authorization_endpoint: https://login.propertyme.com/connect/authorize
+token_endpoint: https://login.propertyme.com/connect/token
+revocation_endpoint: https://login.propertyme.com/connect/revocation
+introspection_endpoint: https://login.propertyme.com/connect/introspect
+registration_endpoint: https://login.propertyme.com/connect/dcr
+schemes:
+  - name: OIDC
+    source: https://login.propertyme.com/.well-known/openid-configuration
+    flows:
+      - flow: authorizationCode
+        authorizationUrl: https://login.propertyme.com/connect/authorize
+        tokenUrl: https://login.propertyme.com/connect/token
+        pkce: [S256, plain]
+      - flow: clientCredentials
+        tokenUrl: https://login.propertyme.com/connect/token
+      - flow: deviceCode
+        deviceAuthorizationUrl: https://login.propertyme.com/connect/deviceauthorization
+      - flow: ciba
+        backchannelAuthenticationUrl: https://login.propertyme.com/connect/ciba
+scopes:
+  - scope: openid
+    description: Standard OIDC scope — issue an id_token identifying the signed-in PropertyMe user.
+    category: identity
+    operations: 0
+  - scope: profile
+    description: Standard OIDC scope — name, preferred_username, picture, locale and related profile claims.
+    category: identity
+    operations: 0
+  - scope: email
+    description: Standard OIDC scope — email and email_verified claims.
+    category: identity
+    operations: 0
+  - scope: offline_access
+    description: Issue a refresh_token so an integration can keep polling a portfolio without re-consent.
+    category: identity
+    operations: 0
+  - scope: property:read
+    description: >-
+      Read lots (properties), tenancies and tenancy balances in the connected portfolio — including the
+      rentals, active sales, vacancy and archived filters and the lot detail record.
+    category: property
+    operations: 14
+  - scope: property:write
+    description: Attach comments and documents to a lot, an owner folio or a tenant folio.
+    category: property
+    operations: 3
+  - scope: contact:read
+    description: >-
+      Read owners, tenants, suppliers, ownerships, the agency contact, contact alerts, contact images
+      and the agency member directory.
+    category: contact
+    operations: 9
+  - scope: contact:write
+    description: Attach comments and documents to a contact.
+    category: contact
+    operations: 2
+  - scope: activity:read
+    description: >-
+      Read inspections, job tasks (maintenance work orders, v1 and v2), general tasks, their quotations,
+      documents, images and assigned managers, plus the activity dashboards.
+    category: activity
+    operations: 23
+  - scope: activity:write
+    description: >-
+      Create and update inspections, job tasks and tasks, and drive their state machines — schedule,
+      reschedule, inspect, close, reopen for inspections; approve, assign, complete, reject, reopen for
+      jobs — plus quotations and attachments. The largest write surface in the contract.
+    category: activity
+    operations: 22
+  - scope: transaction:read
+    description: Read the transaction dashboard aggregate over the trust ledger.
+    category: transaction
+    operations: 1
+  - scope: transaction:write
+    description: >-
+      Create a bill against the trust accounting ledger (POST /v1/bills). The only transaction-writing
+      operation in the published contract.
+    category: transaction
+    operations: 1
+  - scope: communication:read
+    description: Read the communications dashboard aggregate.
+    category: communication
+    operations: 1
+  - scope: communication:write
+    description: Advertised by the identity provider; no published operation requires it.
+    category: communication
+    operations: 0
+  - scope: tenancy:write
+    description: >-
+      Advertised by the identity provider; no published operation requires it. Tenancies are read-only
+      in the public contract.
+    category: property
+    operations: 0
+  - scope: customer:read
+    description: Advertised by the identity provider; no published operation requires it.
+    category: customer
+    operations: 0
+  - scope: customer:write
+    description: Advertised by the identity provider; no published operation requires it.
+    category: customer
+    operations: 0
+  - scope: form:write
+    description: Advertised by the identity provider; no published operation requires it.
+    category: forms
+    operations: 0
+  - scope: ids:admin
+    description: >-
+      Identity-server administration scope. Advertised by the identity provider; not part of the public
+      integration surface.
+    category: administration
+    operations: 0
+  - scope: org-portal:api
+    description: >-
+      Organisation portal API scope. Advertised by the identity provider; no published operation
+      requires it.
+    category: administration
+    operations: 0
+unscoped_operations:
+  count: 10
+  note: >-
+    Ten published operations carry no scope sentence in their description — DELETE
+    /v1/portfolios/disconnect (the consent seam, which the docs say invalidates the current access
+    token) plus nine job-task and attachment writes that in practice sit under activity:write. Recorded
+    as a documentation gap in the contract, not as unauthenticated access.

@@ -1,0 +1,722 @@
+generated: '2026-07-26'
+method: derived
+source: openapi/propertyme-openapi.json
+notes: This crosswalk binds the CANDIDATE MCP tool set in mcp/propertyme-mcp.yml to the operations it
+  was derived from, so every tool carries a real inputSchema (the operation's parameters + body) instead
+  of a guessed one. Because PropertyMe's own MCP surface is not publicly reachable — only inferred from
+  the "mcp_customer_switch" grant type in the anonymous OIDC discovery document — there is no published
+  tool list to reconcile against, so mcp_only[] records the one capability the grant implies rather than
+  any observed tool. There is no GraphQL surface.
+surfaces:
+  openapi:
+    file: openapi/propertyme-openapi.json
+    gated: false
+    url: https://app.propertyme.com/api/openapi.json
+    note: Swagger 2.0, 75 paths / 86 operations / 296 definitions, served anonymously
+  graphql: null
+  mcp:
+    url: null
+    gated: true
+    note: no public endpoint; tools/list not anonymously introspectable; existence inferred from grant_types_supported
+coverage:
+  tools_named: 86
+  tools_bound: 86
+  mcp_only: 1
+  rest_operations_total: 86
+  rest_operations_with_tool: 86
+crosswalk:
+- tool: create_bills
+  category: General
+  rest:
+  - AddBillRequestbills_Post
+  binding: rest
+  confidence: high
+  note: 1:1 — the tool is derived FROM this operation, so it inherits its parameters and requestBody verbatim
+    as its inputSchema.
+- tool: list_contacts
+  category: Contacts
+  rest:
+  - ChangedContactsRequestcontacts_Get
+  binding: rest
+  confidence: high
+  note: 1:1 — the tool is derived FROM this operation, so it inherits its parameters and requestBody verbatim
+    as its inputSchema.
+- tool: list_contacts_agency
+  category: Contacts
+  rest:
+  - AgencyRequestcontactsagency_Get
+  binding: rest
+  confidence: high
+  note: 1:1 — the tool is derived FROM this operation, so it inherits its parameters and requestBody verbatim
+    as its inputSchema.
+- tool: list_contacts_ownerships
+  category: Contacts
+  rest:
+  - ContactOwnershipsRequestcontactsownerships_Get
+  binding: rest
+  confidence: high
+  note: 1:1 — the tool is derived FROM this operation, so it inherits its parameters and requestBody verbatim
+    as its inputSchema.
+- tool: list_contacts_suppliers
+  category: Contacts
+  rest:
+  - QuerySuppliersRequestcontactssuppliers_Get
+  binding: rest
+  confidence: high
+  note: 1:1 — the tool is derived FROM this operation, so it inherits its parameters and requestBody verbatim
+    as its inputSchema.
+- tool: list_contacts_tenants
+  category: Contacts
+  rest:
+  - ContactTenantsRequestcontactstenants_Get
+  binding: rest
+  confidence: high
+  note: 1:1 — the tool is derived FROM this operation, so it inherits its parameters and requestBody verbatim
+    as its inputSchema.
+- tool: get_contacts
+  category: Contacts
+  rest:
+  - ContactRequestcontactsId_Get
+  binding: rest
+  confidence: high
+  note: 1:1 — the tool is derived FROM this operation, so it inherits its parameters and requestBody verbatim
+    as its inputSchema.
+- tool: get_contacts_alerts
+  category: Contacts
+  rest:
+  - GetContactAlertsRequestcontactsIdalertsType_Get
+  binding: rest
+  confidence: high
+  note: 1:1 — the tool is derived FROM this operation, so it inherits its parameters and requestBody verbatim
+    as its inputSchema.
+- tool: create_contacts_comments
+  category: Contacts
+  rest:
+  - AddContactCommentRequestcontactsIdcomments_Post
+  binding: rest
+  confidence: high
+  note: 1:1 — the tool is derived FROM this operation, so it inherits its parameters and requestBody verbatim
+    as its inputSchema.
+- tool: create_contacts_documents
+  category: Documents
+  rest:
+  - AddContactDocumentRequestcontactsIddocuments_Post
+  binding: rest
+  confidence: high
+  note: 1:1 — the tool is derived FROM this operation, so it inherits its parameters and requestBody verbatim
+    as its inputSchema.
+- tool: list_contacts_images
+  category: Images
+  rest:
+  - GetContactImagescontactsIdimages_Get
+  binding: rest
+  confidence: high
+  note: 1:1 — the tool is derived FROM this operation, so it inherits its parameters and requestBody verbatim
+    as its inputSchema.
+- tool: get_dashboards_activities
+  category: Dashboards
+  rest:
+  - ActivityDashboardRequestdashboardsactivitiesType_Get
+  binding: rest
+  confidence: high
+  note: 1:1 — the tool is derived FROM this operation, so it inherits its parameters and requestBody verbatim
+    as its inputSchema.
+- tool: get_dashboards_communications
+  category: Dashboards
+  rest:
+  - CommunicationDashboardRequestdashboardscommunicationsType_Get
+  binding: rest
+  confidence: high
+  note: 1:1 — the tool is derived FROM this operation, so it inherits its parameters and requestBody verbatim
+    as its inputSchema.
+- tool: get_dashboards_lots
+  category: Dashboards
+  rest:
+  - LotDashboardRequestdashboardslotsType_Get
+  binding: rest
+  confidence: high
+  note: 1:1 — the tool is derived FROM this operation, so it inherits its parameters and requestBody verbatim
+    as its inputSchema.
+- tool: get_dashboards_transactions
+  category: Dashboards
+  rest:
+  - TransactionDashboardRequestdashboardstransactionsType_Get
+  binding: rest
+  confidence: high
+  note: 1:1 — the tool is derived FROM this operation, so it inherits its parameters and requestBody verbatim
+    as its inputSchema.
+- tool: list_inspections
+  category: Inspections
+  rest:
+  - ChangedInspectionsRequestinspections_Get
+  binding: rest
+  confidence: high
+  note: 1:1 — the tool is derived FROM this operation, so it inherits its parameters and requestBody verbatim
+    as its inputSchema.
+- tool: create_inspections
+  category: Inspections
+  rest:
+  - AddInspectionRequestinspections_Post
+  binding: rest
+  confidence: high
+  note: 1:1 — the tool is derived FROM this operation, so it inherits its parameters and requestBody verbatim
+    as its inputSchema.
+- tool: get_inspections_members
+  category: Inspections
+  rest:
+  - GetInspectionManagerRequestinspectionsMembersId_Get
+  binding: rest
+  confidence: high
+  note: 1:1 — the tool is derived FROM this operation, so it inherits its parameters and requestBody verbatim
+    as its inputSchema.
+- tool: list_inspections_query
+  category: Inspections
+  rest:
+  - QueryInspectionRequestinspectionsquery_Get
+  binding: rest
+  confidence: high
+  note: 1:1 — the tool is derived FROM this operation, so it inherits its parameters and requestBody verbatim
+    as its inputSchema.
+- tool: get_inspections_reports
+  category: Inspections
+  rest:
+  - GetInspectionReportRequestinspectionsreportsId_Get
+  binding: rest
+  confidence: high
+  note: 1:1 — the tool is derived FROM this operation, so it inherits its parameters and requestBody verbatim
+    as its inputSchema.
+- tool: list_inspections_search
+  category: Inspections
+  rest:
+  - SearchInspectionsRequestinspectionssearch_Get
+  binding: rest
+  confidence: high
+  note: 1:1 — the tool is derived FROM this operation, so it inherits its parameters and requestBody verbatim
+    as its inputSchema.
+- tool: get_inspections_status
+  category: Inspections
+  rest:
+  - GetInspectionsRequestinspectionsstatusStatus_Get
+  binding: rest
+  confidence: high
+  note: 1:1 — the tool is derived FROM this operation, so it inherits its parameters and requestBody verbatim
+    as its inputSchema.
+- tool: get_inspections
+  category: Inspections
+  rest:
+  - GetInspectionRequestinspectionsId_Get
+  binding: rest
+  confidence: high
+  note: 1:1 — the tool is derived FROM this operation, so it inherits its parameters and requestBody verbatim
+    as its inputSchema.
+- tool: create_inspections_comments
+  category: Inspections
+  rest:
+  - AddInspectionCommentRequestinspectionsIdcomments_Post
+  binding: rest
+  confidence: high
+  note: 1:1 — the tool is derived FROM this operation, so it inherits its parameters and requestBody verbatim
+    as its inputSchema.
+- tool: create_inspections_documents
+  category: Inspections
+  rest:
+  - AddInspectionDocumentRequestinspectionsIddocuments_Post
+  binding: rest
+  confidence: high
+  note: 1:1 — the tool is derived FROM this operation, so it inherits its parameters and requestBody verbatim
+    as its inputSchema.
+- tool: list_inspections_images
+  category: Inspections
+  rest:
+  - GetInspectionsImagesinspectionsIdimages_Get
+  binding: rest
+  confidence: high
+  note: 1:1 — the tool is derived FROM this operation, so it inherits its parameters and requestBody verbatim
+    as its inputSchema.
+- tool: create_inspections_report
+  category: Inspections
+  rest:
+  - CreateInspectionReportRequestinspectionsIdreport_Post
+  binding: rest
+  confidence: high
+  note: 1:1 — the tool is derived FROM this operation, so it inherits its parameters and requestBody verbatim
+    as its inputSchema.
+- tool: update_inspections_report
+  category: Inspections
+  rest:
+  - UpdateInspectionReportRequestinspectionsIdreport_Create
+  binding: rest
+  confidence: high
+  note: 1:1 — the tool is derived FROM this operation, so it inherits its parameters and requestBody verbatim
+    as its inputSchema.
+- tool: delete_inspections
+  category: Inspections
+  rest:
+  - DeleteInspectionRequestinspectionsid_Delete
+  binding: rest
+  confidence: high
+  note: 1:1 — the tool is derived FROM this operation, so it inherits its parameters and requestBody verbatim
+    as its inputSchema.
+- tool: create_inspections
+  category: Inspections
+  rest:
+  - UpdateInspectionRequestinspectionsid_Post
+  binding: rest
+  confidence: high
+  note: 1:1 — the tool is derived FROM this operation, so it inherits its parameters and requestBody verbatim
+    as its inputSchema.
+- tool: create_inspections_close
+  category: Inspections
+  rest:
+  - CloseInspectionRequestinspectionsidclose_Post
+  binding: rest
+  confidence: high
+  note: 1:1 — the tool is derived FROM this operation, so it inherits its parameters and requestBody verbatim
+    as its inputSchema.
+- tool: create_inspections_inspect
+  category: Inspections
+  rest:
+  - InspectInspectionRequestinspectionsidinspect_Post
+  binding: rest
+  confidence: high
+  note: 1:1 — the tool is derived FROM this operation, so it inherits its parameters and requestBody verbatim
+    as its inputSchema.
+- tool: create_inspections_reopen
+  category: Inspections
+  rest:
+  - ReopenInspectionRequestinspectionsidreopen_Post
+  binding: rest
+  confidence: high
+  note: 1:1 — the tool is derived FROM this operation, so it inherits its parameters and requestBody verbatim
+    as its inputSchema.
+- tool: create_inspections_reschedule
+  category: Inspections
+  rest:
+  - RescheduleInspectionRequestinspectionsidreschedule_Post
+  binding: rest
+  confidence: high
+  note: 1:1 — the tool is derived FROM this operation, so it inherits its parameters and requestBody verbatim
+    as its inputSchema.
+- tool: create_inspections_schedule
+  category: Inspections
+  rest:
+  - ScheduleInspectionRequestinspectionsidschedule_Post
+  binding: rest
+  confidence: high
+  note: 1:1 — the tool is derived FROM this operation, so it inherits its parameters and requestBody verbatim
+    as its inputSchema.
+- tool: list_jobtasks
+  category: JobTasks
+  rest:
+  - ChangedJobTaskRequestjobtasks_Get
+  binding: rest
+  confidence: high
+  note: 1:1 — the tool is derived FROM this operation, so it inherits its parameters and requestBody verbatim
+    as its inputSchema.
+- tool: create_jobtasks
+  category: JobTasks
+  rest:
+  - AddJobRequestjobtasks_Post
+  binding: rest
+  confidence: high
+  note: 1:1 — the tool is derived FROM this operation, so it inherits its parameters and requestBody verbatim
+    as its inputSchema.
+- tool: list_jobtasks_search
+  category: JobTasks
+  rest:
+  - SearchJobTaskRequestjobtaskssearch_Get
+  binding: rest
+  confidence: high
+  note: 1:1 — the tool is derived FROM this operation, so it inherits its parameters and requestBody verbatim
+    as its inputSchema.
+- tool: get_jobtasks
+  category: JobTasks
+  rest:
+  - JobTaskRequestjobtasksId_Get
+  binding: rest
+  confidence: high
+  note: 1:1 — the tool is derived FROM this operation, so it inherits its parameters and requestBody verbatim
+    as its inputSchema.
+- tool: create_jobtasks
+  category: JobTasks
+  rest:
+  - UpdateJobRequestjobtasksId_Post
+  binding: rest
+  confidence: high
+  note: 1:1 — the tool is derived FROM this operation, so it inherits its parameters and requestBody verbatim
+    as its inputSchema.
+- tool: create_jobtasks_approve
+  category: JobTasks
+  rest:
+  - ApproveJobTaskRequestjobtasksIdapprove_Post
+  binding: rest
+  confidence: high
+  note: 1:1 — the tool is derived FROM this operation, so it inherits its parameters and requestBody verbatim
+    as its inputSchema.
+- tool: create_jobtasks_assign
+  category: JobTasks
+  rest:
+  - AssignTaskRequestjobtasksIdassign_Post
+  binding: rest
+  confidence: high
+  note: 1:1 — the tool is derived FROM this operation, so it inherits its parameters and requestBody verbatim
+    as its inputSchema.
+- tool: create_jobtasks_comments
+  category: JobTasks
+  rest:
+  - AddJobCommentRequestjobtasksIdcomments_Post
+  binding: rest
+  confidence: high
+  note: 1:1 — the tool is derived FROM this operation, so it inherits its parameters and requestBody verbatim
+    as its inputSchema.
+- tool: create_jobtasks_complete
+  category: JobTasks
+  rest:
+  - CompleteJobTaskRequestjobtasksIdcomplete_Post
+  binding: rest
+  confidence: high
+  note: 1:1 — the tool is derived FROM this operation, so it inherits its parameters and requestBody verbatim
+    as its inputSchema.
+- tool: list_jobtasks_documents
+  category: JobTasks
+  rest:
+  - GetJobDocumentsjobtasksIddocuments_Get
+  binding: rest
+  confidence: high
+  note: 1:1 — the tool is derived FROM this operation, so it inherits its parameters and requestBody verbatim
+    as its inputSchema.
+- tool: create_jobtasks_documents
+  category: JobTasks
+  rest:
+  - AddJobDocumentsRequestjobtasksIddocuments_Post
+  binding: rest
+  confidence: high
+  note: 1:1 — the tool is derived FROM this operation, so it inherits its parameters and requestBody verbatim
+    as its inputSchema.
+- tool: list_jobtasks_images
+  category: JobTasks
+  rest:
+  - GetJobImagesjobtasksIdimages_Get
+  binding: rest
+  confidence: high
+  note: 1:1 — the tool is derived FROM this operation, so it inherits its parameters and requestBody verbatim
+    as its inputSchema.
+- tool: create_jobtasks_images
+  category: JobTasks
+  rest:
+  - AddJobImagesRequestjobtasksIdimages_Post
+  binding: rest
+  confidence: high
+  note: 1:1 — the tool is derived FROM this operation, so it inherits its parameters and requestBody verbatim
+    as its inputSchema.
+- tool: list_jobtasks_members
+  category: JobTasks
+  rest:
+  - JobTaskManagerRequestjobtasksIdmembers_Get
+  binding: rest
+  confidence: high
+  note: 1:1 — the tool is derived FROM this operation, so it inherits its parameters and requestBody verbatim
+    as its inputSchema.
+- tool: create_jobtasks_quotation
+  category: JobTasks
+  rest:
+  - AddJobTasksQuotationRequestjobtasksIdquotation_Post
+  binding: rest
+  confidence: high
+  note: 1:1 — the tool is derived FROM this operation, so it inherits its parameters and requestBody verbatim
+    as its inputSchema.
+- tool: create_jobtasks_quotation
+  category: JobTasks
+  rest:
+  - UpdateJobTasksQuotationRequestjobtasksIdquotationQuoteId_Post
+  binding: rest
+  confidence: high
+  note: 1:1 — the tool is derived FROM this operation, so it inherits its parameters and requestBody verbatim
+    as its inputSchema.
+- tool: create_jobtasks_quotation_documents
+  category: JobTasks
+  rest:
+  - AddJobTasksQuotationDocumentRequestjobtasksIdquotationQuoteIddocuments_Post
+  binding: rest
+  confidence: high
+  note: 1:1 — the tool is derived FROM this operation, so it inherits its parameters and requestBody verbatim
+    as its inputSchema.
+- tool: list_jobtasks_quotations
+  category: JobTasks
+  rest:
+  - GetJobTasksQuotationRequestjobtasksIdquotations_Get
+  binding: rest
+  confidence: high
+  note: 1:1 — the tool is derived FROM this operation, so it inherits its parameters and requestBody verbatim
+    as its inputSchema.
+- tool: create_jobtasks_reject
+  category: JobTasks
+  rest:
+  - RejectJobTaskRequestjobtasksIdreject_Post
+  binding: rest
+  confidence: high
+  note: 1:1 — the tool is derived FROM this operation, so it inherits its parameters and requestBody verbatim
+    as its inputSchema.
+- tool: create_jobtasks_reopen
+  category: JobTasks
+  rest:
+  - ReopenJobTaskRequestjobtasksIdreopen_Post
+  binding: rest
+  confidence: high
+  note: 1:1 — the tool is derived FROM this operation, so it inherits its parameters and requestBody verbatim
+    as its inputSchema.
+- tool: list_lots
+  category: Properties
+  rest:
+  - ChangedLotRequestlots_Get
+  binding: rest
+  confidence: high
+  note: 1:1 — the tool is derived FROM this operation, so it inherits its parameters and requestBody verbatim
+    as its inputSchema.
+- tool: list_lots_archived
+  category: Properties
+  rest:
+  - LotArchivedRequestlotsarchived_Get
+  binding: rest
+  confidence: high
+  note: 1:1 — the tool is derived FROM this operation, so it inherits its parameters and requestBody verbatim
+    as its inputSchema.
+- tool: list_lots_rentals
+  category: Properties
+  rest:
+  - LotRentalsRequestlotsrentals_Get
+  binding: rest
+  confidence: high
+  note: 1:1 — the tool is derived FROM this operation, so it inherits its parameters and requestBody verbatim
+    as its inputSchema.
+- tool: list_lots_sales
+  category: Properties
+  rest:
+  - LotActiveSalesRequestlotssales_Get
+  binding: rest
+  confidence: high
+  note: 1:1 — the tool is derived FROM this operation, so it inherits its parameters and requestBody verbatim
+    as its inputSchema.
+- tool: list_lots_vacancy
+  category: Properties
+  rest:
+  - LotVacantSalesRequestlotsvacancy_Get
+  binding: rest
+  confidence: high
+  note: 1:1 — the tool is derived FROM this operation, so it inherits its parameters and requestBody verbatim
+    as its inputSchema.
+- tool: get_lots
+  category: Properties
+  rest:
+  - LotRequestlotsId_Get
+  binding: rest
+  confidence: high
+  note: 1:1 — the tool is derived FROM this operation, so it inherits its parameters and requestBody verbatim
+    as its inputSchema.
+- tool: get_lots_alerts
+  category: Properties
+  rest:
+  - GetContactAlertsRequestlotsIdalertsType_Get
+  binding: rest
+  confidence: high
+  note: 1:1 — the tool is derived FROM this operation, so it inherits its parameters and requestBody verbatim
+    as its inputSchema.
+- tool: create_lots_comments
+  category: Properties
+  rest:
+  - AddLotCommentRequestlotsIdcomments_Post
+  binding: rest
+  confidence: high
+  note: 1:1 — the tool is derived FROM this operation, so it inherits its parameters and requestBody verbatim
+    as its inputSchema.
+- tool: list_lots_detail
+  category: Properties
+  rest:
+  - LotDetailRequestlotsIddetail_Get
+  binding: rest
+  confidence: high
+  note: 1:1 — the tool is derived FROM this operation, so it inherits its parameters and requestBody verbatim
+    as its inputSchema.
+- tool: create_lots_documents
+  category: Properties
+  rest:
+  - AddLotDocumentRequestlotsIddocuments_Post
+  binding: rest
+  confidence: high
+  note: 1:1 — the tool is derived FROM this operation, so it inherits its parameters and requestBody verbatim
+    as its inputSchema.
+- tool: create_lots_folio_documents
+  category: Properties
+  rest:
+  - AddLotFolioDocumentRequestlotsIdfoliodocuments_Post
+  binding: rest
+  confidence: high
+  note: 1:1 — the tool is derived FROM this operation, so it inherits its parameters and requestBody verbatim
+    as its inputSchema.
+- tool: list_lots_images
+  category: Images
+  rest:
+  - GetLotImageslotsIdimages_Get
+  binding: rest
+  confidence: high
+  note: 1:1 — the tool is derived FROM this operation, so it inherits its parameters and requestBody verbatim
+    as its inputSchema.
+- tool: list_lots_members
+  category: Members
+  rest:
+  - LotManagerRequestlotsIdmembers_Get
+  binding: rest
+  confidence: high
+  note: 1:1 — the tool is derived FROM this operation, so it inherits its parameters and requestBody verbatim
+    as its inputSchema.
+- tool: list_members
+  category: Members
+  rest:
+  - MembersRequestmembers_Get
+  binding: rest
+  confidence: high
+  note: 1:1 — the tool is derived FROM this operation, so it inherits its parameters and requestBody verbatim
+    as its inputSchema.
+- tool: delete_portfolios_disconnect
+  category: Connection
+  rest:
+  - DisconnectPortfolioRequestportfoliosdisconnect_Delete
+  binding: rest
+  confidence: high
+  note: 1:1 — the tool is derived FROM this operation, so it inherits its parameters and requestBody verbatim
+    as its inputSchema.
+- tool: list_tasks
+  category: General
+  rest:
+  - ChangedTasksRequesttasks_Get
+  binding: rest
+  confidence: high
+  note: 1:1 — the tool is derived FROM this operation, so it inherits its parameters and requestBody verbatim
+    as its inputSchema.
+- tool: create_tasks
+  category: General
+  rest:
+  - AddTaskRequesttasks_Post
+  binding: rest
+  confidence: high
+  note: 1:1 — the tool is derived FROM this operation, so it inherits its parameters and requestBody verbatim
+    as its inputSchema.
+- tool: get_tasks
+  category: General
+  rest:
+  - GetTaskRequesttasksId_Get
+  binding: rest
+  confidence: high
+  note: 1:1 — the tool is derived FROM this operation, so it inherits its parameters and requestBody verbatim
+    as its inputSchema.
+- tool: create_tasks
+  category: General
+  rest:
+  - UpdateTaskRequesttasksId_Post
+  binding: rest
+  confidence: high
+  note: 1:1 — the tool is derived FROM this operation, so it inherits its parameters and requestBody verbatim
+    as its inputSchema.
+- tool: create_tasks_comments
+  category: Tasks
+  rest:
+  - AddTaskCommentRequesttasksIdcomments_Post
+  binding: rest
+  confidence: high
+  note: 1:1 — the tool is derived FROM this operation, so it inherits its parameters and requestBody verbatim
+    as its inputSchema.
+- tool: create_tasks_documents
+  category: Documents
+  rest:
+  - AddTaskDocumentRequesttasksIddocuments_Post
+  binding: rest
+  confidence: high
+  note: 1:1 — the tool is derived FROM this operation, so it inherits its parameters and requestBody verbatim
+    as its inputSchema.
+- tool: list_tasks_images
+  category: Images
+  rest:
+  - GetTaskImagestasksIdimages_Get
+  binding: rest
+  confidence: high
+  note: 1:1 — the tool is derived FROM this operation, so it inherits its parameters and requestBody verbatim
+    as its inputSchema.
+- tool: list_tasks_members
+  category: General
+  rest:
+  - GetTaskManagerRequesttasksIdmembers_Get
+  binding: rest
+  confidence: high
+  note: 1:1 — the tool is derived FROM this operation, so it inherits its parameters and requestBody verbatim
+    as its inputSchema.
+- tool: list_tenancies
+  category: Tenancies
+  rest:
+  - TenancyRequesttenancies_Get
+  binding: rest
+  confidence: high
+  note: 1:1 — the tool is derived FROM this operation, so it inherits its parameters and requestBody verbatim
+    as its inputSchema.
+- tool: list_tenancies_balances
+  category: Tenancies
+  rest:
+  - TenancyBalanceRequesttenanciesbalances_Get
+  binding: rest
+  confidence: high
+  note: 1:1 — the tool is derived FROM this operation, so it inherits its parameters and requestBody verbatim
+    as its inputSchema.
+- tool: get_tenancies_balances
+  category: Tenancies
+  rest:
+  - SingleTenancyBalanceRequesttenanciesbalancesid_Get
+  binding: rest
+  confidence: high
+  note: 1:1 — the tool is derived FROM this operation, so it inherits its parameters and requestBody verbatim
+    as its inputSchema.
+- tool: list_v2_jobtasks
+  category: JobTasks
+  rest:
+  - ChangedJobTaskV2Requestjobtasks_Get
+  binding: rest
+  confidence: high
+  note: 1:1 — the tool is derived FROM this operation, so it inherits its parameters and requestBody verbatim
+    as its inputSchema.
+- tool: create_v2_jobtasks
+  category: JobTasks
+  rest:
+  - AddJobV2Requestjobtasks_Post
+  binding: rest
+  confidence: high
+  note: 1:1 — the tool is derived FROM this operation, so it inherits its parameters and requestBody verbatim
+    as its inputSchema.
+- tool: list_v2_jobtasks_search
+  category: JobTasks
+  rest:
+  - SearchJobTaskV2Requestjobtaskssearch_Get
+  binding: rest
+  confidence: high
+  note: 1:1 — the tool is derived FROM this operation, so it inherits its parameters and requestBody verbatim
+    as its inputSchema.
+- tool: get_v2_jobtasks
+  category: JobTasks
+  rest:
+  - JobTaskV2RequestjobtasksId_Get
+  binding: rest
+  confidence: high
+  note: 1:1 — the tool is derived FROM this operation, so it inherits its parameters and requestBody verbatim
+    as its inputSchema.
+- tool: create_v2_jobtasks
+  category: JobTasks
+  rest:
+  - UpdateJobV2RequestjobtasksId_Post
+  binding: rest
+  confidence: high
+  note: 1:1 — the tool is derived FROM this operation, so it inherits its parameters and requestBody verbatim
+    as its inputSchema.
+mcp_only:
+- tool: switch_customer_portfolio
+  reason: Implied by the "mcp_customer_switch" grant type in https://login.propertyme.com/.well-known/openid-configuration.
+    No REST operation changes the acting portfolio — the public contract only exposes DELETE /v1/portfolios/disconnect
+    (DisconnectPortfolioRequestportfoliosdisconnect_Delete), which severs the connection rather than switching
+    it. Recorded as a genuine surface divergence, not a mapped tool.
+rest_only: []

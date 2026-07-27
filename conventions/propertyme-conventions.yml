@@ -1,0 +1,120 @@
+generated: '2026-07-26'
+method: derived
+source: openapi/propertyme-openapi.json
+supplemental_source: https://login.propertyme.com/.well-known/openid-configuration
+notes: >-
+  PropertyMe's cross-cutting semantics are those of a .NET Swashbuckle CRUD service, with one design
+  decision that genuinely shapes integration: change detection is a required integer change-since
+  Timestamp on the six collection endpoints, not a webhook or an event stream. An integration keeps a
+  cursor per resource and re-polls; there is nothing to subscribe to. Two conventions a
+  trust-accounting API would normally carry are missing and worth flagging: there is NO idempotency
+  contract of any kind — POST /v1/bills writes against the trust ledger with no Idempotency-Key
+  header, no client-supplied reference and no documented dedupe window — and there is no request-id
+  or correlation header, so a failed write cannot be reconciled from the client side. Pagination is
+  offset/limit but only on twelve of the eighty-six operations; the rest return unbounded arrays.
+authentication:
+  style: OAuth 2.0 / OpenID Connect bearer token
+  header: 'Authorization: Bearer <access_token>'
+  issuer: https://login.propertyme.com
+  ref: authentication/propertyme-authentication.yml
+  scopes_ref: scopes/propertyme-scopes.yml
+  tenancy: >-
+    Every call is implicitly scoped to the one customer portfolio the agency connected. There is no
+    customer or portfolio path parameter — the token carries it.
+idempotency:
+  supported: false
+  header: null
+  evidence: >-
+    No Idempotency-Key, Request-Id, client-reference or equivalent parameter appears in any of the 86
+    operations. Checked explicitly against the write surface: POST /v1/bills (AddBillRequestbills_Post),
+    POST /v1/jobtasks (AddJobRequestjobtasks_Post), POST /v2/jobtasks (AddJobV2Requestjobtasks_Post),
+    POST /v1/tasks (AddTaskRequesttasks_Post), POST /v1/inspections (AddInspectionRequestinspections_Post).
+  consequence: >-
+    A retried bill or job creation after a timeout may duplicate. Integrations must dedupe from their
+    own side by re-reading the collection with a change-since Timestamp.
+pagination:
+  style: offset-limit
+  params:
+    offset: Offset
+    limit: Limit
+  applies_to_operations: 12
+  operations:
+    - LotActiveSalesRequestlotssales_Get
+    - LotArchivedRequestlotsarchived_Get
+    - LotRentalsRequestlotsrentals_Get
+    - LotVacantSalesRequestlotsvacancy_Get
+    - SearchJobTaskRequestjobtaskssearch_Get
+    - SearchJobTaskV2Requestjobtaskssearch_Get
+    - SearchInspectionsRequestinspectionssearch_Get
+    - QueryInspectionRequestinspectionsquery_Get
+    - GetInspectionsRequestinspectionsstatusStatus_Get
+    - ContactOwnershipsRequestcontactsownerships_Get
+    - QuerySuppliersRequestcontactssuppliers_Get
+    - ContactTenantsRequestcontactstenants_Get
+  response_envelope: >-
+    Bare JSON arrays or ResponseBase-derived objects. No total count, no next-page link, no cursor and
+    no Link header — the client pages blind until a short page comes back.
+  unpaginated_lists: >-
+    The remaining list operations, including the six change-since collections, return the full result
+    set with no paging parameters.
+change_detection:
+  style: change-since polling
+  param: Timestamp
+  type: integer (int64)
+  required: true
+  semantics: Records returned will have a changed timestamp greater than this value.
+  operations:
+    - ChangedContactsRequestcontacts_Get
+    - ChangedLotRequestlots_Get
+    - ChangedTasksRequesttasks_Get
+    - ChangedJobTaskRequestjobtasks_Get
+    - ChangedJobTaskV2Requestjobtasks_Get
+    - ChangedInspectionsRequestinspections_Get
+  note: >-
+    This is PropertyMe's replacement for webhooks. There is no push surface — see the webhooks note in
+    lifecycle/propertyme-lifecycle.yml and the absence of any AsyncAPI artifact in this repo.
+content_negotiation:
+  accept_header_required: true
+  accept_values: [application/json]
+  note: >-
+    The Accept header is declared as a REQUIRED global parameter with a single permitted value,
+    application/json. Clients that omit it are outside the published contract. Request and response
+    media types are application/json throughout.
+field_expansion:
+  supported: false
+  note: >-
+    Relationships are flat GUID reference fields (LotId, ContactId, FolioId, …). There is no expand,
+    include or fields parameter — a client resolves a graph with additional round trips. Two lot
+    read shapes exist instead: LotRequestlotsId_Get (summary) and LotDetailRequestlotsIddetail_Get.
+metadata:
+  supported: false
+  note: No customer-defined metadata or custom-field surface is published.
+request_tracing:
+  request_id_header: null
+  correlation_header: null
+  note: No request-id, trace or correlation header is documented anywhere in the contract.
+versioning:
+  style: uri-path
+  live: [v1, v2]
+  ref: lifecycle/propertyme-lifecycle.yml
+errors:
+  envelope: same schema as the 200 response (ResponseBase and per-operation subclasses)
+  problem_json: false
+  ref: errors/propertyme-problem-types.yml
+  note: >-
+    Declared statuses are 200, 202, 400, 500 and — on the dashboard and task collection operations —
+    502 used for missing required query parameters, which is a misuse of the status code.
+rate_limiting:
+  documented: false
+  headers: null
+  note: >-
+    No rate-limit policy, quota or RateLimit/X-RateLimit response header is documented, and no 429 is
+    declared on any operation. Absence of a published contract, not evidence of no throttling.
+conditional_requests:
+  etag: false
+  last_modified: false
+webhooks:
+  supported: false
+  note: >-
+    No webhook registration surface, event catalogue or callback documentation exists. Integrations
+    poll the change-since collections.
