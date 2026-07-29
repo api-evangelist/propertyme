@@ -1,0 +1,38 @@
+# Kin Score artifact — propertyme — 2026-07-28T115055
+# The API Evangelist rating (https://github.com/api-evangelist/kin-score). Generated; do not edit.
+---
+kin_score:
+  slug: propertyme
+  schema_version: 0.5
+  scored_at: '2026-07-28'
+  run_ts: 2026-07-28T115055
+  composite: 47.1
+  band: developing
+  facets:
+    discoverability: 100.0
+    contract_quality: 37.7
+    governance: 0.0
+    operational_transparency: 31.6
+    developer_ergonomics: 47.8
+    commercial_clarity: 44.7
+  agent_readiness:
+    score: 69.2
+    band: agent-native
+    dimensions:
+      spec_presence: true
+      agentic_access: true
+      mcp_server: true
+      auth_clarity: true
+      idempotency: false
+      error_semantics: true
+      openapi_examples: false
+      rate_limit_signal: false
+      asyncapi_events: false
+      agent_skills: true
+      well_known_catalog: true
+      consent_identity: false
+  regulatory:
+    applies: true
+    regime: Payments
+    regime_id: payments
+    score: 76.1
