@@ -1,0 +1,21 @@
+{
+  "repo": "propertyme",
+  "feeds": [
+    {
+      "source": "https://status.propertyme.com/",
+      "feed_url": "https://status.propertyme.com/",
+      "title": "",
+      "saved": 0,
+      "method": "none"
+    },
+    {
+      "source": "https://www.propertyme.com.au/blog",
+      "feed_url": "https://www.propertyme.com.au/feed",
+      "title": "",
+      "saved": 0,
+      "method": "discovered"
+    }
+  ],
+  "post_count": 0,
+  "fetched": "2026-08-01T15:49:00Z"
+}
