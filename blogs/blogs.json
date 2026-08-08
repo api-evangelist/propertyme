@@ -9,6 +9,13 @@
       "method": "none"
     },
     {
+      "source": "https://www.propertyme.com.au/feed",
+      "feed_url": "https://www.propertyme.com.au/feed",
+      "title": "",
+      "saved": 0,
+      "method": "feed"
+    },
+    {
       "source": "https://www.propertyme.com.au/blog",
       "feed_url": "https://www.propertyme.com.au/feed",
       "title": "",
@@ -16,6 +23,6 @@
       "method": "discovered"
     }
   ],
-  "post_count": 0,
-  "fetched": "2026-08-01T15:49:00Z"
+  "post_count": 12,
+  "fetched": "2026-08-06T14:08:46Z"
 }
