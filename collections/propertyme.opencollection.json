@@ -1,0 +1,2432 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "PropertyMe",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": " Scope: Properties",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List of all tenancies",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/tenancies",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "ContactId",
+                "value": "",
+                "type": "query",
+                "description": "Id of the contact associated with the tenancies"
+              },
+              {
+                "name": "LotId",
+                "value": "",
+                "type": "query",
+                "description": "Id of the property associated with the tenancies"
+              },
+              {
+                "name": "HasOwnership",
+                "value": "",
+                "type": "query",
+                "description": "Flag indicating whether tenancy has an ownership"
+              },
+              {
+                "name": "IncludeClosed",
+                "value": "",
+                "type": "query",
+                "description": "Flag to include/exclude closed tenancies"
+              }
+            ]
+          },
+          "docs": "The auth token must contain a scope of property:read."
+        },
+        {
+          "info": {
+            "name": "List all lots that have changed since a given timestamp",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/lots",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "Timestamp",
+                "value": "",
+                "type": "query",
+                "description": "Records returned will have a changed timestamp greater than this value"
+              }
+            ]
+          },
+          "docs": "The auth token must contain a scope of property:read."
+        },
+        {
+          "info": {
+            "name": "List of all tenancy balances",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/tenancies/balances",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "ContactId",
+                "value": "",
+                "type": "query",
+                "description": "Id of the contact associated with the balance"
+              },
+              {
+                "name": "LotId",
+                "value": "",
+                "type": "query",
+                "description": "Id of the property associated with the balance"
+              },
+              {
+                "name": "LastUpdated",
+                "value": "",
+                "type": "query",
+                "description": "Only records updated on or after this last updated date time (UTC) will be included in the results set"
+              }
+            ]
+          },
+          "docs": "The auth token must contain a scope of property:read."
+        },
+        {
+          "info": {
+            "name": "List of all lots describing active sales",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/lots/sales",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "RentalOnly",
+                "value": "",
+                "type": "query",
+                "description": "Rental only"
+              },
+              {
+                "name": "Offset",
+                "value": "",
+                "type": "query",
+                "description": "The number of rows to skip before beginning to return rows. An offset of 0 is the same as omitting the offset parameter."
+              },
+              {
+                "name": "Limit",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of results to be returned. There may be less if the query returned less than the maximum."
+              }
+            ]
+          },
+          "docs": "The auth token must contain a scope of property:read."
+        },
+        {
+          "info": {
+            "name": "List of all lots described as archived lots",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/lots/archived",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "ArchivedSince",
+                "value": "",
+                "type": "query",
+                "description": "Only records updated on or after this archived since date time (UTC) will be included in the results set"
+              },
+              {
+                "name": "Offset",
+                "value": "",
+                "type": "query",
+                "description": "The number of rows to skip before beginning to return rows. An offset of 0 is the same as omitting the offset parameter."
+              },
+              {
+                "name": "Limit",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of results to be returned. There may be less if the query returned less than the maximum."
+              }
+            ]
+          },
+          "docs": "The auth token must contain a scope of property:read."
+        },
+        {
+          "info": {
+            "name": "Find a lot by id",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/lots/:Id",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "Id",
+                "value": "",
+                "type": "path",
+                "description": "Id of the lot"
+              }
+            ]
+          },
+          "docs": "The auth token must contain a scope of property:read."
+        },
+        {
+          "info": {
+            "name": "List all rentals described as rentals",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/lots/rentals",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "Offset",
+                "value": "",
+                "type": "query",
+                "description": "The number of rows to skip before beginning to return rows. An offset of 0 is the same as omitting the offset parameter."
+              },
+              {
+                "name": "Limit",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of results to be returned. There may be less if the query returned less than the maximum."
+              }
+            ]
+          },
+          "docs": "The auth token must contain a scope of property:read."
+        },
+        {
+          "info": {
+            "name": "List of all lots described as vacant",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/lots/vacancy",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "RentalOnly",
+                "value": "",
+                "type": "query",
+                "description": "Rental only"
+              },
+              {
+                "name": "Offset",
+                "value": "",
+                "type": "query",
+                "description": "The number of rows to skip before beginning to return rows. An offset of 0 is the same as omitting the offset parameter."
+              },
+              {
+                "name": "Limit",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of results to be returned. There may be less if the query returned less than the maximum."
+              }
+            ]
+          },
+          "docs": "The auth token must contain a scope of property:read."
+        },
+        {
+          "info": {
+            "name": "Find a tenancy balance record by Id",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/tenancies/balances/:id",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "Id",
+                "value": "",
+                "type": "path",
+                "description": "Id of the tenancy balance record"
+              }
+            ]
+          },
+          "docs": "The auth token must contain a scope of property:read."
+        },
+        {
+          "info": {
+            "name": "Create a new comment for a given lot",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/lots/:Id/comments",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "Id",
+                "value": "",
+                "type": "query",
+                "description": "The id of the lot"
+              }
+            ]
+          },
+          "docs": "The auth token must contain a scope of property:write."
+        },
+        {
+          "info": {
+            "name": "Create a new document for a given lot",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/lots/:Id/documents",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "Id",
+                "value": "",
+                "type": "path",
+                "description": "Id of the lot"
+              }
+            ]
+          },
+          "docs": "The auth token must contain a scope of property:write."
+        },
+        {
+          "info": {
+            "name": "List all images for a given lot",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/lots/:Id/images",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "Id",
+                "value": "",
+                "type": "path",
+                "description": "Id of the lot"
+              }
+            ]
+          },
+          "docs": "The auth token must contain a scope of property:read."
+        },
+        {
+          "info": {
+            "name": "Find a lot by id",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/lots/:Id/detail",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "Id",
+                "value": "",
+                "type": "path",
+                "description": "Id of the lot"
+              }
+            ]
+          },
+          "docs": "The auth token must contain a scope of property:read."
+        },
+        {
+          "info": {
+            "name": "Find a lot manager by lot id",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/lots/:Id/members",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "Id",
+                "value": "",
+                "type": "path",
+                "description": "Id of the lot"
+              }
+            ]
+          },
+          "docs": "The auth token must contain a scope of property:read."
+        },
+        {
+          "info": {
+            "name": "Get dashboard item by type",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/dashboards/lots/:Type",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "Type",
+                "value": "",
+                "type": "path",
+                "description": "The available dashboard type: AllProperties, Vacancies"
+              }
+            ]
+          },
+          "docs": "The auth token must contain a scope of property:read."
+        },
+        {
+          "info": {
+            "name": "Create a new document for a given owner or tenant",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/lots/:Id/folio/documents",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "Id",
+                "value": "",
+                "type": "path",
+                "description": "Id of the lot"
+              }
+            ]
+          },
+          "docs": "The auth token must contain a scope of property:write."
+        },
+        {
+          "info": {
+            "name": "List all contact alerts for a given lot by contact alert type",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/lots/:Id/alerts/:Type",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "Id",
+                "value": "",
+                "type": "path",
+                "description": "Id of the contact"
+              },
+              {
+                "name": "Type",
+                "value": "",
+                "type": "path",
+                "description": "Contact alert type can be one of Property, Job and Inspection"
+              }
+            ]
+          },
+          "docs": "The auth token must contain a scope of property:read."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": " Scope: Activities",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all tasks changed since a given timestamp",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/tasks",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "Timestamp",
+                "value": "",
+                "type": "query",
+                "description": "Records returned will have a changed timestamp greater than this value"
+              }
+            ]
+          },
+          "docs": "The auth token must contain a scope of activity:read."
+        },
+        {
+          "info": {
+            "name": "Create a new task",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/tasks",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "The auth token must contain a scope of activity:write."
+        },
+        {
+          "info": {
+            "name": "List all job tasks changed since a given timestamp",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/jobtasks",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "Timestamp",
+                "value": "",
+                "type": "query",
+                "description": "Records returned will have a changed timestamp greater than this value"
+              }
+            ]
+          },
+          "docs": "The auth token must contain a scope of activity:read."
+        },
+        {
+          "info": {
+            "name": "Create a new job",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/jobtasks",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "The auth token must contain a scope of activity:write."
+        },
+        {
+          "info": {
+            "name": "List all inspections changed since a given timestamp",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/inspections",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "Timestamp",
+                "value": "",
+                "type": "query",
+                "description": "Records returned will have a changed timestamp greater than this value"
+              }
+            ]
+          },
+          "docs": "The auth token must contain a scope of activity:read."
+        },
+        {
+          "info": {
+            "name": "Create a new inspection",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/inspections",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "The auth token must contain a scope of activity:write."
+        },
+        {
+          "info": {
+            "name": "Find a Task by id",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/tasks/:Id",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "Id",
+                "value": "",
+                "type": "query",
+                "description": "The id of the task"
+              }
+            ]
+          },
+          "docs": "The auth token must contain a scope of activity:read."
+        },
+        {
+          "info": {
+            "name": "update an existing task",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/tasks/:Id",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "Id",
+                "value": "",
+                "type": "path",
+                "description": "The id of the task"
+              }
+            ]
+          },
+          "docs": "The auth token must contain a scope of activity:write."
+        },
+        {
+          "info": {
+            "name": "Find a job task by id",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/jobtasks/:Id",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "Id",
+                "value": "",
+                "type": "path",
+                "description": "Id of the job task"
+              }
+            ]
+          },
+          "docs": "The auth token must contain a scope of activity:read."
+        },
+        {
+          "info": {
+            "name": "Update an existing job",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/jobtasks/:Id",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "Id",
+                "value": "",
+                "type": "path",
+                "description": "Job Id"
+              }
+            ]
+          },
+          "docs": "The auth token must contain a scope of activity:write."
+        },
+        {
+          "info": {
+            "name": "Search job task based on due date, created date and status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/jobtasks/search",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "DueDateMin",
+                "value": "",
+                "type": "query",
+                "description": "From Due Date (yyyy-MM-dd in UTC)"
+              },
+              {
+                "name": "DueDateMax",
+                "value": "",
+                "type": "query",
+                "description": "To Due Date (yyyy-MM-dd in UTC). Allowed date range is 10 days"
+              },
+              {
+                "name": "DateCreatedMin",
+                "value": "",
+                "type": "query",
+                "description": "From Created Date (yyyy-MM-dd in UTC)"
+              },
+              {
+                "name": "DateCreatedMax",
+                "value": "",
+                "type": "query",
+                "description": "To Created Date (yyyy-MM-dd in UTC). Allowed date range is 10 days"
+              },
+              {
+                "name": "Status",
+                "value": "",
+                "type": "query",
+                "description": "Job task status"
+              },
+              {
+                "name": "Offset",
+                "value": "",
+                "type": "query",
+                "description": "The number of rows to skip before beginning to return rows. An offset of 0 is the same as omitting the offset parameter."
+              },
+              {
+                "name": "Limit",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of results to be returned(Max value is 100). There may be less if the query returned less than the maximum."
+              }
+            ]
+          },
+          "docs": "The auth token must contain a scope of activity:read."
+        },
+        {
+          "info": {
+            "name": "Update an existing inspection",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/inspections/:id",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "Id",
+                "value": "",
+                "type": "path",
+                "description": "Inspection Id"
+              }
+            ]
+          },
+          "docs": "The auth token must contain a scope of activity:write."
+        },
+        {
+          "info": {
+            "name": "Delete the inspection",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/v1/inspections/:id",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "Id",
+                "value": "",
+                "type": "path",
+                "description": "Inspection Id"
+              }
+            ]
+          },
+          "docs": "The auth token must contain a scope of activity:write."
+        },
+        {
+          "info": {
+            "name": "Find an inspection by id",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/inspections/:Id",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "Id",
+                "value": "",
+                "type": "query",
+                "description": "Inspection Id"
+              }
+            ]
+          },
+          "docs": "The auth token must contain a scope of activity:read."
+        },
+        {
+          "info": {
+            "name": "Search all inspections by contact id and/or lot id",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/inspections/search",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "ContactId",
+                "value": "",
+                "type": "query",
+                "description": "Id of the contact"
+              },
+              {
+                "name": "LotId",
+                "value": "",
+                "type": "query",
+                "description": "Id of the property"
+              },
+              {
+                "name": "Offset",
+                "value": "",
+                "type": "query",
+                "description": "The number of rows to skip before beginning to return rows. An offset of 0 is the same as omitting the offset parameter."
+              },
+              {
+                "name": "Limit",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of results to be returned. There may be less if the query returned less than the maximum."
+              }
+            ]
+          },
+          "docs": "The auth token must contain a scope of activity:read."
+        },
+        {
+          "info": {
+            "name": "Query all inspections",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/inspections/query",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "DueDateMin",
+                "value": "",
+                "type": "query",
+                "description": "From Due Date (yyyy-MM-dd)"
+              },
+              {
+                "name": "DueDateMax",
+                "value": "",
+                "type": "query",
+                "description": "To Due Date (yyyy-MM-dd)"
+              },
+              {
+                "name": "Type",
+                "value": "",
+                "type": "query",
+                "description": "Inspection type can be one of Routine, Entry, Exit and Open"
+              },
+              {
+                "name": "Status",
+                "value": "",
+                "type": "query",
+                "description": "Inspection task status. Can be one of Planned, Scheduled, ReScheduled, Inspected, Closed, Cancelled"
+              },
+              {
+                "name": "Published",
+                "value": "",
+                "type": "query",
+                "description": "Inspection is published. Can be Yes, No, empty"
+              },
+              {
+                "name": "MemberOrTeam",
+                "value": "",
+                "type": "query",
+                "description": "Inspection property member or team Id(Guid)"
+              },
+              {
+                "name": "TaskMemberOrTeam",
+                "value": "",
+                "type": "query",
+                "description": "Inspection task member or team Id(Guid)"
+              },
+              {
+                "name": "Label",
+                "value": "",
+                "type": "query",
+                "description": "Inspection task label"
+              },
+              {
+                "name": "Offset",
+                "value": "",
+                "type": "query",
+                "description": "The number of rows to skip before beginning to return rows. An offset of 0 is the same as omitting the offset parameter."
+              },
+              {
+                "name": "Limit",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of results to be returned. There may be less if the query returned less than the maximum."
+              }
+            ]
+          },
+          "docs": "The auth token must contain a scope of activity:read."
+        },
+        {
+          "info": {
+            "name": "Create a new comment for a given task",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/tasks/:Id/comments",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "Id",
+                "value": "",
+                "type": "path",
+                "description": "The id of the task"
+              }
+            ]
+          },
+          "docs": "The auth token must contain a scope of activity:write."
+        },
+        {
+          "info": {
+            "name": "Create a new document for a given task",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/tasks/:Id/documents",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "Id",
+                "value": "",
+                "type": "path",
+                "description": "Id of the task"
+              }
+            ]
+          },
+          "docs": "The auth token must contain a scope of Activity:write."
+        },
+        {
+          "info": {
+            "name": "List all images for a given task",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/tasks/:Id/images",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "Id",
+                "value": "",
+                "type": "path",
+                "description": "Id of the task"
+              }
+            ]
+          },
+          "docs": "The auth token must contain a scope of activity:read."
+        },
+        {
+          "info": {
+            "name": "Find a Task manager by task id",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/tasks/:Id/members",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "Id",
+                "value": "",
+                "type": "query",
+                "description": "The id of the task"
+              }
+            ]
+          },
+          "docs": "The auth token must contain a scope of activity:read."
+        },
+        {
+          "info": {
+            "name": "Update the supplier of a job",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/jobtasks/:Id/assign",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "Id",
+                "value": "",
+                "type": "path",
+                "description": "Id of the job"
+              }
+            ]
+          },
+          "docs": "The auth token must contain a scope of Activity:write."
+        },
+        {
+          "info": {
+            "name": "Create a new comment for a given job",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/jobtasks/:Id/comments",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "Id",
+                "value": "",
+                "type": "path",
+                "description": "The id of the job"
+              }
+            ]
+          },
+          "docs": "The auth token must contain a scope of activity:write."
+        },
+        {
+          "info": {
+            "name": "List all documents for a given job",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/jobtasks/:Id/documents",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "Id",
+                "value": "",
+                "type": "path",
+                "description": "Id of the job"
+              }
+            ]
+          },
+          "docs": "The auth token must contain a scope of activity:read."
+        },
+        {
+          "info": {
+            "name": "Create a new document for a given job",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/jobtasks/:Id/documents",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "Id",
+                "value": "",
+                "type": "path",
+                "description": "Id of the job"
+              }
+            ]
+          },
+          "docs": "The auth token must contain a scope of Activity:write."
+        },
+        {
+          "info": {
+            "name": "List all images for a given job",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/jobtasks/:Id/images",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "Id",
+                "value": "",
+                "type": "path",
+                "description": "Id of the job"
+              }
+            ]
+          },
+          "docs": "The auth token must contain a scope of activity:read."
+        },
+        {
+          "info": {
+            "name": "Create a new image for a given job",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/jobtasks/:Id/images",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "Id",
+                "value": "",
+                "type": "path",
+                "description": "Id of the job"
+              }
+            ]
+          },
+          "docs": "The auth token must contain a scope of Activity:write."
+        },
+        {
+          "info": {
+            "name": "Find a job task manager by job id",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/jobtasks/:Id/members",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "Id",
+                "value": "",
+                "type": "path",
+                "description": "Id of the job task"
+              }
+            ]
+          },
+          "docs": "The auth token must contain a scope of activity:read."
+        },
+        {
+          "info": {
+            "name": "Create a new quotation for the job task",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/jobtasks/:Id/quotation",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "Id",
+                "value": "",
+                "type": "path",
+                "description": "Id of the job"
+              }
+            ]
+          },
+          "docs": "The auth token must contain a scope of activity:write."
+        },
+        {
+          "info": {
+            "name": "List all the quotation for a job task",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/jobtasks/:Id/quotations",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "Id",
+                "value": "",
+                "type": "path",
+                "description": "Id of the job"
+              }
+            ]
+          },
+          "docs": "The auth token must contain a scope of activity:read."
+        },
+        {
+          "info": {
+            "name": "Update the job task status to Approved",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/jobtasks/:Id/approve",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "Id",
+                "value": "",
+                "type": "path",
+                "description": "Id of the job"
+              }
+            ]
+          },
+          "docs": "The auth token must contain a scope of Activity:write."
+        },
+        {
+          "info": {
+            "name": "Update the job task status to Complete",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/jobtasks/:Id/complete",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "Id",
+                "value": "",
+                "type": "path",
+                "description": "Id of the job"
+              }
+            ]
+          },
+          "docs": "The auth token must contain a scope of Activity:write."
+        },
+        {
+          "info": {
+            "name": "Update the job task status to Rejected",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/jobtasks/:Id/reject",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "Id",
+                "value": "",
+                "type": "path",
+                "description": "Id of the job"
+              }
+            ]
+          },
+          "docs": "The auth token must contain a scope of Activity:write."
+        },
+        {
+          "info": {
+            "name": "Update the job task status to Reopened",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/jobtasks/:Id/reopen",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "Id",
+                "value": "",
+                "type": "path",
+                "description": "Id of the job"
+              }
+            ]
+          },
+          "docs": "The auth token must contain a scope of Activity:write."
+        },
+        {
+          "info": {
+            "name": "Close the inspection",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/inspections/:id/close",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "Id",
+                "value": "",
+                "type": "path",
+                "description": "Inspection Id"
+              }
+            ]
+          },
+          "docs": "The auth token must contain a scope of activity:write."
+        },
+        {
+          "info": {
+            "name": "Create a new comment for a given inspection",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/inspections/:Id/comments",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "Id",
+                "value": "",
+                "type": "path",
+                "description": "The id of the inspection"
+              }
+            ]
+          },
+          "docs": "The auth token must contain a scope of activity:write."
+        },
+        {
+          "info": {
+            "name": "Create a new document for a given inspection",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/inspections/:Id/documents",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "Id",
+                "value": "",
+                "type": "path",
+                "description": "Id of the inspection"
+              },
+              {
+                "name": "IsClientVisible",
+                "value": "",
+                "type": "query",
+                "description": "Visible on the owner portal"
+              }
+            ]
+          },
+          "docs": "The auth token must contain a scope of Activity:write."
+        },
+        {
+          "info": {
+            "name": "List all images for a given inspection",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/inspections/:Id/images",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "Id",
+                "value": "",
+                "type": "path",
+                "description": "Id of the inspection"
+              }
+            ]
+          },
+          "docs": "The auth token must contain a scope of activity:read."
+        },
+        {
+          "info": {
+            "name": "Inspect the inspection",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/inspections/:id/inspect",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "Id",
+                "value": "",
+                "type": "path",
+                "description": "Inspection Id"
+              }
+            ]
+          },
+          "docs": "The auth token must contain a scope of activity:write."
+        },
+        {
+          "info": {
+            "name": "List all inspections",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/inspections/status/:Status",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "Status",
+                "value": "",
+                "type": "path",
+                "description": "Inspection task status. Can be one of Planned, Scheduled, ReScheduled, Inspected, Closed, Cancelled"
+              },
+              {
+                "name": "Offset",
+                "value": "",
+                "type": "query",
+                "description": "The number of rows to skip before beginning to return rows. An offset of 0 is the same as omitting the offset parameter."
+              },
+              {
+                "name": "Limit",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of results to be returned. There may be less if the query returned less than the maximum."
+              }
+            ]
+          },
+          "docs": "The auth token must contain a scope of activity:read."
+        },
+        {
+          "info": {
+            "name": "Find an inspection manager by id",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/inspections/Members/:Id",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "Id",
+                "value": "",
+                "type": "query",
+                "description": "Inspection Id"
+              }
+            ]
+          },
+          "docs": "The auth token must contain a scope of activity:read."
+        },
+        {
+          "info": {
+            "name": "Reopen the closed inspection",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/inspections/:id/reopen",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "Id",
+                "value": "",
+                "type": "path",
+                "description": "Inspection Id"
+              }
+            ]
+          },
+          "docs": "The auth token must contain a scope of activity:write."
+        },
+        {
+          "info": {
+            "name": "Reschedule the inspection",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/inspections/:id/reschedule",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "Id",
+                "value": "",
+                "type": "path",
+                "description": "Inspection Id"
+              }
+            ]
+          },
+          "docs": "The auth token must contain a scope of activity:write."
+        },
+        {
+          "info": {
+            "name": "Change the inspection status to scheduled",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/inspections/:id/schedule",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "Id",
+                "value": "",
+                "type": "path",
+                "description": "Inspection Id"
+              }
+            ]
+          },
+          "docs": "The auth token must contain a scope of activity:write."
+        },
+        {
+          "info": {
+            "name": "Find an inspection report by id",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/inspections/reports/:Id",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "Id",
+                "value": "",
+                "type": "query",
+                "description": "Inspection report Id"
+              }
+            ]
+          },
+          "docs": "The auth token must contain a scope of activity:read."
+        },
+        {
+          "info": {
+            "name": "Create a new inspection report",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/inspections/:Id/report",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "Id",
+                "value": "",
+                "type": "path",
+                "description": "Inspection Task Id that this report is created for"
+              }
+            ]
+          },
+          "docs": "The auth token must contain a scope of activity:write."
+        },
+        {
+          "info": {
+            "name": "Update an existing inspection report",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/v1/inspections/:Id/report",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "Id",
+                "value": "",
+                "type": "path",
+                "description": "Inspection Task Id of this report"
+              }
+            ]
+          },
+          "docs": "The auth token must contain a scope of activity:write."
+        },
+        {
+          "info": {
+            "name": "List dashboard activities by a given type",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/dashboards/activities/:Type",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "Type",
+                "value": "",
+                "type": "path",
+                "description": "The available dashboard type: Jobs, Inspections, InspectionPlanning, Tasks"
+              }
+            ]
+          },
+          "docs": "The auth token must contain a scope of communication:read."
+        },
+        {
+          "info": {
+            "name": "Update an existing quotation for the job task",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/jobtasks/:Id/quotation/:QuoteId",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "Id",
+                "value": "",
+                "type": "path",
+                "description": "Job Id"
+              },
+              {
+                "name": "QuoteId",
+                "value": "",
+                "type": "path",
+                "description": "Quotation Id"
+              }
+            ]
+          },
+          "docs": "The auth token must contain a scope of activity:write."
+        },
+        {
+          "info": {
+            "name": "Find a job task by id",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/jobtasks/:Id",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "Id",
+                "value": "",
+                "type": "path",
+                "description": "Id of the job task"
+              }
+            ]
+          },
+          "docs": "The auth token must contain a scope of activity:read."
+        },
+        {
+          "info": {
+            "name": "Update an existing job",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/jobtasks/:Id",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "Id",
+                "value": "",
+                "type": "path",
+                "description": "Job Id"
+              }
+            ]
+          },
+          "docs": "The auth token must contain a scope of activity:write."
+        },
+        {
+          "info": {
+            "name": "Search job task based on due date, created date and status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/jobtasks/search",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "DueDateMin",
+                "value": "",
+                "type": "query",
+                "description": "From Due Date (yyyy-MM-dd in UTC)"
+              },
+              {
+                "name": "DueDateMax",
+                "value": "",
+                "type": "query",
+                "description": "To Due Date (yyyy-MM-dd in UTC). Allowed date range is 10 days"
+              },
+              {
+                "name": "DateCreatedMin",
+                "value": "",
+                "type": "query",
+                "description": "From Created Date (yyyy-MM-dd in UTC)"
+              },
+              {
+                "name": "DateCreatedMax",
+                "value": "",
+                "type": "query",
+                "description": "To Created Date (yyyy-MM-dd in UTC). Allowed date range is 10 days"
+              },
+              {
+                "name": "Status",
+                "value": "",
+                "type": "query",
+                "description": "Job task status"
+              },
+              {
+                "name": "Offset",
+                "value": "",
+                "type": "query",
+                "description": "The number of rows to skip before beginning to return rows. An offset of 0 is the same as omitting the offset parameter."
+              },
+              {
+                "name": "Limit",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of results to be returned(Max value is 100). There may be less if the query returned less than the maximum."
+              },
+              {
+                "name": "Priority",
+                "value": "",
+                "type": "query",
+                "description": "Job priority"
+              }
+            ]
+          },
+          "docs": "The auth token must contain a scope of activity:read."
+        },
+        {
+          "info": {
+            "name": "List all job tasks changed since a given timestamp",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/jobtasks",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "Timestamp",
+                "value": "",
+                "type": "query",
+                "description": "Records returned will have a changed timestamp greater than this value"
+              }
+            ]
+          },
+          "docs": "The auth token must contain a scope of activity:read."
+        },
+        {
+          "info": {
+            "name": "Create a new job",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/jobtasks",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "The auth token must contain a scope of activity:write."
+        },
+        {
+          "info": {
+            "name": "Add a document to an existing quotation for the job task",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/jobtasks/:Id/quotation/:QuoteId/documents",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "Id",
+                "value": "",
+                "type": "path",
+                "description": "Job Id"
+              },
+              {
+                "name": "QuoteId",
+                "value": "",
+                "type": "path",
+                "description": "Quotation Id"
+              }
+            ]
+          },
+          "docs": "The auth token must contain a scope of activity:write."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": " Scope: Contacts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all members",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/members",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "The auth token must contain a scope of contact:read."
+        },
+        {
+          "info": {
+            "name": "Find any contacts changed since a given timestamp",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/contacts",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "Timestamp",
+                "value": "",
+                "type": "query",
+                "description": "Records returned will have a changed timestamp greater than this value"
+              },
+              {
+                "name": "IncludeArchived",
+                "value": "",
+                "type": "query",
+                "description": "Includes archived contacts"
+              }
+            ]
+          },
+          "docs": "The auth token must contain a scope of contact:read."
+        },
+        {
+          "info": {
+            "name": "Returns an agency contact",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/contacts/agency",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "The auth token must contain a scope of contact:read."
+        },
+        {
+          "info": {
+            "name": "Find a contact by Id",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/contacts/:Id",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "Id",
+                "value": "",
+                "type": "path",
+                "description": "Id of the contact"
+              }
+            ]
+          },
+          "docs": "The auth token must contain a scope of contact:read."
+        },
+        {
+          "info": {
+            "name": "List of all owners in relation to the contact",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/contacts/ownerships",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "Offset",
+                "value": "",
+                "type": "query",
+                "description": "The number of rows to skip before beginning to return rows. An offset of 0 is the same as omitting the offset parameter."
+              },
+              {
+                "name": "Limit",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of results to be returned. There may be less if the query returned less than the maximum."
+              }
+            ]
+          },
+          "docs": "The auth token must contain a scope of contact:read."
+        },
+        {
+          "info": {
+            "name": "List of all suppliers in relation to the contact",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/contacts/suppliers",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "Offset",
+                "value": "",
+                "type": "query",
+                "description": "The number of rows to skip before beginning to return rows. An offset of 0 is the same as omitting the offset parameter."
+              },
+              {
+                "name": "Limit",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of results to be returned. There may be less if the query returned less than the maximum."
+              }
+            ]
+          },
+          "docs": "The auth token must contain a scope of contact:read."
+        },
+        {
+          "info": {
+            "name": "List of all tenants in relation to the contact",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/contacts/tenants",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "Offset",
+                "value": "",
+                "type": "query",
+                "description": "The number of rows to skip before beginning to return rows. An offset of 0 is the same as omitting the offset parameter."
+              },
+              {
+                "name": "Limit",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of results to be returned. There may be less if the query returned less than the maximum."
+              }
+            ]
+          },
+          "docs": "The auth token must contain a scope of contact:read."
+        },
+        {
+          "info": {
+            "name": "Create a new comment for a given contact",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/contacts/:Id/comments",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "Id",
+                "value": "",
+                "type": "path",
+                "description": "The id of the contact"
+              }
+            ]
+          },
+          "docs": "The auth token must contain a scope of contact:write."
+        },
+        {
+          "info": {
+            "name": "Create a new document for a given contact",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/contacts/:Id/documents",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "Id",
+                "value": "",
+                "type": "path",
+                "description": "Id of the contact"
+              }
+            ]
+          },
+          "docs": "The auth token must contain a scope of contact:write."
+        },
+        {
+          "info": {
+            "name": "List all images for a given contact",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/contacts/:Id/images",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "Id",
+                "value": "",
+                "type": "path",
+                "description": "Id of the contact"
+              }
+            ]
+          },
+          "docs": "The auth token must contain a scope of contact:read."
+        },
+        {
+          "info": {
+            "name": "List of all Contact alerts for a given contact and filtered by contact alert type",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/contacts/:Id/alerts/:Type",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "Id",
+                "value": "",
+                "type": "path",
+                "description": "Id of the contact"
+              },
+              {
+                "name": "Type",
+                "value": "",
+                "type": "path",
+                "description": "Contact alert type. Can be one of Property, Job and Inspection"
+              }
+            ]
+          },
+          "docs": "The auth token must contain a scope of contact:read."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": " Scope: Bills",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create a new bill including a document",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/bills",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "The auth token must contain a scope of transaction:write."
+        },
+        {
+          "info": {
+            "name": "Get activity dashboard item by type",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/dashboards/transactions/:Type",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "Type",
+                "value": "",
+                "type": "path",
+                "description": "The available dashboard type: Disbursements, RentArrears, Banking, Withdrawals, Reconciliation, UnprocessedBankTransactions, Bills, RentInvoicing, RentReviews"
+              }
+            ]
+          },
+          "docs": "The auth token must contain a scope of transaction:read."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Connection",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Disconnect from current portfolio",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/v1/portfolios/disconnect",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Cannot be undone, portfolio user will have to choose to reconnect. Current access token remains valid until it expires."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": " Scope: Messages",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get communication dashboard item by type",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/dashboards/communications/:Type",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "Type",
+                "value": "",
+                "type": "path",
+                "description": "The available dashboard type: Messages"
+              }
+            ]
+          },
+          "docs": "The auth token must contain a scope of activity:read."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

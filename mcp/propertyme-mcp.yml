@@ -619,3 +619,9 @@ tools:
   scopes:
   - activity:write
   read_only: false
+deployment:
+  mode: none
+  verified: derived
+  tools: 86
+  checked: '2026-08-12'
+  source: catalog MCP census
