@@ -40,7 +40,7 @@ tags:
 - New Zealand
 created: '2026-07-26'
 modified: '2026-07-26'
-specificationVersion: '0.19'
+specificationVersion: '0.23'
 apis:
 - aid: propertyme:propertyme-contacts-api
   name: PropertyMe Contacts API
