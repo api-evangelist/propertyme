@@ -55,229 +55,86 @@ created: '2026-07-26'
 modified: '2026-07-26'
 specificationVersion: '0.23'
 apis:
-- aid: propertyme:propertyme-contacts-api
-  name: PropertyMe Contacts API
-  description: Read the contact records in a connected PropertyMe portfolio — owners, tenants, suppliers
-    and the agency contact itself — with change-since-timestamp polling, contact alerts by type,
-    images, and write access for comments and documents attached to a contact. Requires the contact:read
-    scope; comment and document creation require contact:write.
-  humanURL: https://app.propertyme.com/api/swagger-ui/
-  baseURL: https://app.propertyme.com/api
-  tags:
-  - Contacts
-  - Owners
-  - Tenants
-  - Suppliers
-  properties:
-  - type: OpenAPI
-    url: openapi/propertyme-openapi.json
-  - type: APIReference
-    url: https://app.propertyme.com/api/swagger-ui/
-  - type: Authentication
-    url: authentication/propertyme-openid-configuration.json
-- aid: propertyme:propertyme-properties-api
-  name: PropertyMe Properties API
-  description: The lot (property) record in a connected PropertyMe portfolio — list all lots changed
-    since a timestamp, or filter to rentals, active sales, vacancies and archived lots, retrieve
-    lot detail, contact alerts, images and the managing member, and attach comments and documents
-    to a lot or to an owner or tenant folio. Requires the property:read scope; writes require property:write.
-  humanURL: https://app.propertyme.com/api/swagger-ui/
-  baseURL: https://app.propertyme.com/api
-  tags:
-  - Properties
-  - Lots
-  - Rentals
-  - Vacancy
-  properties:
-  - type: OpenAPI
-    url: openapi/propertyme-openapi.json
-  - type: APIReference
-    url: https://app.propertyme.com/api/swagger-ui/
-  - type: Authentication
-    url: authentication/propertyme-openid-configuration.json
-- aid: propertyme:propertyme-tenancies-api
-  name: PropertyMe Tenancies API
-  description: Read-only access to the tenancies in a connected PropertyMe portfolio and to tenancy
-    balances, including a single tenancy balance record by id. This is the lettings ledger surface
-    that most listing-oriented real estate APIs omit entirely. Requires the property:read scope.
-  humanURL: https://app.propertyme.com/api/swagger-ui/
-  baseURL: https://app.propertyme.com/api
-  tags:
-  - Tenancies
-  - Leases
-  - Balances
-  properties:
-  - type: OpenAPI
-    url: openapi/propertyme-openapi.json
-  - type: APIReference
-    url: https://app.propertyme.com/api/swagger-ui/
-  - type: Authentication
-    url: authentication/propertyme-openid-configuration.json
-- aid: propertyme:propertyme-inspections-api
-  name: PropertyMe Inspections API
-  description: The full routine and entry/exit inspection lifecycle — create, query, search by contact
-    or lot, filter by status, and drive an inspection through schedule, reschedule, inspect, close
-    and reopen transitions, plus inspection reports, comments, documents, images and the assigned
-    inspection manager. Requires activity:read and, for the state transitions, activity:write.
-  humanURL: https://app.propertyme.com/api/swagger-ui/
-  baseURL: https://app.propertyme.com/api
-  tags:
-  - Inspections
-  - Reports
-  - Compliance
-  properties:
-  - type: OpenAPI
-    url: openapi/propertyme-openapi.json
-  - type: APIReference
-    url: https://app.propertyme.com/api/swagger-ui/
-  - type: Authentication
-    url: authentication/propertyme-openid-configuration.json
-- aid: propertyme:propertyme-job-tasks-api
-  name: PropertyMe Job Tasks API
-  description: Maintenance work orders, in both a v1 and a newer v2 shape. Create and update jobs,
-    search by due date, created date and status, move a job through approve, assign, complete, reject
-    and reopen, manage supplier quotations and quotation documents, and attach comments, documents
-    and images. The largest write surface in the API. Requires activity:read and activity:write.
-  humanURL: https://app.propertyme.com/api/swagger-ui/
-  baseURL: https://app.propertyme.com/api
-  tags:
-  - Maintenance
-  - Job
-  - Work Orders
-  - Quotations
-  - Suppliers
-  tags_raw:
-  - Maintenance
-  - Jobs
-  - Work Orders
-  - Quotations
-  - Suppliers
-  properties:
-  - type: OpenAPI
-    url: openapi/propertyme-openapi.json
-  - type: APIReference
-    url: https://app.propertyme.com/api/swagger-ui/
-  - type: Authentication
-    url: authentication/propertyme-openid-configuration.json
-- aid: propertyme:propertyme-tasks-api
-  name: PropertyMe Tasks API
-  description: General property management tasks distinct from maintenance jobs — list tasks changed
-    since a timestamp, create and update a task, find a task by id, read the assigned task manager,
-    and attach comments, documents and images. Requires activity:read and activity:write.
-  humanURL: https://app.propertyme.com/api/swagger-ui/
-  baseURL: https://app.propertyme.com/api
-  tags:
-  - Task
-  - Workflows
-  tags_raw:
-  - Tasks
-  - Workflow
-  properties:
-  - type: OpenAPI
-    url: openapi/propertyme-openapi.json
-  - type: APIReference
-    url: https://app.propertyme.com/api/swagger-ui/
-  - type: Authentication
-    url: authentication/propertyme-openid-configuration.json
-- aid: propertyme:propertyme-bills-api
-  name: PropertyMe Bills API
-  description: Create a new bill in a connected PropertyMe portfolio, including the supporting document,
-    against the trust accounting ledger. This is the only transaction-writing operation exposed in
-    the published contract and it requires the transaction:write scope.
-  humanURL: https://app.propertyme.com/api/swagger-ui/
-  baseURL: https://app.propertyme.com/api
-  tags:
-  - Bills
-  - Trust Accounting
-  - Transaction
-  tags_raw:
-  - Bills
-  - Trust Accounting
-  - Transactions
-  properties:
-  - type: OpenAPI
-    url: openapi/propertyme-openapi.json
-  - type: APIReference
-    url: https://app.propertyme.com/api/swagger-ui/
-  - type: Authentication
-    url: authentication/propertyme-openid-configuration.json
-- aid: propertyme:propertyme-dashboards-api
-  name: PropertyMe Dashboards API
-  description: Typed dashboard aggregates over a connected portfolio — activities, communications,
-    lots and transactions, each retrieved by dashboard item type. The read model behind the PropertyMe
-    dashboard, drawing on the activity, communication, property and transaction read scopes.
-  humanURL: https://app.propertyme.com/api/swagger-ui/
-  baseURL: https://app.propertyme.com/api
-  tags:
-  - Dashboards
-  - Reporting
-  - Analytics
-  properties:
-  - type: OpenAPI
-    url: openapi/propertyme-openapi.json
-  - type: APIReference
-    url: https://app.propertyme.com/api/swagger-ui/
-  - type: Authentication
-    url: authentication/propertyme-openid-configuration.json
-- aid: propertyme:propertyme-documents-and-images-api
-  name: PropertyMe Documents and Images API
-  description: The file surface, exposed as sub-resources rather than a standalone collection — create
-    documents against contacts, lots, owner and tenant folios, inspections, tasks and jobs, and list
-    images for contacts, lots, inspections, tasks and jobs. Document creation is governed by the
-    write scope of the parent resource.
-  humanURL: https://app.propertyme.com/api/swagger-ui/
-  baseURL: https://app.propertyme.com/api
-  tags:
-  - Documents
-  - Image
-  - File
-  tags_raw:
-  - Documents
-  - Images
-  - Files
-  properties:
-  - type: OpenAPI
-    url: openapi/propertyme-openapi.json
-  - type: APIReference
-    url: https://app.propertyme.com/api/swagger-ui/
-  - type: Authentication
-    url: authentication/propertyme-openid-configuration.json
-- aid: propertyme:propertyme-members-api
-  name: PropertyMe Members API
-  description: The agency staff directory inside a connected portfolio — list all members, and resolve
-    the responsible member for a lot, a task, a job or an inspection. Requires the contact:read scope.
-  humanURL: https://app.propertyme.com/api/swagger-ui/
-  baseURL: https://app.propertyme.com/api
-  tags:
-  - Members
-  - Property Managers
-  - Staff
-  properties:
-  - type: OpenAPI
-    url: openapi/propertyme-openapi.json
-  - type: APIReference
-    url: https://app.propertyme.com/api/swagger-ui/
-  - type: Authentication
-    url: authentication/propertyme-openid-configuration.json
-- aid: propertyme:propertyme-portfolio-connection-api
-  name: PropertyMe Portfolio Connection API
-  description: The consent seam. A single DELETE /v1/portfolios/disconnect operation severs the integration's
-    connection to the customer's current portfolio. Every other operation in the API is implicitly
-    scoped to the one portfolio the agency connected, which is what makes this a per-customer, revocable
-    integration rather than market-wide data access.
+- aid: propertyme:propertyme-connection-api
+  name: PropertyMe Connection API
+  description: The Connection API from PropertyMe — 1 operation(s) for connection.
   humanURL: https://app.propertyme.com/api/swagger-ui/
   baseURL: https://app.propertyme.com/api
   tags:
   - Connection
-  - Portfolio
-  - Consent
-  tags_raw:
-  - Connection
-  - Portfolios
-  - Consent
   properties:
   - type: OpenAPI
-    url: openapi/propertyme-openapi.json
+    url: openapi/propertyme-connection-api-openapi.yml
+  - type: APIReference
+    url: https://app.propertyme.com/api/swagger-ui/
+  - type: Authentication
+    url: authentication/propertyme-openid-configuration.json
+- aid: propertyme:propertyme-scope-activities-api
+  name: 'PropertyMe Scope: Activities API'
+  description: 'The  Scope: Activities API from PropertyMe — 43 operation(s) for  scope: activities.'
+  humanURL: https://app.propertyme.com/api/swagger-ui/
+  baseURL: https://app.propertyme.com/api
+  tags:
+  - ' Scope: Activities'
+  properties:
+  - type: OpenAPI
+    url: openapi/propertyme-scope-activities-api-openapi.yml
+  - type: APIReference
+    url: https://app.propertyme.com/api/swagger-ui/
+  - type: Authentication
+    url: authentication/propertyme-openid-configuration.json
+- aid: propertyme:propertyme-scope-bills-api
+  name: 'PropertyMe Scope: Bills API'
+  description: 'The  Scope: Bills API from PropertyMe — 2 operation(s) for  scope: bills.'
+  humanURL: https://app.propertyme.com/api/swagger-ui/
+  baseURL: https://app.propertyme.com/api
+  tags:
+  - ' Scope: Bills'
+  properties:
+  - type: OpenAPI
+    url: openapi/propertyme-scope-bills-api-openapi.yml
+  - type: APIReference
+    url: https://app.propertyme.com/api/swagger-ui/
+  - type: Authentication
+    url: authentication/propertyme-openid-configuration.json
+- aid: propertyme:propertyme-scope-contacts-api
+  name: 'PropertyMe Scope: Contacts API'
+  description: 'The  Scope: Contacts API from PropertyMe — 11 operation(s) for  scope: contacts.'
+  humanURL: https://app.propertyme.com/api/swagger-ui/
+  baseURL: https://app.propertyme.com/api
+  tags:
+  - ' Scope: Contacts'
+  properties:
+  - type: OpenAPI
+    url: openapi/propertyme-scope-contacts-api-openapi.yml
+  - type: APIReference
+    url: https://app.propertyme.com/api/swagger-ui/
+  - type: Authentication
+    url: authentication/propertyme-openid-configuration.json
+- aid: propertyme:propertyme-scope-messages-api
+  name: 'PropertyMe Scope: Messages API'
+  description: 'The  Scope: Messages API from PropertyMe — 1 operation(s) for  scope: messages.'
+  humanURL: https://app.propertyme.com/api/swagger-ui/
+  baseURL: https://app.propertyme.com/api
+  tags:
+  - ' Scope: Messages'
+  properties:
+  - type: OpenAPI
+    url: openapi/propertyme-scope-messages-api-openapi.yml
+  - type: APIReference
+    url: https://app.propertyme.com/api/swagger-ui/
+  - type: Authentication
+    url: authentication/propertyme-openid-configuration.json
+- aid: propertyme:propertyme-scope-properties-api
+  name: 'PropertyMe Scope: Properties API'
+  description: 'The  Scope: Properties API from PropertyMe — 17 operation(s) for  scope: properties.'
+  humanURL: https://app.propertyme.com/api/swagger-ui/
+  baseURL: https://app.propertyme.com/api
+  tags:
+  - ' Scope: Properties'
+  properties:
+  - type: OpenAPI
+    url: openapi/propertyme-scope-properties-api-openapi.yml
   - type: APIReference
     url: https://app.propertyme.com/api/swagger-ui/
   - type: Authentication
