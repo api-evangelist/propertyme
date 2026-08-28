@@ -8,125 +8,134 @@ info:
     Timestamp 0 and reads the agency directory, then shows the clean disconnect. Every operation is
     scoped to the one customer portfolio the OAuth token was issued against.
 sourceDescriptions:
-  - name: propertyme
-    url: ../openapi/propertyme-openapi.json
-    type: openapi
+- name: connectionApi
+  url: ../openapi/propertyme-connection-api-openapi.yml
+  type: openapi
+- name: scopeActivitiesApi
+  url: ../openapi/propertyme-scope-activities-api-openapi.yml
+  type: openapi
+- name: scopeContactsApi
+  url: ../openapi/propertyme-scope-contacts-api-openapi.yml
+  type: openapi
+- name: scopePropertiesApi
+  url: ../openapi/propertyme-scope-properties-api-openapi.yml
+  type: openapi
 workflows:
-  - workflowId: connect-and-sync-portfolio
-    summary: Seed a full read of a connected PropertyMe portfolio and advance the change cursor.
+- workflowId: connect-and-sync-portfolio
+  summary: Seed a full read of a connected PropertyMe portfolio and advance the change cursor.
+  description: >-
+    Requires contact:read, property:read and activity:read. Send Accept application/json on every
+    call — it is a required parameter in the contract, not optional.
+  inputs:
+    type: object
+    properties:
+      timestamp:
+        type: integer
+        format: int64
+        description: Change cursor. Use 0 to seed, then the highest observed changed timestamp.
+        default: 0
+    required: [timestamp]
+  steps:
+  - stepId: read-agency
+    description: Read the agency's own contact record to confirm which portfolio the token is bound to.
+    operationId: AgencyRequestcontactsagency_Get
+    parameters:
+    - name: Accept
+      in: header
+      value: application/json
+    successCriteria:
+    - condition: $statusCode == 200
+  - stepId: read-members
+    description: Read the agency staff directory so job and inspection assignees can be resolved locally.
+    operationId: MembersRequestmembers_Get
+    parameters:
+    - name: Accept
+      in: header
+      value: application/json
+    successCriteria:
+    - condition: $statusCode == 200
+  - stepId: sync-contacts
+    description: Owners, tenants and suppliers changed since the cursor.
+    operationId: ChangedContactsRequestcontacts_Get
+    parameters:
+    - name: Accept
+      in: header
+      value: application/json
+    - name: Timestamp
+      in: query
+      value: $inputs.timestamp
+    successCriteria:
+    - condition: $statusCode == 200
+  - stepId: sync-lots
+    description: Properties (lots) changed since the cursor.
+    operationId: ChangedLotRequestlots_Get
+    parameters:
+    - name: Accept
+      in: header
+      value: application/json
+    - name: Timestamp
+      in: query
+      value: $inputs.timestamp
+    successCriteria:
+    - condition: $statusCode == 200
+  - stepId: sync-tenancies
     description: >-
-      Requires contact:read, property:read and activity:read. Send Accept application/json on every
-      call — it is a required parameter in the contract, not optional.
-    inputs:
-      type: object
-      properties:
-        timestamp:
-          type: integer
-          format: int64
-          description: Change cursor. Use 0 to seed, then the highest observed changed timestamp.
-          default: 0
-      required: [timestamp]
-    steps:
-      - stepId: read-agency
-        description: Read the agency's own contact record to confirm which portfolio the token is bound to.
-        operationId: AgencyRequestcontactsagency_Get
-        parameters:
-          - name: Accept
-            in: header
-            value: application/json
-        successCriteria:
-          - condition: $statusCode == 200
-      - stepId: read-members
-        description: Read the agency staff directory so job and inspection assignees can be resolved locally.
-        operationId: MembersRequestmembers_Get
-        parameters:
-          - name: Accept
-            in: header
-            value: application/json
-        successCriteria:
-          - condition: $statusCode == 200
-      - stepId: sync-contacts
-        description: Owners, tenants and suppliers changed since the cursor.
-        operationId: ChangedContactsRequestcontacts_Get
-        parameters:
-          - name: Accept
-            in: header
-            value: application/json
-          - name: Timestamp
-            in: query
-            value: $inputs.timestamp
-        successCriteria:
-          - condition: $statusCode == 200
-      - stepId: sync-lots
-        description: Properties (lots) changed since the cursor.
-        operationId: ChangedLotRequestlots_Get
-        parameters:
-          - name: Accept
-            in: header
-            value: application/json
-          - name: Timestamp
-            in: query
-            value: $inputs.timestamp
-        successCriteria:
-          - condition: $statusCode == 200
-      - stepId: sync-tenancies
-        description: >-
-          Tenancies. Note this collection takes no Timestamp — it returns the full set, filtered only
-          by ContactId, LotId, HasOwnership and IncludeClosed.
-        operationId: TenancyRequesttenancies_Get
-        parameters:
-          - name: Accept
-            in: header
-            value: application/json
-        successCriteria:
-          - condition: $statusCode == 200
-      - stepId: sync-inspections
-        description: Inspections changed since the cursor.
-        operationId: ChangedInspectionsRequestinspections_Get
-        parameters:
-          - name: Accept
-            in: header
-            value: application/json
-          - name: Timestamp
-            in: query
-            value: $inputs.timestamp
-        successCriteria:
-          - condition: $statusCode == 200
-      - stepId: sync-jobtasks
-        description: Maintenance work orders changed since the cursor, in the newer v2 shape.
-        operationId: ChangedJobTaskV2Requestjobtasks_Get
-        parameters:
-          - name: Accept
-            in: header
-            value: application/json
-          - name: Timestamp
-            in: query
-            value: $inputs.timestamp
-        successCriteria:
-          - condition: $statusCode == 200
-      - stepId: sync-tasks
-        description: General property-management tasks changed since the cursor.
-        operationId: ChangedTasksRequesttasks_Get
-        parameters:
-          - name: Accept
-            in: header
-            value: application/json
-          - name: Timestamp
-            in: query
-            value: $inputs.timestamp
-        successCriteria:
-          - condition: $statusCode == 200
-  - workflowId: disconnect-portfolio
-    summary: Sever the integration's connection to the customer's current portfolio.
-    description: >-
-      Cannot be undone. The current access token is invalidated and the portfolio user must choose to
-      reconnect. Run this on teardown or revocation only — never as error handling.
-    steps:
-      - stepId: disconnect
-        operationId: DisconnectPortfolioRequestportfoliosdisconnect_Delete
-        parameters:
-          - name: Accept
-            in: header
-            value: application/json
-        successCriteria:
-          - condition: $statusCode == 200
+      Tenancies. Note this collection takes no Timestamp — it returns the full set, filtered only
+      by ContactId, LotId, HasOwnership and IncludeClosed.
+    operationId: TenancyRequesttenancies_Get
+    parameters:
+    - name: Accept
+      in: header
+      value: application/json
+    successCriteria:
+    - condition: $statusCode == 200
+  - stepId: sync-inspections
+    description: Inspections changed since the cursor.
+    operationId: ChangedInspectionsRequestinspections_Get
+    parameters:
+    - name: Accept
+      in: header
+      value: application/json
+    - name: Timestamp
+      in: query
+      value: $inputs.timestamp
+    successCriteria:
+    - condition: $statusCode == 200
+  - stepId: sync-jobtasks
+    description: Maintenance work orders changed since the cursor, in the newer v2 shape.
+    operationId: ChangedJobTaskV2Requestjobtasks_Get
+    parameters:
+    - name: Accept
+      in: header
+      value: application/json
+    - name: Timestamp
+      in: query
+      value: $inputs.timestamp
+    successCriteria:
+    - condition: $statusCode == 200
+  - stepId: sync-tasks
+    description: General property-management tasks changed since the cursor.
+    operationId: ChangedTasksRequesttasks_Get
+    parameters:
+    - name: Accept
+      in: header
+      value: application/json
+    - name: Timestamp
+      in: query
+      value: $inputs.timestamp
+    successCriteria:
+    - condition: $statusCode == 200
+- workflowId: disconnect-portfolio
+  summary: Sever the integration's connection to the customer's current portfolio.
+  description: >-
+    Cannot be undone. The current access token is invalidated and the portfolio user must choose to
+    reconnect. Run this on teardown or revocation only — never as error handling.
+  steps:
+  - stepId: disconnect
+    operationId: DisconnectPortfolioRequestportfoliosdisconnect_Delete
+    parameters:
+    - name: Accept
+      in: header
+      value: application/json
+    successCriteria:
+    - condition: $statusCode == 200

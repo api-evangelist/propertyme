@@ -1,7 +1,7 @@
-generated: '2026-07-26'
-method: generated
-source: openapi/propertyme-openapi.json
-notes: >-
+x-generated: '2026-07-26'
+x-method: generated
+x-source: openapi/propertyme-openapi.json
+x-notes: >-
   Native Arazzo 1.0.1 workflows stitching PropertyMe's own operations into real multi-step use cases.
   Every operationId was grepped verbatim from the published Swagger 2.0 contract. No sandbox exists —
   PropertyMe publishes no test environment, no test credentials and no magic test values — so these

@@ -10,126 +10,126 @@ info:
     /v1/inspections/{id}/... in lower case while the declared path parameter is named Id. This
     workflow uses the DECLARED parameter name, Id.
 sourceDescriptions:
-  - name: propertyme
-    url: ../openapi/propertyme-openapi.json
-    type: openapi
+- name: scopeActivitiesApi
+  url: ../openapi/propertyme-scope-activities-api-openapi.yml
+  type: openapi
 workflows:
-  - workflowId: schedule-inspect-report-close
-    summary: Create an inspection on a property, schedule it, conduct it, file the report and close it.
-    inputs:
-      type: object
-      properties:
-        lotId:
-          type: string
-          description: GUID of the lot (property) being inspected.
-        inspectionId:
-          type: string
-          description: GUID of the inspection once created.
-        reportId:
-          type: string
-          description: GUID of the inspection report.
-      required: [lotId]
-    steps:
-      - stepId: create-inspection
-        description: >-
-          Create the inspection. No idempotency key exists — on a timeout, confirm with
-          SearchInspectionsRequestinspectionssearch_Get filtered by LotId before retrying.
-        operationId: AddInspectionRequestinspections_Post
-        parameters:
-          - name: Accept
-            in: header
-            value: application/json
-        successCriteria:
-          - condition: $statusCode == 200
-      - stepId: read-inspection
-        description: Read current state before transitioning.
-        operationId: GetInspectionRequestinspectionsId_Get
-        parameters:
-          - name: Accept
-            in: header
-            value: application/json
-          - name: Id
-            in: path
-            value: $inputs.inspectionId
-        successCriteria:
-          - condition: $statusCode == 200
-      - stepId: schedule-inspection
-        operationId: ScheduleInspectionRequestinspectionsidschedule_Post
-        parameters:
-          - name: Accept
-            in: header
-            value: application/json
-          - name: Id
-            in: path
-            value: $inputs.inspectionId
-        successCriteria:
-          - condition: $statusCode == 200
-      - stepId: conduct-inspection
-        description: Mark the inspection as conducted.
-        operationId: InspectInspectionRequestinspectionsidinspect_Post
-        parameters:
-          - name: Accept
-            in: header
-            value: application/json
-          - name: Id
-            in: path
-            value: $inputs.inspectionId
-        successCriteria:
-          - condition: $statusCode == 200
-      - stepId: create-report
-        operationId: CreateInspectionReportRequestinspectionsIdreport_Post
-        parameters:
-          - name: Accept
-            in: header
-            value: application/json
-          - name: Id
-            in: path
-            value: $inputs.inspectionId
-        successCriteria:
-          - condition: $statusCode == 200
-      - stepId: update-report
-        description: Revise the report. The operationId ends _Create but the method is PUT.
-        operationId: UpdateInspectionReportRequestinspectionsIdreport_Create
-        parameters:
-          - name: Accept
-            in: header
-            value: application/json
-          - name: Id
-            in: path
-            value: $inputs.inspectionId
-        successCriteria:
-          - condition: $statusCode == 200
-      - stepId: read-report
-        description: The report is fetched by REPORT id on its own path, not under the inspection.
-        operationId: GetInspectionReportRequestinspectionsreportsId_Get
-        parameters:
-          - name: Accept
-            in: header
-            value: application/json
-          - name: Id
-            in: path
-            value: $inputs.reportId
-        successCriteria:
-          - condition: $statusCode == 200
-      - stepId: attach-document
-        operationId: AddInspectionDocumentRequestinspectionsIddocuments_Post
-        parameters:
-          - name: Accept
-            in: header
-            value: application/json
-          - name: Id
-            in: path
-            value: $inputs.inspectionId
-        successCriteria:
-          - condition: $statusCode == 200
-      - stepId: close-inspection
-        operationId: CloseInspectionRequestinspectionsidclose_Post
-        parameters:
-          - name: Accept
-            in: header
-            value: application/json
-          - name: Id
-            in: path
-            value: $inputs.inspectionId
-        successCriteria:
-          - condition: $statusCode == 200
+- workflowId: schedule-inspect-report-close
+  summary: Create an inspection on a property, schedule it, conduct it, file the report and close it.
+  inputs:
+    type: object
+    properties:
+      lotId:
+        type: string
+        description: GUID of the lot (property) being inspected.
+      inspectionId:
+        type: string
+        description: GUID of the inspection once created.
+      reportId:
+        type: string
+        description: GUID of the inspection report.
+    required: [lotId]
+  steps:
+  - stepId: create-inspection
+    description: >-
+      Create the inspection. No idempotency key exists — on a timeout, confirm with
+      SearchInspectionsRequestinspectionssearch_Get filtered by LotId before retrying.
+    operationId: AddInspectionRequestinspections_Post
+    parameters:
+    - name: Accept
+      in: header
+      value: application/json
+    successCriteria:
+    - condition: $statusCode == 200
+  - stepId: read-inspection
+    description: Read current state before transitioning.
+    operationId: GetInspectionRequestinspectionsId_Get
+    parameters:
+    - name: Accept
+      in: header
+      value: application/json
+    - name: Id
+      in: path
+      value: $inputs.inspectionId
+    successCriteria:
+    - condition: $statusCode == 200
+  - stepId: schedule-inspection
+    operationId: ScheduleInspectionRequestinspectionsidschedule_Post
+    parameters:
+    - name: Accept
+      in: header
+      value: application/json
+    - name: Id
+      in: path
+      value: $inputs.inspectionId
+    successCriteria:
+    - condition: $statusCode == 200
+  - stepId: conduct-inspection
+    description: Mark the inspection as conducted.
+    operationId: InspectInspectionRequestinspectionsidinspect_Post
+    parameters:
+    - name: Accept
+      in: header
+      value: application/json
+    - name: Id
+      in: path
+      value: $inputs.inspectionId
+    successCriteria:
+    - condition: $statusCode == 200
+  - stepId: create-report
+    operationId: CreateInspectionReportRequestinspectionsIdreport_Post
+    parameters:
+    - name: Accept
+      in: header
+      value: application/json
+    - name: Id
+      in: path
+      value: $inputs.inspectionId
+    successCriteria:
+    - condition: $statusCode == 200
+  - stepId: update-report
+    description: Revise the report. The operationId ends _Create but the method is PUT.
+    operationId: UpdateInspectionReportRequestinspectionsIdreport_Create
+    parameters:
+    - name: Accept
+      in: header
+      value: application/json
+    - name: Id
+      in: path
+      value: $inputs.inspectionId
+    successCriteria:
+    - condition: $statusCode == 200
+  - stepId: read-report
+    description: The report is fetched by REPORT id on its own path, not under the inspection.
+    operationId: GetInspectionReportRequestinspectionsreportsId_Get
+    parameters:
+    - name: Accept
+      in: header
+      value: application/json
+    - name: Id
+      in: path
+      value: $inputs.reportId
+    successCriteria:
+    - condition: $statusCode == 200
+  - stepId: attach-document
+    operationId: AddInspectionDocumentRequestinspectionsIddocuments_Post
+    parameters:
+    - name: Accept
+      in: header
+      value: application/json
+    - name: Id
+      in: path
+      value: $inputs.inspectionId
+    successCriteria:
+    - condition: $statusCode == 200
+  - stepId: close-inspection
+    operationId: CloseInspectionRequestinspectionsidclose_Post
+    parameters:
+    - name: Accept
+      in: header
+      value: application/json
+    - name: Id
+      in: path
+      value: $inputs.inspectionId
+    successCriteria:
+    - condition: $statusCode == 200
