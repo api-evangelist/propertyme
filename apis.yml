@@ -151,6 +151,9 @@ apis:
   - type: Authentication
     url: authentication/propertyme-openid-configuration.json
 common:
+- type: CapabilityMap
+  url: capabilities/propertyme-capability-edges.yml
+  name: PropertyMe Business Capability Map
 - type: AgenticAccess
   url: agentic-access/propertyme-agentic-access.yml
 - type: DomainSecurity

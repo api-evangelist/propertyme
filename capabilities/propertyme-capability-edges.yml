@@ -1,0 +1,27 @@
+slug: propertyme
+provider: PropertyMe
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Real Estate
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 1
+edges:
+- tag: ' Scope: Activities'
+  spec_file: propertyme-scope-activities-api-openapi.yml
+  capability_id: BC-4940.20
+  capability_id_l1: BC-4940
+  capability_name: Property Maintenance & Work Order Management
+  confidence: 0.72
+  evidence: POST /v1/jobtasks 'Create a new job'; GET /v1/inspections 'List all inspections changed since
+    a given timestamp'; schemas ApproveJobTaskRequest, JobTaskQuoteResponse, InspectionReportPhoto, ConditionEntry
+  reason: Operations create and track maintenance jobs/tasks with contractor quotes and approvals, plus
+    routine property inspections with condition reports — landlord/property-manager-side work order and
+    inspection execution, i.e. Property Maintenance & Work Order Management. Some spill into general task
+    management keeps confidence moderate.
