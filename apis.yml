@@ -24,6 +24,17 @@ description: PropertyMe is an Australian cloud property management and trust acc
   $metadata document and no Universal Property Identifier, which is the expected Australian answer
   because RESO is a North American NAR/MLS construct with no Australian counterpart. PropertyMe publishes
   no open data.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: false
+  label: Hosted service · you call their endpoint
+  confidence: medium
+  source:
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 image: https://www.propertyme.com.au/wp-content/themes/PropertyMe/assets/dist/favicons/android-icon-192x192.png
 tags:
 - Real-Estate
