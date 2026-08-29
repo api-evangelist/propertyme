@@ -9,6 +9,17 @@ info:
     failure. Note a defect in PropertyMe's own contract: the transition paths are templated
     /v1/inspections/{id}/... in lower case while the declared path parameter is named Id. This
     workflow uses the DECLARED parameter name, Id.
+  x-realizes-capability-ids:
+  - BC-4940.20
+  x-capability-derivation:
+    method: 'deterministic join: sourceDescriptions -> per-tag OpenAPI -> tag/capability edge. No classification at this step.'
+    min_confidence: 0.7
+    sources:
+    - capability_id: BC-4940.20
+      capability_name: Property Maintenance & Work Order Management
+      spec: propertyme-scope-activities-api-openapi.yml
+      confidence: 0.72
+    model: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities, CC BY 4.0
 sourceDescriptions:
 - name: scopeActivitiesApi
   url: ../openapi/propertyme-scope-activities-api-openapi.yml
