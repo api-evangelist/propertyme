@@ -1,0 +1,4996 @@
+openapi: 3.2.0
+info:
+  title: 'PropertyMe Scope: Activities API'
+  version: '1.0'
+servers:
+- url: https://app.propertyme.com/api
+tags:
+- name: ' Scope: Activities'
+paths:
+  /v1/tasks:
+    parameters:
+    - $ref: '#/components/parameters/Accept'
+    get:
+      tags:
+      - ' Scope: Activities'
+      summary: List all tasks changed since a given timestamp
+      description: The auth token must contain a scope of activity:read.
+      operationId: ChangedTasksRequesttasks_Get
+      parameters:
+      - name: Timestamp
+        in: query
+        description: Records returned will have a changed timestamp greater than this value
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                title: List<MobTaskQueryData>
+                type: array
+                items:
+                  $ref: '#/components/schemas/MobTaskQueryData'
+        '500':
+          description: An internal error has occurred
+          content:
+            application/json:
+              schema:
+                title: List<MobTaskQueryData>
+                type: array
+                items:
+                  $ref: '#/components/schemas/MobTaskQueryData'
+      deprecated: false
+      security:
+      - Bearer: []
+    post:
+      tags:
+      - ' Scope: Activities'
+      summary: Create a new task
+      description: The auth token must contain a scope of activity:write.
+      operationId: AddTaskRequesttasks_Post
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TaskResponse'
+        '500':
+          description: An internal error has occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TaskResponse'
+        '400':
+          description: Invalid task request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TaskResponse'
+      deprecated: false
+      security:
+      - Bearer: []
+      requestBody:
+        content:
+          application/json:
+            schema: {}
+        description: task contact id
+  /v1/jobtasks:
+    parameters:
+    - $ref: '#/components/parameters/Accept'
+    get:
+      tags:
+      - ' Scope: Activities'
+      summary: List all job tasks changed since a given timestamp
+      description: The auth token must contain a scope of activity:read.
+      operationId: ChangedJobTaskRequestjobtasks_Get
+      parameters:
+      - name: Timestamp
+        in: query
+        description: Records returned will have a changed timestamp greater than this value
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                title: List<MobJobTaskQueryData>
+                type: array
+                items:
+                  $ref: '#/components/schemas/MobJobTaskQueryData'
+        '500':
+          description: An internal error has occurred
+          content:
+            application/json:
+              schema:
+                title: List<MobJobTaskQueryData>
+                type: array
+                items:
+                  $ref: '#/components/schemas/MobJobTaskQueryData'
+        '400':
+          description: Invalid timestamp value
+          content:
+            application/json:
+              schema:
+                title: List<MobJobTaskQueryData>
+                type: array
+                items:
+                  $ref: '#/components/schemas/MobJobTaskQueryData'
+      deprecated: false
+      security:
+      - Bearer: []
+    post:
+      tags:
+      - ' Scope: Activities'
+      summary: Create a new job
+      description: The auth token must contain a scope of activity:write.
+      operationId: AddJobRequestjobtasks_Post
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobTaskResponse'
+        '500':
+          description: An internal error has occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobTaskResponse'
+        '400':
+          description: Invalid job request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobTaskResponse'
+      deprecated: false
+      security:
+      - Bearer: []
+      requestBody:
+        content:
+          application/json:
+            schema: {}
+        description: supplier instructions
+  /v1/inspections:
+    parameters:
+    - $ref: '#/components/parameters/Accept'
+    get:
+      tags:
+      - ' Scope: Activities'
+      summary: List all inspections changed since a given timestamp
+      description: The auth token must contain a scope of activity:read.
+      operationId: ChangedInspectionsRequestinspections_Get
+      parameters:
+      - name: Timestamp
+        in: query
+        description: Records returned will have a changed timestamp greater than this value
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                title: List<ChangedInspectionData>
+                type: array
+                items:
+                  $ref: '#/components/schemas/ChangedInspectionData'
+        '500':
+          description: An internal error has occurred
+          content:
+            application/json:
+              schema:
+                title: List<ChangedInspectionData>
+                type: array
+                items:
+                  $ref: '#/components/schemas/ChangedInspectionData'
+      deprecated: false
+      security:
+      - Bearer: []
+    post:
+      tags:
+      - ' Scope: Activities'
+      summary: Create a new inspection
+      description: The auth token must contain a scope of activity:write.
+      operationId: AddInspectionRequestinspections_Post
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScheduleInspectionResponse'
+        '500':
+          description: An internal error has occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScheduleInspectionResponse'
+        '400':
+          description: Invalid inspection request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScheduleInspectionResponse'
+      deprecated: false
+      security:
+      - Bearer: []
+      requestBody:
+        content:
+          application/json:
+            schema: {}
+        description: listing id for open inspection
+  /v1/tasks/{Id}:
+    parameters:
+    - $ref: '#/components/parameters/Accept'
+    get:
+      tags:
+      - ' Scope: Activities'
+      summary: Find a Task by id
+      description: The auth token must contain a scope of activity:read.
+      operationId: GetTaskRequesttasksId_Get
+      parameters:
+      - name: Id
+        in: query
+        description: The id of the task
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TaskQueryData'
+        '500':
+          description: An internal error has occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TaskQueryData'
+        '400':
+          description: Invalid task id
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TaskQueryData'
+      deprecated: false
+      security:
+      - Bearer: []
+    post:
+      tags:
+      - ' Scope: Activities'
+      summary: update an existing task
+      description: The auth token must contain a scope of activity:write.
+      operationId: UpdateTaskRequesttasksId_Post
+      parameters:
+      - name: Id
+        in: path
+        description: The id of the task
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TaskResponse'
+        '500':
+          description: An internal error has occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TaskResponse'
+        '400':
+          description: Invalid task request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TaskResponse'
+      deprecated: false
+      security:
+      - Bearer: []
+      requestBody:
+        content:
+          application/json:
+            schema: {}
+        description: task manager member id
+  /v1/jobtasks/{Id}:
+    parameters:
+    - $ref: '#/components/parameters/Accept'
+    get:
+      tags:
+      - ' Scope: Activities'
+      summary: Find a job task by id
+      description: The auth token must contain a scope of activity:read.
+      operationId: JobTaskRequestjobtasksId_Get
+      parameters:
+      - name: Id
+        in: path
+        description: Id of the job task
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobTaskQueryData'
+        '500':
+          description: An internal error has occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobTaskQueryData'
+        '400':
+          description: Invalid id
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobTaskQueryData'
+      deprecated: false
+      security:
+      - Bearer: []
+    post:
+      tags:
+      - ' Scope: Activities'
+      summary: Update an existing job
+      description: The auth token must contain a scope of activity:write.
+      operationId: UpdateJobRequestjobtasksId_Post
+      parameters:
+      - name: Id
+        in: path
+        description: Job Id
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobTaskResponse'
+        '500':
+          description: An internal error has occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobTaskResponse'
+        '400':
+          description: Invalid job request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobTaskResponse'
+      deprecated: false
+      security:
+      - Bearer: []
+      requestBody:
+        content:
+          application/json:
+            schema: {}
+        description: supplier instructions
+  /v1/jobtasks/search:
+    parameters:
+    - $ref: '#/components/parameters/Accept'
+    get:
+      tags:
+      - ' Scope: Activities'
+      summary: Search job task based on due date, created date and status
+      description: The auth token must contain a scope of activity:read.
+      operationId: SearchJobTaskRequestjobtaskssearch_Get
+      parameters:
+      - name: DueDateMin
+        in: query
+        description: From Due Date (yyyy-MM-dd in UTC)
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: DueDateMax
+        in: query
+        description: To Due Date (yyyy-MM-dd in UTC). Allowed date range is 10 days
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: DateCreatedMin
+        in: query
+        description: From Created Date (yyyy-MM-dd in UTC)
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: DateCreatedMax
+        in: query
+        description: To Created Date (yyyy-MM-dd in UTC). Allowed date range is 10 days
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: Status
+        in: query
+        description: Job task status
+        required: false
+        schema:
+          type: string
+      - name: Offset
+        in: query
+        description: The number of rows to skip before beginning to return rows. An offset of 0 is the same as omitting the offset parameter.
+        required: true
+        schema:
+          type: integer
+          format: int32
+      - name: Limit
+        in: query
+        description: The maximum number of results to be returned(Max value is 100). There may be less if the query returned less than the maximum.
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                title: List<JobQueryData>
+                type: array
+                items:
+                  $ref: '#/components/schemas/JobQueryData'
+        '500':
+          description: An internal error has occurred
+          content:
+            application/json:
+              schema:
+                title: List<JobQueryData>
+                type: array
+                items:
+                  $ref: '#/components/schemas/JobQueryData'
+        '400':
+          description: Invalid id
+          content:
+            application/json:
+              schema:
+                title: List<JobQueryData>
+                type: array
+                items:
+                  $ref: '#/components/schemas/JobQueryData'
+      deprecated: false
+      security:
+      - Bearer: []
+  /v1/inspections/{id}:
+    parameters:
+    - $ref: '#/components/parameters/Accept'
+    post:
+      tags:
+      - ' Scope: Activities'
+      summary: Update an existing inspection
+      description: The auth token must contain a scope of activity:write.
+      operationId: UpdateInspectionRequestinspectionsid_Post
+      parameters:
+      - name: Id
+        in: path
+        description: Inspection Id
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScheduleInspectionResponse'
+        '500':
+          description: An internal error has occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScheduleInspectionResponse'
+        '400':
+          description: Invalid inspection request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScheduleInspectionResponse'
+      deprecated: false
+      security:
+      - Bearer: []
+      requestBody:
+        content:
+          application/json:
+            schema: {}
+        description: listing id for open inspection
+    delete:
+      tags:
+      - ' Scope: Activities'
+      summary: Delete the inspection
+      description: The auth token must contain a scope of activity:write.
+      operationId: DeleteInspectionRequestinspectionsid_Delete
+      parameters:
+      - name: Id
+        in: path
+        description: Inspection Id
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseBase'
+        '500':
+          description: An internal error has occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseBase'
+        '400':
+          description: Invalid inspection request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseBase'
+      deprecated: false
+      security:
+      - Bearer: []
+  /v1/inspections/{Id}:
+    parameters:
+    - $ref: '#/components/parameters/Accept'
+    get:
+      tags:
+      - ' Scope: Activities'
+      summary: Find an inspection by id
+      description: The auth token must contain a scope of activity:read.
+      operationId: GetInspectionRequestinspectionsId_Get
+      parameters:
+      - name: Id
+        in: query
+        description: Inspection Id
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetInspectionResponse'
+        '500':
+          description: An internal error has occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetInspectionResponse'
+        '400':
+          description: Invalid inspection id
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetInspectionResponse'
+      deprecated: false
+      security:
+      - Bearer: []
+  /v1/inspections/search:
+    parameters:
+    - $ref: '#/components/parameters/Accept'
+    get:
+      tags:
+      - ' Scope: Activities'
+      summary: Search all inspections by contact id and/or lot id
+      description: The auth token must contain a scope of activity:read.
+      operationId: SearchInspectionsRequestinspectionssearch_Get
+      parameters:
+      - name: ContactId
+        in: query
+        description: Id of the contact
+        required: false
+        schema:
+          type: string
+      - name: LotId
+        in: query
+        description: Id of the property
+        required: false
+        schema:
+          type: string
+      - name: Offset
+        in: query
+        description: The number of rows to skip before beginning to return rows. An offset of 0 is the same as omitting the offset parameter.
+        required: true
+        schema:
+          type: integer
+          format: int32
+      - name: Limit
+        in: query
+        description: The maximum number of results to be returned. There may be less if the query returned less than the maximum.
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                title: List<InspectionTask>
+                type: array
+                items:
+                  $ref: '#/components/schemas/InspectionTask'
+        '500':
+          description: An internal error has occurred
+          content:
+            application/json:
+              schema:
+                title: List<InspectionTask>
+                type: array
+                items:
+                  $ref: '#/components/schemas/InspectionTask'
+        '400':
+          description: Invalid contact and/or lot id(s)
+          content:
+            application/json:
+              schema:
+                title: List<InspectionTask>
+                type: array
+                items:
+                  $ref: '#/components/schemas/InspectionTask'
+      deprecated: false
+      security:
+      - Bearer: []
+  /v1/inspections/query:
+    parameters:
+    - $ref: '#/components/parameters/Accept'
+    get:
+      tags:
+      - ' Scope: Activities'
+      summary: Query all inspections
+      description: The auth token must contain a scope of activity:read.
+      operationId: QueryInspectionRequestinspectionsquery_Get
+      parameters:
+      - name: DueDateMin
+        in: query
+        description: From Due Date (yyyy-MM-dd)
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: DueDateMax
+        in: query
+        description: To Due Date (yyyy-MM-dd)
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: Type
+        in: query
+        description: Inspection type can be one of Routine, Entry, Exit and Open
+        required: false
+        schema:
+          type: string
+      - name: Status
+        in: query
+        description: Inspection task status. Can be one of Planned, Scheduled, ReScheduled, Inspected, Closed, Cancelled
+        required: false
+        schema:
+          type: string
+      - name: Published
+        in: query
+        description: Inspection is published. Can be Yes, No, empty
+        required: false
+        schema:
+          type: string
+      - name: MemberOrTeam
+        in: query
+        description: Inspection property member or team Id(Guid)
+        required: false
+        schema:
+          type: string
+      - name: TaskMemberOrTeam
+        in: query
+        description: Inspection task member or team Id(Guid)
+        required: false
+        schema:
+          type: string
+      - name: Label
+        in: query
+        description: Inspection task label
+        required: false
+        schema:
+          type: string
+      - name: Offset
+        in: query
+        description: The number of rows to skip before beginning to return rows. An offset of 0 is the same as omitting the offset parameter.
+        required: true
+        schema:
+          type: integer
+          format: int32
+      - name: Limit
+        in: query
+        description: The maximum number of results to be returned. There may be less if the query returned less than the maximum.
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                title: List<InspectionDataTableRow>
+                type: array
+                items:
+                  $ref: '#/components/schemas/InspectionDataTableRow'
+        '500':
+          description: An internal error has occurred
+          content:
+            application/json:
+              schema:
+                title: List<InspectionDataTableRow>
+                type: array
+                items:
+                  $ref: '#/components/schemas/InspectionDataTableRow'
+        '400':
+          description: Invalid status
+          content:
+            application/json:
+              schema:
+                title: List<InspectionDataTableRow>
+                type: array
+                items:
+                  $ref: '#/components/schemas/InspectionDataTableRow'
+      deprecated: false
+      security:
+      - Bearer: []
+  /v1/tasks/{Id}/comments:
+    parameters:
+    - $ref: '#/components/parameters/Accept'
+    post:
+      tags:
+      - ' Scope: Activities'
+      summary: Create a new comment for a given task
+      description: The auth token must contain a scope of activity:write.
+      operationId: AddTaskCommentRequesttasksIdcomments_Post
+      parameters:
+      - name: Id
+        in: path
+        description: The id of the task
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseBase'
+        '500':
+          description: An internal error has occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseBase'
+        '400':
+          description: Invalid task id
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseBase'
+      deprecated: false
+      security:
+      - Bearer: []
+      requestBody:
+        content:
+          application/json:
+            schema: {}
+        description: comment
+  /v1/tasks/{Id}/documents:
+    parameters:
+    - $ref: '#/components/parameters/Accept'
+    post:
+      tags:
+      - ' Scope: Activities'
+      summary: Create a new document for a given task
+      description: The auth token must contain a scope of Activity:write.
+      operationId: AddTaskDocumentRequesttasksIddocuments_Post
+      parameters:
+      - name: Id
+        in: path
+        description: Id of the task
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseBase'
+        '500':
+          description: An internal error has occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseBase'
+        '400':
+          description: Invalid task id
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseBase'
+      deprecated: false
+      security:
+      - Bearer: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddTaskDocumentRequest'
+  /v1/tasks/{Id}/images:
+    parameters:
+    - $ref: '#/components/parameters/Accept'
+    get:
+      tags:
+      - ' Scope: Activities'
+      summary: List all images for a given task
+      description: The auth token must contain a scope of activity:read.
+      operationId: GetTaskImagestasksIdimages_Get
+      parameters:
+      - name: Id
+        in: path
+        description: Id of the task
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                title: List<QueryDocumentData>
+                type: array
+                items:
+                  $ref: '#/components/schemas/QueryDocumentData'
+        '500':
+          description: An internal error has occurred
+          content:
+            application/json:
+              schema:
+                title: List<QueryDocumentData>
+                type: array
+                items:
+                  $ref: '#/components/schemas/QueryDocumentData'
+        '400':
+          description: Invalid task id
+          content:
+            application/json:
+              schema:
+                title: List<QueryDocumentData>
+                type: array
+                items:
+                  $ref: '#/components/schemas/QueryDocumentData'
+      deprecated: false
+      security:
+      - Bearer: []
+  /v1/tasks/{Id}/members:
+    parameters:
+    - $ref: '#/components/parameters/Accept'
+    get:
+      tags:
+      - ' Scope: Activities'
+      summary: Find a Task manager by task id
+      description: The auth token must contain a scope of activity:read.
+      operationId: GetTaskManagerRequesttasksIdmembers_Get
+      parameters:
+      - name: Id
+        in: query
+        description: The id of the task
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerMemberData'
+        '500':
+          description: An internal error has occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerMemberData'
+        '400':
+          description: Invalid task id
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerMemberData'
+      deprecated: false
+      security:
+      - Bearer: []
+  /v1/jobtasks/{Id}/assign:
+    parameters:
+    - $ref: '#/components/parameters/Accept'
+    post:
+      tags:
+      - ' Scope: Activities'
+      summary: Update the supplier of a job
+      description: The auth token must contain a scope of Activity:write.
+      operationId: AssignTaskRequestjobtasksIdassign_Post
+      parameters:
+      - name: Id
+        in: path
+        description: Id of the job
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobTaskResponse'
+        '500':
+          description: An internal error has occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobTaskResponse'
+        '400':
+          description: Invalid job id
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobTaskResponse'
+      deprecated: false
+      security:
+      - Bearer: []
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AssignTaskRequest'
+  /v1/jobtasks/{Id}/comments:
+    parameters:
+    - $ref: '#/components/parameters/Accept'
+    post:
+      tags:
+      - ' Scope: Activities'
+      summary: Create a new comment for a given job
+      description: The auth token must contain a scope of activity:write.
+      operationId: AddJobCommentRequestjobtasksIdcomments_Post
+      parameters:
+      - name: Id
+        in: path
+        description: The id of the job
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseBase'
+        '500':
+          description: An internal error has occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseBase'
+        '400':
+          description: Invalid job id
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseBase'
+      deprecated: false
+      security:
+      - Bearer: []
+      requestBody:
+        content:
+          application/json:
+            schema: {}
+        description: comment
+  /v1/jobtasks/{Id}/documents:
+    parameters:
+    - $ref: '#/components/parameters/Accept'
+    get:
+      tags:
+      - ' Scope: Activities'
+      summary: List all documents for a given job
+      description: The auth token must contain a scope of activity:read.
+      operationId: GetJobDocumentsjobtasksIddocuments_Get
+      parameters:
+      - name: Id
+        in: path
+        description: Id of the job
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                title: List<QueryDocumentData>
+                type: array
+                items:
+                  $ref: '#/components/schemas/QueryDocumentData'
+        '500':
+          description: An internal error has occurred
+          content:
+            application/json:
+              schema:
+                title: List<QueryDocumentData>
+                type: array
+                items:
+                  $ref: '#/components/schemas/QueryDocumentData'
+        '400':
+          description: Invalid job id
+          content:
+            application/json:
+              schema:
+                title: List<QueryDocumentData>
+                type: array
+                items:
+                  $ref: '#/components/schemas/QueryDocumentData'
+      deprecated: false
+      security:
+      - Bearer: []
+    post:
+      tags:
+      - ' Scope: Activities'
+      summary: Create a new document for a given job
+      description: The auth token must contain a scope of Activity:write.
+      operationId: AddJobDocumentsRequestjobtasksIddocuments_Post
+      parameters:
+      - name: Id
+        in: path
+        description: Id of the job
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseBase'
+        '500':
+          description: An internal error has occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseBase'
+        '400':
+          description: Invalid job id
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseBase'
+      deprecated: false
+      security:
+      - Bearer: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddJobDocumentsRequest'
+  /v1/jobtasks/{Id}/images:
+    parameters:
+    - $ref: '#/components/parameters/Accept'
+    get:
+      tags:
+      - ' Scope: Activities'
+      summary: List all images for a given job
+      description: The auth token must contain a scope of activity:read.
+      operationId: GetJobImagesjobtasksIdimages_Get
+      parameters:
+      - name: Id
+        in: path
+        description: Id of the job
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                title: List<QueryDocumentData>
+                type: array
+                items:
+                  $ref: '#/components/schemas/QueryDocumentData'
+        '500':
+          description: An internal error has occurred
+          content:
+            application/json:
+              schema:
+                title: List<QueryDocumentData>
+                type: array
+                items:
+                  $ref: '#/components/schemas/QueryDocumentData'
+        '400':
+          description: Invalid job id
+          content:
+            application/json:
+              schema:
+                title: List<QueryDocumentData>
+                type: array
+                items:
+                  $ref: '#/components/schemas/QueryDocumentData'
+      deprecated: false
+      security:
+      - Bearer: []
+    post:
+      tags:
+      - ' Scope: Activities'
+      summary: Create a new image for a given job
+      description: The auth token must contain a scope of Activity:write.
+      operationId: AddJobImagesRequestjobtasksIdimages_Post
+      parameters:
+      - name: Id
+        in: path
+        description: Id of the job
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseBase'
+        '500':
+          description: An internal error has occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseBase'
+        '400':
+          description: Invalid job id
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseBase'
+      deprecated: false
+      security:
+      - Bearer: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddJobImagesRequest'
+  /v1/jobtasks/{Id}/members:
+    parameters:
+    - $ref: '#/components/parameters/Accept'
+    get:
+      tags:
+      - ' Scope: Activities'
+      summary: Find a job task manager by job id
+      description: The auth token must contain a scope of activity:read.
+      operationId: JobTaskManagerRequestjobtasksIdmembers_Get
+      parameters:
+      - name: Id
+        in: path
+        description: Id of the job task
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerMemberData'
+        '500':
+          description: An internal error has occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerMemberData'
+        '400':
+          description: Invalid id
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerMemberData'
+      deprecated: false
+      security:
+      - Bearer: []
+  /v1/jobtasks/{Id}/quotation:
+    parameters:
+    - $ref: '#/components/parameters/Accept'
+    post:
+      tags:
+      - ' Scope: Activities'
+      summary: Create a new quotation for the job task
+      description: The auth token must contain a scope of activity:write.
+      operationId: AddJobTasksQuotationRequestjobtasksIdquotation_Post
+      parameters:
+      - name: Id
+        in: path
+        description: Id of the job
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobTaskQuoteResponse'
+        '500':
+          description: An internal error has occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobTaskQuoteResponse'
+        '400':
+          description: Invalid job request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobTaskQuoteResponse'
+      deprecated: false
+      security:
+      - Bearer: []
+      requestBody:
+        content:
+          application/json:
+            schema: {}
+        description: Amount
+        required: true
+  /v1/jobtasks/{Id}/quotations:
+    parameters:
+    - $ref: '#/components/parameters/Accept'
+    get:
+      tags:
+      - ' Scope: Activities'
+      summary: List all the quotation for a job task
+      description: The auth token must contain a scope of activity:read.
+      operationId: GetJobTasksQuotationRequestjobtasksIdquotations_Get
+      parameters:
+      - name: Id
+        in: path
+        description: Id of the job
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobTaskQuoteData'
+        '500':
+          description: An internal error has occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobTaskQuoteData'
+        '400':
+          description: Invalid timestamp value
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobTaskQuoteData'
+      deprecated: false
+      security:
+      - Bearer: []
+  /v1/jobtasks/{Id}/approve:
+    parameters:
+    - $ref: '#/components/parameters/Accept'
+    post:
+      tags:
+      - ' Scope: Activities'
+      summary: Update the job task status to Approved
+      description: The auth token must contain a scope of Activity:write.
+      operationId: ApproveJobTaskRequestjobtasksIdapprove_Post
+      parameters:
+      - name: Id
+        in: path
+        description: Id of the job
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobTaskResponse'
+        '500':
+          description: An internal error has occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobTaskResponse'
+        '400':
+          description: Invalid job id
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobTaskResponse'
+      deprecated: false
+      security:
+      - Bearer: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ApproveJobTaskRequest'
+  /v1/jobtasks/{Id}/complete:
+    parameters:
+    - $ref: '#/components/parameters/Accept'
+    post:
+      tags:
+      - ' Scope: Activities'
+      summary: Update the job task status to Complete
+      description: The auth token must contain a scope of Activity:write.
+      operationId: CompleteJobTaskRequestjobtasksIdcomplete_Post
+      parameters:
+      - name: Id
+        in: path
+        description: Id of the job
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobTaskResponse'
+        '500':
+          description: An internal error has occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobTaskResponse'
+        '400':
+          description: Invalid job id
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobTaskResponse'
+      deprecated: false
+      security:
+      - Bearer: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CompleteJobTaskRequest'
+  /v1/jobtasks/{Id}/reject:
+    parameters:
+    - $ref: '#/components/parameters/Accept'
+    post:
+      tags:
+      - ' Scope: Activities'
+      summary: Update the job task status to Rejected
+      description: The auth token must contain a scope of Activity:write.
+      operationId: RejectJobTaskRequestjobtasksIdreject_Post
+      parameters:
+      - name: Id
+        in: path
+        description: Id of the job
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobTaskResponse'
+        '500':
+          description: An internal error has occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobTaskResponse'
+        '400':
+          description: Invalid job id
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobTaskResponse'
+      deprecated: false
+      security:
+      - Bearer: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RejectJobTaskRequest'
+  /v1/jobtasks/{Id}/reopen:
+    parameters:
+    - $ref: '#/components/parameters/Accept'
+    post:
+      tags:
+      - ' Scope: Activities'
+      summary: Update the job task status to Reopened
+      description: The auth token must contain a scope of Activity:write.
+      operationId: ReopenJobTaskRequestjobtasksIdreopen_Post
+      parameters:
+      - name: Id
+        in: path
+        description: Id of the job
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobTaskResponse'
+        '500':
+          description: An internal error has occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobTaskResponse'
+        '400':
+          description: Invalid job id
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobTaskResponse'
+      deprecated: false
+      security:
+      - Bearer: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReopenJobTaskRequest'
+  /v1/inspections/{id}/close:
+    parameters:
+    - $ref: '#/components/parameters/Accept'
+    post:
+      tags:
+      - ' Scope: Activities'
+      summary: Close the inspection
+      description: The auth token must contain a scope of activity:write.
+      operationId: CloseInspectionRequestinspectionsidclose_Post
+      parameters:
+      - name: Id
+        in: path
+        description: Inspection Id
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseBase'
+        '500':
+          description: An internal error has occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseBase'
+        '400':
+          description: Invalid inspection request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseBase'
+      deprecated: false
+      security:
+      - Bearer: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CloseInspectionRequest'
+  /v1/inspections/{Id}/comments:
+    parameters:
+    - $ref: '#/components/parameters/Accept'
+    post:
+      tags:
+      - ' Scope: Activities'
+      summary: Create a new comment for a given inspection
+      description: The auth token must contain a scope of activity:write.
+      operationId: AddInspectionCommentRequestinspectionsIdcomments_Post
+      parameters:
+      - name: Id
+        in: path
+        description: The id of the inspection
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseBase'
+        '500':
+          description: An internal error has occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseBase'
+        '400':
+          description: Invalid inspection id
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseBase'
+      deprecated: false
+      security:
+      - Bearer: []
+      requestBody:
+        content:
+          application/json:
+            schema: {}
+        description: comment
+  /v1/inspections/{Id}/documents:
+    parameters:
+    - $ref: '#/components/parameters/Accept'
+    post:
+      tags:
+      - ' Scope: Activities'
+      summary: Create a new document for a given inspection
+      description: The auth token must contain a scope of Activity:write.
+      operationId: AddInspectionDocumentRequestinspectionsIddocuments_Post
+      parameters:
+      - name: Id
+        in: path
+        description: Id of the inspection
+        required: true
+        schema:
+          type: string
+      - name: IsClientVisible
+        in: query
+        description: Visible on the owner portal
+        required: false
+        schema:
+          type: boolean
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseBase'
+        '500':
+          description: An internal error has occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseBase'
+        '400':
+          description: Invalid inspection id
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseBase'
+      deprecated: false
+      security:
+      - Bearer: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddInspectionDocumentRequest'
+  /v1/inspections/{Id}/images:
+    parameters:
+    - $ref: '#/components/parameters/Accept'
+    get:
+      tags:
+      - ' Scope: Activities'
+      summary: List all images for a given inspection
+      description: The auth token must contain a scope of activity:read.
+      operationId: GetInspectionsImagesinspectionsIdimages_Get
+      parameters:
+      - name: Id
+        in: path
+        description: Id of the inspection
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                title: List<QueryDocumentData>
+                type: array
+                items:
+                  $ref: '#/components/schemas/QueryDocumentData'
+        '500':
+          description: An internal error has occurred
+          content:
+            application/json:
+              schema:
+                title: List<QueryDocumentData>
+                type: array
+                items:
+                  $ref: '#/components/schemas/QueryDocumentData'
+        '400':
+          description: Invalid inspection id
+          content:
+            application/json:
+              schema:
+                title: List<QueryDocumentData>
+                type: array
+                items:
+                  $ref: '#/components/schemas/QueryDocumentData'
+      deprecated: false
+      security:
+      - Bearer: []
+  /v1/inspections/{id}/inspect:
+    parameters:
+    - $ref: '#/components/parameters/Accept'
+    post:
+      tags:
+      - ' Scope: Activities'
+      summary: Inspect the inspection
+      description: The auth token must contain a scope of activity:write.
+      operationId: InspectInspectionRequestinspectionsidinspect_Post
+      parameters:
+      - name: Id
+        in: path
+        description: Inspection Id
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseBase'
+        '500':
+          description: An internal error has occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseBase'
+        '400':
+          description: Invalid inspection request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseBase'
+      deprecated: false
+      security:
+      - Bearer: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InspectInspectionRequest'
+  /v1/inspections/status/{Status}:
+    parameters:
+    - $ref: '#/components/parameters/Accept'
+    get:
+      tags:
+      - ' Scope: Activities'
+      summary: List all inspections
+      description: The auth token must contain a scope of activity:read.
+      operationId: GetInspectionsRequestinspectionsstatusStatus_Get
+      parameters:
+      - name: Status
+        in: path
+        description: Inspection task status. Can be one of Planned, Scheduled, ReScheduled, Inspected, Closed, Cancelled
+        required: true
+        schema:
+          type: string
+      - name: Offset
+        in: query
+        description: The number of rows to skip before beginning to return rows. An offset of 0 is the same as omitting the offset parameter.
+        required: true
+        schema:
+          type: integer
+          format: int32
+      - name: Limit
+        in: query
+        description: The maximum number of results to be returned. There may be less if the query returned less than the maximum.
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                title: List<InspectionDataTableRow>
+                type: array
+                items:
+                  $ref: '#/components/schemas/InspectionDataTableRow'
+        '500':
+          description: An internal error has occurred
+          content:
+            application/json:
+              schema:
+                title: List<InspectionDataTableRow>
+                type: array
+                items:
+                  $ref: '#/components/schemas/InspectionDataTableRow'
+        '400':
+          description: Invalid status
+          content:
+            application/json:
+              schema:
+                title: List<InspectionDataTableRow>
+                type: array
+                items:
+                  $ref: '#/components/schemas/InspectionDataTableRow'
+      deprecated: false
+      security:
+      - Bearer: []
+  /v1/inspections/Members/{Id}:
+    parameters:
+    - $ref: '#/components/parameters/Accept'
+    get:
+      tags:
+      - ' Scope: Activities'
+      summary: Find an inspection manager by id
+      description: The auth token must contain a scope of activity:read.
+      operationId: GetInspectionManagerRequestinspectionsMembersId_Get
+      parameters:
+      - name: Id
+        in: query
+        description: Inspection Id
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerMemberData'
+        '500':
+          description: An internal error has occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerMemberData'
+        '400':
+          description: Invalid inspection id
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerMemberData'
+      deprecated: false
+      security:
+      - Bearer: []
+  /v1/inspections/{id}/reopen:
+    parameters:
+    - $ref: '#/components/parameters/Accept'
+    post:
+      tags:
+      - ' Scope: Activities'
+      summary: Reopen the closed inspection
+      description: The auth token must contain a scope of activity:write.
+      operationId: ReopenInspectionRequestinspectionsidreopen_Post
+      parameters:
+      - name: Id
+        in: path
+        description: Inspection Id
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseBase'
+        '500':
+          description: An internal error has occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseBase'
+        '400':
+          description: Invalid inspection request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseBase'
+      deprecated: false
+      security:
+      - Bearer: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReopenInspectionRequest'
+  /v1/inspections/{id}/reschedule:
+    parameters:
+    - $ref: '#/components/parameters/Accept'
+    post:
+      tags:
+      - ' Scope: Activities'
+      summary: Reschedule the inspection
+      description: The auth token must contain a scope of activity:write.
+      operationId: RescheduleInspectionRequestinspectionsidreschedule_Post
+      parameters:
+      - name: Id
+        in: path
+        description: Inspection Id
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseBase'
+        '500':
+          description: An internal error has occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseBase'
+        '400':
+          description: Invalid inspection request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseBase'
+      deprecated: false
+      security:
+      - Bearer: []
+      requestBody:
+        content:
+          application/json:
+            schema: {}
+        description: Inspection duration length
+        required: true
+  /v1/inspections/{id}/schedule:
+    parameters:
+    - $ref: '#/components/parameters/Accept'
+    post:
+      tags:
+      - ' Scope: Activities'
+      summary: Change the inspection status to scheduled
+      description: The auth token must contain a scope of activity:write.
+      operationId: ScheduleInspectionRequestinspectionsidschedule_Post
+      parameters:
+      - name: Id
+        in: path
+        description: Inspection Id
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseBase'
+        '500':
+          description: An internal error has occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseBase'
+        '400':
+          description: Invalid inspection request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseBase'
+      deprecated: false
+      security:
+      - Bearer: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ScheduleInspectionRequest'
+  /v1/inspections/reports/{Id}:
+    parameters:
+    - $ref: '#/components/parameters/Accept'
+    get:
+      tags:
+      - ' Scope: Activities'
+      summary: Find an inspection report by id
+      description: The auth token must contain a scope of activity:read.
+      operationId: GetInspectionReportRequestinspectionsreportsId_Get
+      parameters:
+      - name: Id
+        in: query
+        description: Inspection report Id
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetReportDetailedResponse'
+        '500':
+          description: An internal error has occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetReportDetailedResponse'
+        '400':
+          description: Invalid inspection id
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetReportDetailedResponse'
+      deprecated: false
+      security:
+      - Bearer: []
+  /v1/inspections/{Id}/report:
+    parameters:
+    - $ref: '#/components/parameters/Accept'
+    put:
+      tags:
+      - ' Scope: Activities'
+      summary: Update an existing inspection report
+      description: The auth token must contain a scope of activity:write.
+      operationId: UpdateInspectionReportRequestinspectionsIdreport_Create
+      parameters:
+      - name: Id
+        in: path
+        description: Inspection Task Id of this report
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseBase'
+        '500':
+          description: An internal error has occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseBase'
+        '400':
+          description: Invalid inspection request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseBase'
+      deprecated: false
+      security:
+      - Bearer: []
+      requestBody:
+        content:
+          application/json:
+            schema: {}
+        description: The old Report Id to be replaced, the old report will be deleted
+    post:
+      tags:
+      - ' Scope: Activities'
+      summary: Create a new inspection report
+      description: The auth token must contain a scope of activity:write.
+      operationId: CreateInspectionReportRequestinspectionsIdreport_Post
+      parameters:
+      - name: Id
+        in: path
+        description: Inspection Task Id that this report is created for
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InspectionReportResponse'
+        '500':
+          description: An internal error has occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InspectionReportResponse'
+        '400':
+          description: Invalid inspection request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InspectionReportResponse'
+      deprecated: false
+      security:
+      - Bearer: []
+      requestBody:
+        content:
+          application/json:
+            schema: {}
+        description: Specify the template to use for this report
+  /v1/dashboards/activities/{Type}:
+    parameters:
+    - $ref: '#/components/parameters/Accept'
+    get:
+      tags:
+      - ' Scope: Activities'
+      summary: List dashboard activities by a given type
+      description: The auth token must contain a scope of communication:read.
+      operationId: ActivityDashboardRequestdashboardsactivitiesType_Get
+      parameters:
+      - name: Type
+        in: path
+        description: 'The available dashboard type: Jobs, Inspections, InspectionPlanning, Tasks'
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DashboardResponse'
+        '502':
+          description: Dashboard type is not supplied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DashboardResponse'
+        '500':
+          description: An internal error has occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DashboardResponse'
+      deprecated: false
+      security:
+      - Bearer: []
+  /v1/jobtasks/{Id}/quotation/{QuoteId}:
+    parameters:
+    - $ref: '#/components/parameters/Accept'
+    post:
+      tags:
+      - ' Scope: Activities'
+      summary: Update an existing quotation for the job task
+      description: The auth token must contain a scope of activity:write.
+      operationId: UpdateJobTasksQuotationRequestjobtasksIdquotationQuoteId_Post
+      parameters:
+      - name: Id
+        in: path
+        description: Job Id
+        required: true
+        schema:
+          type: string
+      - name: QuoteId
+        in: path
+        description: Quotation Id
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobTaskQuoteResponse'
+        '500':
+          description: An internal error has occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobTaskQuoteResponse'
+        '400':
+          description: Invalid job request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobTaskQuoteResponse'
+      deprecated: false
+      security:
+      - Bearer: []
+      requestBody:
+        content:
+          application/json:
+            schema: {}
+        description: Amount
+        required: true
+  /v2/jobtasks/{Id}:
+    parameters:
+    - $ref: '#/components/parameters/Accept'
+    get:
+      tags:
+      - ' Scope: Activities'
+      summary: Find a job task by id
+      description: The auth token must contain a scope of activity:read.
+      operationId: JobTaskV2RequestjobtasksId_Get
+      parameters:
+      - name: Id
+        in: path
+        description: Id of the job task
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobTaskV2QueryData'
+        '500':
+          description: An internal error has occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobTaskV2QueryData'
+        '400':
+          description: Invalid id
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobTaskV2QueryData'
+      deprecated: false
+      security:
+      - Bearer: []
+    post:
+      tags:
+      - ' Scope: Activities'
+      summary: Update an existing job
+      description: The auth token must contain a scope of activity:write.
+      operationId: UpdateJobV2RequestjobtasksId_Post
+      parameters:
+      - name: Id
+        in: path
+        description: Job Id
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobTaskResponse'
+        '500':
+          description: An internal error has occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobTaskResponse'
+        '400':
+          description: Invalid job request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobTaskResponse'
+      deprecated: false
+      security:
+      - Bearer: []
+      requestBody:
+        content:
+          application/json:
+            schema: {}
+        description: job priority
+  /v2/jobtasks/search:
+    parameters:
+    - $ref: '#/components/parameters/Accept'
+    get:
+      tags:
+      - ' Scope: Activities'
+      summary: Search job task based on due date, created date and status
+      description: The auth token must contain a scope of activity:read.
+      operationId: SearchJobTaskV2Requestjobtaskssearch_Get
+      parameters:
+      - name: DueDateMin
+        in: query
+        description: From Due Date (yyyy-MM-dd in UTC)
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: DueDateMax
+        in: query
+        description: To Due Date (yyyy-MM-dd in UTC). Allowed date range is 10 days
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: DateCreatedMin
+        in: query
+        description: From Created Date (yyyy-MM-dd in UTC)
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: DateCreatedMax
+        in: query
+        description: To Created Date (yyyy-MM-dd in UTC). Allowed date range is 10 days
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: Status
+        in: query
+        description: Job task status
+        required: false
+        schema:
+          type: string
+          enum:
+          - Pending
+          - Reported
+          - Quoted
+          - Approved
+          - Assigned
+          - Finished
+          - Closed
+          - Rejected
+          - Completed
+          - Cancelled
+      - name: Offset
+        in: query
+        description: The number of rows to skip before beginning to return rows. An offset of 0 is the same as omitting the offset parameter.
+        required: true
+        schema:
+          type: integer
+          format: int32
+      - name: Limit
+        in: query
+        description: The maximum number of results to be returned(Max value is 100). There may be less if the query returned less than the maximum.
+        required: true
+        schema:
+          type: integer
+          format: int32
+      - name: Priority
+        in: query
+        description: Job priority
+        required: false
+        schema:
+          type: string
+          enum:
+          - Low
+          - Medium
+          - High
+          - Urgent
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                title: List<JobQueryV2Data>
+                type: array
+                items:
+                  $ref: '#/components/schemas/JobQueryV2Data'
+        '500':
+          description: An internal error has occurred
+          content:
+            application/json:
+              schema:
+                title: List<JobQueryV2Data>
+                type: array
+                items:
+                  $ref: '#/components/schemas/JobQueryV2Data'
+        '400':
+          description: Invalid id
+          content:
+            application/json:
+              schema:
+                title: List<JobQueryV2Data>
+                type: array
+                items:
+                  $ref: '#/components/schemas/JobQueryV2Data'
+      deprecated: false
+      security:
+      - Bearer: []
+  /v2/jobtasks:
+    parameters:
+    - $ref: '#/components/parameters/Accept'
+    get:
+      tags:
+      - ' Scope: Activities'
+      summary: List all job tasks changed since a given timestamp
+      description: The auth token must contain a scope of activity:read.
+      operationId: ChangedJobTaskV2Requestjobtasks_Get
+      parameters:
+      - name: Timestamp
+        in: query
+        description: Records returned will have a changed timestamp greater than this value
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                title: List<IntegratorJobTaskV2QueryData>
+                type: array
+                items:
+                  $ref: '#/components/schemas/IntegratorJobTaskV2QueryData'
+        '500':
+          description: An internal error has occurred
+          content:
+            application/json:
+              schema:
+                title: List<IntegratorJobTaskV2QueryData>
+                type: array
+                items:
+                  $ref: '#/components/schemas/IntegratorJobTaskV2QueryData'
+        '400':
+          description: Invalid timestamp value
+          content:
+            application/json:
+              schema:
+                title: List<IntegratorJobTaskV2QueryData>
+                type: array
+                items:
+                  $ref: '#/components/schemas/IntegratorJobTaskV2QueryData'
+      deprecated: false
+      security:
+      - Bearer: []
+    post:
+      tags:
+      - ' Scope: Activities'
+      summary: Create a new job
+      description: The auth token must contain a scope of activity:write.
+      operationId: AddJobV2Requestjobtasks_Post
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobTaskResponse'
+        '500':
+          description: An internal error has occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobTaskResponse'
+        '400':
+          description: Invalid job request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobTaskResponse'
+      deprecated: false
+      security:
+      - Bearer: []
+      requestBody:
+        content:
+          application/json:
+            schema: {}
+        description: job priority
+  /v1/jobtasks/{Id}/quotation/{QuoteId}/documents:
+    parameters:
+    - $ref: '#/components/parameters/Accept'
+    post:
+      tags:
+      - ' Scope: Activities'
+      summary: Add a document to an existing quotation for the job task
+      description: The auth token must contain a scope of activity:write.
+      operationId: AddJobTasksQuotationDocumentRequestjobtasksIdquotationQuoteIddocuments_Post
+      parameters:
+      - name: Id
+        in: path
+        description: Job Id
+        required: true
+        schema:
+          type: string
+      - name: QuoteId
+        in: path
+        description: Quotation Id
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseBase'
+        '500':
+          description: An internal error has occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseBase'
+        '400':
+          description: Invalid job request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseBase'
+      deprecated: false
+      security:
+      - Bearer: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddJobTasksQuotationDocumentRequest'
+components:
+  schemas:
+    ReopenInspectionRequest:
+      title: ReopenInspectionRequest
+      required:
+      - Id
+      properties:
+        Id:
+          description: Inspection Id
+          type: string
+      description: PropertyMe Rest API
+      type: object
+    CloseInspectionRequest:
+      title: CloseInspectionRequest
+      required:
+      - Id
+      properties:
+        Id:
+          description: Inspection Id
+          type: string
+      description: PropertyMe Rest API
+      type: object
+    QueryDocumentData:
+      title: QueryDocumentData
+      properties:
+        LotId:
+          type: string
+        ContactId:
+          type: string
+        TenantInvoiceId:
+          type: string
+        InspectionTaskId:
+          type: string
+        IsClientVisible:
+          type: boolean
+        DocumentLinkId:
+          type: string
+        TenantInvoiceNumber:
+          type: integer
+          format: int32
+        ChartAccountName:
+          type: string
+        JobTaskId:
+          type: string
+        TaskId:
+          type: string
+        JobTaskSummary:
+          type: string
+        Number:
+          type: integer
+          format: int32
+        FolioType:
+          type: string
+        LotReference:
+          type: string
+        Id:
+          type: string
+        CustomerId:
+          type: string
+        CreatedOn:
+          type: string
+          format: date-time
+        MimeType:
+          type: string
+        FileType:
+          type: string
+        FileName:
+          type: string
+        Size:
+          type: integer
+          format: int64
+        ThumbnailsFileSize:
+          type: integer
+          format: int64
+        Status:
+          type: string
+        IsReadOnly:
+          type: boolean
+        DocumentType:
+          type: string
+        DocumentArea:
+          type: string
+      description: QueryDocumentData
+      type: object
+    JobQueryV2Data:
+      title: JobQueryV2Data
+      properties:
+        Id:
+          type: string
+        CustomerId:
+          type: string
+        DueDate:
+          type: string
+          format: date-time
+        CreatedOn:
+          type: string
+          format: date-time
+        ClosedOn:
+          type: string
+          format: date-time
+        Summary:
+          type: string
+        Description:
+          type: string
+        Labels:
+          type: string
+        LotId:
+          type: string
+        OwnerContactId:
+          type: string
+        TenantContactId:
+          type: string
+        ContactId:
+          type: string
+        ManagerMemberId:
+          type: string
+        LotReference:
+          type: string
+        ContactReference:
+          type: string
+        JobTaskQuotationReference:
+          type: string
+        ManagerName:
+          type: string
+        MemberFirstName:
+          type: string
+        MemberLastName:
+          type: string
+        Status:
+          type: string
+        Number:
+          type: integer
+          format: int32
+        OwnerAttending:
+          type: boolean
+        TenantAttending:
+          type: boolean
+        SupplierReference:
+          type: string
+        DisplayNumber:
+          type: string
+        QuoteReference:
+          type: string
+        Priority:
+          type: string
+          enum:
+          - Low
+          - Medium
+          - High
+          - Urgent
+      description: JobQueryV2Data
+      type: object
+    JobQueryData:
+      title: JobQueryData
+      properties:
+        Id:
+          type: string
+        CustomerId:
+          type: string
+        DueDate:
+          type: string
+          format: date-time
+        CreatedOn:
+          type: string
+          format: date-time
+        ClosedOn:
+          type: string
+          format: date-time
+        Summary:
+          type: string
+        Description:
+          type: string
+        Labels:
+          type: string
+        LotId:
+          type: string
+        OwnerContactId:
+          type: string
+        TenantContactId:
+          type: string
+        ContactId:
+          type: string
+        ManagerMemberId:
+          type: string
+        LotReference:
+          type: string
+        ContactReference:
+          type: string
+        JobTaskQuotationReference:
+          type: string
+        ManagerName:
+          type: string
+        MemberFirstName:
+          type: string
+        MemberLastName:
+          type: string
+        Status:
+          type: string
+        Number:
+          type: integer
+          format: int32
+        OwnerAttending:
+          type: boolean
+        TenantAttending:
+          type: boolean
+        SupplierReference:
+          type: string
+        DisplayNumber:
+          type: string
+        QuoteReference:
+          type: string
+      description: JobQueryData
+      type: object
+    ApproveJobTaskRequest:
+      title: ApproveJobTaskRequest
+      required:
+      - Id
+      properties:
+        Id:
+          description: Id of the job
+          type: string
+      description: PropertyMe Rest API
+      type: object
+    JobTaskQuoteResponse:
+      title: JobTaskQuoteResponse
+      properties:
+        JobTaskQuoteId:
+          type: string
+        ResponseStatus:
+          $ref: '#/components/schemas/ResponseStatus'
+        IsSuccessful:
+          type: boolean
+      description: JobTaskQuoteResponse
+      type: object
+    InspectionReportPhoto:
+      title: InspectionReportPhoto
+      properties:
+        Number:
+          type: integer
+          format: int32
+        Note:
+          type: string
+        DocumentStorageId:
+          type: string
+        IsDeleted:
+          type: boolean
+        Hash:
+          type: string
+        DocumentType:
+          type: string
+        FileName:
+          type: string
+        FileType:
+          type: string
+        CreatedOn:
+          type: string
+          format: date-time
+      description: InspectionReportPhoto
+      type: object
+    ResponseBase:
+      title: ResponseBase
+      properties:
+        ResponseStatus:
+          $ref: '#/components/schemas/ResponseStatus'
+        IsSuccessful:
+          type: boolean
+      description: ResponseBase
+      type: object
+    ScheduleInspectionResponse:
+      title: ScheduleInspectionResponse
+      properties:
+        Ids:
+          type: array
+          items:
+            type: string
+        ResponseStatus:
+          $ref: '#/components/schemas/ResponseStatus'
+        IsSuccessful:
+          type: boolean
+      description: ScheduleInspectionResponse
+      type: object
+    ScheduleInspectionRequest:
+      title: ScheduleInspectionRequest
+      required:
+      - Id
+      properties:
+        Id:
+          description: Inspection Id
+          type: string
+      description: PropertyMe Rest API
+      type: object
+    AdditionalEmail:
+      title: AdditionalEmail
+      properties:
+        Email:
+          type: string
+        AllScope:
+          type: boolean
+      description: AdditionalEmail
+      type: object
+    DashboardResponse:
+      title: DashboardResponse
+      properties:
+        ValueWidgets:
+          type: array
+          items:
+            $ref: '#/components/schemas/ValueWidget'
+        SpecialValues:
+          type: array
+          items:
+            $ref: '#/components/schemas/ValueWidget'
+        DetailWidgets:
+          type: array
+          items:
+            $ref: '#/components/schemas/DetailWidget'
+        ResponseStatus:
+          $ref: '#/components/schemas/ResponseStatus'
+        IsSuccessful:
+          type: boolean
+      description: DashboardResponse
+      type: object
+    InspectionReportResponse:
+      title: InspectionReportResponse
+      properties:
+        InspectionReport:
+          $ref: '#/components/schemas/InspectionReport'
+        ResponseStatus:
+          $ref: '#/components/schemas/ResponseStatus'
+        IsSuccessful:
+          type: boolean
+      description: InspectionReportResponse
+      type: object
+    MobTaskChecklistAutomationActionData:
+      title: MobTaskChecklistAutomationActionData
+      properties:
+        ActionName:
+          type: string
+        ActionArgumentKey:
+          type: string
+        ActionDescription:
+          type: string
+        ActionArgumentData:
+          $ref: '#/components/schemas/IArgumentData'
+        IsValid:
+          type: boolean
+        ValidationMessage:
+          type: string
+        ActionResult:
+          $ref: '#/components/schemas/MobTaskChecklistAutomationActionResult'
+        ChildActions:
+          type: array
+          items:
+            $ref: '#/components/schemas/MobTaskChecklistAutomationActionData'
+      description: MobTaskChecklistAutomationActionData
+      type: object
+    Dictionary_String_String_:
+      title: Dictionary<String,String>
+      additionalProperties:
+        type: string
+      description: Dictionary<String,String>
+      type: object
+    ConditionEntry:
+      title: ConditionEntry
+      properties:
+        Name:
+          type: string
+        Value:
+          type: string
+      description: ConditionEntry
+      type: object
+    AddJobTasksQuotationDocumentRequest:
+      title: AddJobTasksQuotationDocumentRequest
+      required:
+      - Id
+      - QuoteId
+      properties:
+        Id:
+          description: Job Id
+          type: string
+        QuoteId:
+          description: Quotation Id
+          type: string
+      description: PropertyMe Rest API
+      type: object
+    AddTaskDocumentRequest:
+      title: AddTaskDocumentRequest
+      required:
+      - Id
+      properties:
+        Id:
+          description: Id of the task
+          type: string
+      description: PropertyMe Rest API
+      type: object
+    CustomerMemberData:
+      title: CustomerMemberData
+      properties:
+        Id:
+          type: string
+        CustomerId:
+          type: string
+        UserId:
+          type: integer
+          format: int32
+        Role:
+          type: string
+        ExpireOn:
+          type: string
+          format: date-time
+        FirstName:
+          type: string
+        LastName:
+          type: string
+        CompanyName:
+          type: string
+        RegisteredEmail:
+          type: string
+        RegisteredOn:
+          type: string
+          format: date-time
+        WorkPhone:
+          type: string
+        MobilePhone:
+          type: string
+        IsActivated:
+          type: boolean
+        AgreeConditionsOn:
+          type: string
+          format: date-time
+        RegionCode:
+          type: string
+        Permissions:
+          type: string
+        CurrentMemberAccessId:
+          type: string
+        JobTitle:
+          type: string
+        Teams:
+          type: string
+        IsSupport:
+          type: boolean
+        IsBillingRecipient:
+          type: boolean
+        IsTwoFactorAuthenticationEnabled:
+          type: boolean
+        Name:
+          type: string
+      description: CustomerMemberData
+      type: object
+    Lot:
+      title: Lot
+      properties:
+        Id:
+          type: string
+        CustomerId:
+          type: string
+        Reference:
+          type: string
+        Address:
+          $ref: '#/components/schemas/AddressDetail'
+        AddressText:
+          type: string
+        PrimaryType:
+          type: string
+        PropertySubtype:
+          type: string
+        Bedrooms:
+          type: integer
+          format: int32
+        Bathrooms:
+          type: integer
+          format: int32
+        CarSpaces:
+          type: integer
+          format: int32
+        Area:
+          type: number
+          format: double
+        AreaUnit:
+          type: string
+        LandArea:
+          type: number
+          format: double
+        LandAreaUnit:
+          type: string
+        Description:
+          type: string
+        Notes:
+          type: string
+        NextInspectionOn:
+          type: string
+          format: date-time
+        KeyNumber:
+          type: string
+        ArchivedOn:
+          type: string
+          format: date-time
+        AdRentAmount:
+          type: number
+          format: double
+        AdRentPeriod:
+          type: string
+        ActiveOwnershipId:
+          type: string
+        ActiveSaleAgreementId:
+          type: string
+        ActiveTenancyId:
+          type: string
+        Longitude:
+          type: number
+          format: double
+        Latitude:
+          type: number
+          format: double
+        InspectionFrequency:
+          type: integer
+          format: int32
+        InspectionFrequencyType:
+          type: string
+        InitialInspectionFrequency:
+          type: integer
+          format: int32
+        InitialInspectionFrequencyType:
+          type: string
+        MainPhotoDocumentId:
+          type: string
+        ActiveManagerMemberId:
+          type: string
+        Labels:
+          type: string
+        StrataManagerContactId:
+          type: string
+        RuralCategory:
+          type: string
+        DisplayAddress:
+          type: boolean
+        IsRental:
+          type: boolean
+        IsArchived:
+          type: boolean
+        CreatedOn:
+          type: string
+          format: date-time
+        UpdatedOn:
+          type: string
+          format: date-time
+        ExternalListingId:
+          type: string
+        ActiveRentalListingId:
+          type: string
+        ActiveSaleListingId:
+          type: string
+      description: Lot
+      type: object
+    GetInspectionResponse:
+      title: GetInspectionResponse
+      properties:
+        Inspection:
+          $ref: '#/components/schemas/InspectionTaskData'
+        Property:
+          $ref: '#/components/schemas/Lot'
+        Tenant:
+          $ref: '#/components/schemas/Contact'
+        Owner:
+          $ref: '#/components/schemas/Contact'
+        InspectionReport:
+          $ref: '#/components/schemas/InspectionReport'
+        CurrentRentAmount:
+          type: number
+          format: double
+        CurrentRentPeriod:
+          type: string
+        OwnerFolioId:
+          type: string
+        ListingInfo:
+          type: string
+        InspectionTenantStatus:
+          $ref: '#/components/schemas/InspectionTenantStatusDto'
+        TenantHasReviewed:
+          type: boolean
+        SubscriptionAllowsTenantToReviewECR:
+          type: boolean
+        RequiresTenantReviewsEcrFeature:
+          type: boolean
+        ResponseStatus:
+          $ref: '#/components/schemas/ResponseStatus'
+        IsSuccessful:
+          type: boolean
+      description: GetInspectionResponse
+      type: object
+    JobTaskResponse:
+      title: JobTaskResponse
+      properties:
+        JobTaskId:
+          type: string
+        JobQuoteId:
+          type: string
+        SupplierInsuranceExpiryDays:
+          type: integer
+          format: int32
+        ResponseStatus:
+          $ref: '#/components/schemas/ResponseStatus'
+        IsSuccessful:
+          type: boolean
+      description: JobTaskResponse
+      type: object
+    RelatedInspection:
+      title: RelatedInspection
+      properties:
+        InspectionReport:
+          $ref: '#/components/schemas/InspectionReport'
+        Inspection:
+          $ref: '#/components/schemas/InspectionTaskData'
+      description: RelatedInspection
+      type: object
+    InspectionTaskData:
+      title: InspectionTaskData
+      properties:
+        LotReference:
+          type: string
+        AddressText:
+          type: string
+        KeyNumber:
+          type: string
+        Longitude:
+          type: number
+          format: double
+        Latitude:
+          type: number
+          format: double
+        TenantReference:
+          type: string
+        OwnerReference:
+          type: string
+        PublishOn:
+          type: string
+          format: date-time
+        LotMainPhotoDocumentId:
+          type: string
+        ManagerName:
+          type: string
+        ActiveManagerMemberId:
+          type: string
+        ActiveManagerTeams:
+          type: string
+        ManagerMemberTeams:
+          type: string
+        Timestamp:
+          type: integer
+          format: int64
+        TenantHasReviewed:
+          type: boolean
+        StatusText:
+          type: string
+        StartTimeText:
+          type: string
+        IsPublished:
+          type: boolean
+        SearchText:
+          type: string
+        StartTime:
+          type: string
+          format: date-time
+        Duration:
+          type: integer
+          format: int32
+        Type:
+          type: string
+        Status:
+          type: string
+        ListingId:
+          type: string
+        TenantReturnDate:
+          type: string
+          format: date-time
+        AssignedToTenantDate:
+          type: string
+          format: date-time
+        InspectionSnapshotId:
+          type: string
+        StatusPriorToClosing:
+          type: string
+        Id:
+          type: string
+        CustomerId:
+          type: string
+        DueDate:
+          type: string
+          format: date-time
+        CreatedOn:
+          type: string
+          format: date-time
+        ClosedOn:
+          type: string
+          format: date-time
+        Summary:
+          type: string
+        Description:
+          type: string
+        LotId:
+          type: string
+        TenantContactId:
+          type: string
+        OwnerContactId:
+          type: string
+        ContactId:
+          type: string
+        ManagerMemberId:
+          type: string
+        Labels:
+          type: string
+        UpdatedOn:
+          type: string
+          format: date-time
+      description: InspectionTaskData
+      type: object
+    JobTaskQuoteData:
+      title: JobTaskQuoteData
+      properties:
+        Id:
+          type: string
+        Reference:
+          type: string
+        CustomerId:
+          type: string
+        JobTaskId:
+          type: string
+        FolioId:
+          type: string
+        ContactId:
+          type: string
+        DocumentStorageId:
+          type: string
+        Amount:
+          type: number
+          format: double
+        QuotedOn:
+          type: string
+          format: date-time
+        ContactReference:
+          type: string
+        FileName:
+          type: string
+        Size:
+          type: integer
+          format: int64
+        FileType:
+          type: string
+      description: JobTaskQuoteData
+      type: object
+    Contact:
+      title: Contact
+      properties:
+        Id:
+          type: string
+        CustomerId:
+          type: string
+        SpecialType:
+          type: string
+        Roles:
+          type: array
+          items:
+            type: string
+        ArchivedOn:
+          type: string
+          format: date-time
+        AccountDetails:
+          type: array
+          items:
+            $ref: '#/components/schemas/FolioAccount'
+        Reference:
+          type: string
+        Website:
+          type: string
+        ABN:
+          type: string
+        PersonMigrated:
+          type: boolean
+        Labels:
+          type: string
+        Notes:
+          type: string
+        NameText:
+          type: string
+        PostalAddressText:
+          type: string
+        PhysicalAddressText:
+          type: string
+        HasTenantInvoiceAccount:
+          type: boolean
+        HomePhone:
+          type: string
+        WorkPhone:
+          type: string
+        CellPhone:
+          type: string
+        TradeName:
+          type: string
+        Email:
+          type: string
+        SupplierChartAccountId:
+          type: string
+        IsArchived:
+          type: boolean
+        IsSupplier:
+          type: boolean
+        IsTenant:
+          type: boolean
+        IsOwner:
+          type: boolean
+        IsSeller:
+          type: boolean
+        PhoneText:
+          type: string
+        WorkPhoneText:
+          type: string
+        ContactPhone:
+          type: string
+        CreatedOn:
+          type: string
+          format: date-time
+        UpdatedOn:
+          type: string
+          format: date-time
+        ContactPersons:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContactPerson'
+        PrimaryContactPerson:
+          $ref: '#/components/schemas/ContactPerson'
+      description: Contact
+      type: object
+    TenantInspectionReportPhoto:
+      title: TenantInspectionReportPhoto
+      properties:
+        InspectionAreaId:
+          type: string
+        Number:
+          type: integer
+          format: int32
+        Note:
+          type: string
+        DocumentStorageId:
+          type: string
+        TenantPhotoId:
+          type: string
+        IsDeleted:
+          type: boolean
+        DocumentType:
+          type: string
+        FileName:
+          type: string
+        FileType:
+          type: string
+        CreatedOn:
+          type: string
+          format: date-time
+      description: TenantInspectionReportPhoto
+      type: object
+    ReopenJobTaskRequest:
+      title: ReopenJobTaskRequest
+      required:
+      - Id
+      properties:
+        Id:
+          description: Id of the job
+          type: string
+      description: PropertyMe Rest API
+      type: object
+    IArgumentData:
+      title: IArgumentData
+      properties: {}
+      description: IArgumentData
+      type: object
+    Tenancy:
+      title: Tenancy
+      properties:
+        Id:
+          type: string
+        CustomerId:
+          type: string
+        LotId:
+          type: string
+        ContactId:
+          type: string
+        TenancyStart:
+          type: string
+          format: date-time
+        AgreementStart:
+          type: string
+          format: date-time
+        AgreementEnd:
+          type: string
+          format: date-time
+        Periodic:
+          type: boolean
+        TenancyEnd:
+          type: string
+          format: date-time
+        Termination:
+          type: string
+          format: date-time
+        BreakLease:
+          type: string
+          format: date-time
+        Notes:
+          type: string
+        RentAmount:
+          type: number
+          format: double
+        RentPeriod:
+          type: string
+        BondAmount:
+          type: number
+          format: double
+        OpenBondReceived:
+          type: number
+          format: double
+        BondReference:
+          type: string
+        BondInTrust:
+          type: number
+          format: double
+        BankReference:
+          type: string
+        TaxOnRent:
+          type: boolean
+        GenerateRentInvoice:
+          type: boolean
+        RentInvoiceDaysInAdvance:
+          type: integer
+          format: int32
+        ReceiptWarning:
+          type: string
+        NextIncreaseAmount:
+          type: number
+          format: double
+        NextIncreaseDate:
+          type: string
+          format: date-time
+        RentSequence:
+          type: integer
+          format: int32
+        PaidTo:
+          type: string
+          format: date-time
+        EffectivePaidTo:
+          type: string
+          format: date-time
+        PartPaid:
+          type: number
+          format: double
+        ProrataTo:
+          type: string
+          format: date-time
+        MepayStatus:
+          type: string
+        AllowMepayPayments:
+          type: boolean
+        ReviewFrequency:
+          type: integer
+          format: int32
+        NextReviewDate:
+          type: string
+          format: date-time
+        LastReviewedOn:
+          type: string
+          format: date-time
+        DirectDebit:
+          type: boolean
+        DirectDebitFixedAmount:
+          type: number
+          format: double
+        DirectDebitFrequency:
+          type: string
+        NextDirectDebitDate:
+          type: string
+          format: date-time
+        CreatedOn:
+          type: string
+          format: date-time
+        UpdatedOn:
+          type: string
+          format: date-time
+        ExcludeArrearsAutomation:
+          type: boolean
+        IsWaterUsageCharged:
+          type: boolean
+        BondDueDate:
+          type: string
+          format: date-time
+      description: Tenancy
+      type: object
+    FolioAccount:
+      title: FolioAccount
+      properties:
+        Id:
+          type: string
+        CustomerId:
+          type: string
+        FolioId:
+          type: string
+        Index:
+          type: integer
+          format: int32
+        BSB:
+          type: string
+        AccountNumber:
+          type: string
+        BillerCode:
+          type: string
+        BillerReference:
+          type: string
+        Payee:
+          type: string
+        PaymentMethod:
+          type: string
+        Name:
+          type: string
+        Value:
+          type: number
+          format: double
+        Percentage:
+          type: number
+          format: double
+        IsMarkedForDeletion:
+          type: boolean
+      description: FolioAccount
+      type: object
+    JobTaskV2QueryData:
+      title: JobTaskV2QueryData
+      properties:
+        Priority:
+          type: string
+          enum:
+          - Low
+          - Medium
+          - High
+          - Urgent
+        Id:
+          type: string
+        CustomerId:
+          type: string
+        DueDate:
+          type: string
+          format: date-time
+        CreatedOn:
+          type: string
+          format: date-time
+        UpdatedOn:
+          type: string
+          format: date-time
+        ClosedOn:
+          type: string
+          format: date-time
+        Summary:
+          type: string
+        Description:
+          type: string
+        SupplierInstructions:
+          type: string
+        SupplierInsuranceExpiryDate:
+          type: string
+          format: date-time
+        SupplierInsuranceExpiryDays:
+          type: integer
+          format: int32
+        LotId:
+          type: string
+        TenantContactId:
+          type: string
+        OwnerContactId:
+          type: string
+        ContactId:
+          type: string
+        ManagerMemberId:
+          type: string
+        QuoteId:
+          type: string
+        LotReference:
+          type: string
+        TenantReference:
+          type: string
+        OwnerReference:
+          type: string
+        ContactReference:
+          type: string
+        TenantPhone:
+          type: string
+        TenantCellPhone:
+          type: string
+        TenantNormalisedMobilePhone:
+          type: string
+        TenantHomePhone:
+          type: string
+        TenantWorkPhone:
+          type: string
+        OwnerPhone:
+          type: string
+        OwnerCellPhone:
+          type: string
+        OwnerNormalisedMobilePhone:
+          type: string
+        OwnerHomePhone:
+          type: string
+        OwnerWorkPhone:
+          type: string
+        ContactPhone:
+          type: string
+        ContactCellPhone:
+          type: string
+        ContactNormalisedMobilePhone:
+          type: string
+        ContactHomePhone:
+          type: string
+        ContactWorkPhone:
+          type: string
+        StrataContactId:
+          type: string
+        StrataReference:
+          type: string
+        StrataMobilePhone:
+          type: string
+        StrataNormalisedMobilePhone:
+          type: string
+        StrataHomePhone:
+          type: string
+        StrataWorkPhone:
+          type: string
+        StrataEmail:
+          type: string
+        TenantEmail:
+          type: string
+        OwnerEmail:
+          type: string
+        ContactEmail:
+          type: string
+        TaskManagerName:
+          type: string
+        TaskManagerEmail:
+          type: string
+        TaskManagerMobile:
+          type: string
+        TaskManagerWork:
+          type: string
+        LotActiveManagerMemberId:
+          type: string
+        LotManagerName:
+          type: string
+        LotManagerEmail:
+          type: string
+        LotManagerMobile:
+          type: string
+        LotManagerWork:
+          type: string
+        ManagerName:
+          type: string
+        ManagerMobile:
+          type: string
+        ManagerWork:
+          type: string
+        ManagerEmail:
+          type: string
+        Number:
+          type: integer
+          format: int32
+        Status:
+          type: string
+        ReportedContactType:
+          type: string
+        Access:
+          type: string
+        Labels:
+          type: string
+        MainPhotoDocumentId:
+          type: string
+        Timestamp:
+          type: integer
+          format: int64
+        TaskType:
+          type: string
+        OwnerAttending:
+          type: boolean
+        TenantAttending:
+          type: boolean
+        StrataAttending:
+          type: boolean
+        SupplierReference:
+          type: string
+        DisplayNumber:
+          type: string
+        Label:
+          type: string
+      description: JobTaskV2QueryData
+      type: object
+    InspectionReportItem:
+      title: InspectionReportItem
+      properties:
+        Id:
+          type: string
+        Name:
+          type: string
+        ConditionType:
+          type: string
+        Conditions:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConditionEntry'
+        AgentComment:
+          type: string
+        TenantComment:
+          type: string
+        Hash:
+          type: string
+        IsDeleted:
+          type: boolean
+        IsConflict:
+          type: boolean
+        TenantAgrees:
+          type: boolean
+      description: InspectionReportItem
+      type: object
+    DetailWidget:
+      title: DetailWidget
+      properties:
+        Label:
+          type: string
+        Amount:
+          type: number
+          format: double
+        Quantity:
+          type: integer
+          format: int64
+        Percent:
+          type: number
+          format: double
+        IsMemberView:
+          type: boolean
+        FilterType:
+          type: string
+        AlertLevel:
+          type: string
+        Type:
+          type: string
+        Values:
+          type: array
+          items:
+            $ref: '#/components/schemas/ValueWidget'
+        Date:
+          type: string
+          format: date-time
+        AdditionalValue:
+          type: integer
+          format: int32
+      description: DetailWidget
+      type: object
+    IntegratorJobTaskV2QueryData:
+      title: IntegratorJobTaskV2QueryData
+      properties:
+        Priority:
+          type: string
+          enum:
+          - Low
+          - Medium
+          - High
+          - Urgent
+        LotReference:
+          type: string
+        TenantReference:
+          type: string
+        OwnerReference:
+          type: string
+        ContactReference:
+          type: string
+        ManagerName:
+          type: string
+        IsLetterStatement:
+          type: boolean
+        StatementId:
+          type: string
+        TaskType:
+          type: string
+        Timestamp:
+          type: integer
+          format: int64
+        OwnerAttending:
+          type: boolean
+        TenantAttending:
+          type: boolean
+        SupplierReference:
+          type: string
+        DisplayNumber:
+          type: string
+        Number:
+          type: integer
+          format: int32
+        Status:
+          type: string
+        ReportedContactType:
+          type: string
+        Access:
+          type: string
+        MainPhotoDocumentId:
+          type: string
+        DocumentLinkTextName:
+          type: string
+        QuoteId:
+          type: string
+        SupplierInstructions:
+          type: string
+        Id:
+          type: string
+        CustomerId:
+          type: string
+        DueDate:
+          type: string
+          format: date-time
+        CreatedOn:
+          type: string
+          format: date-time
+        ClosedOn:
+          type: string
+          format: date-time
+        Summary:
+          type: string
+        Description:
+          type: string
+        LotId:
+          type: string
+        TenantContactId:
+          type: string
+        OwnerContactId:
+          type: string
+        ContactId:
+          type: string
+        ManagerMemberId:
+          type: string
+        Labels:
+          type: string
+        UpdatedOn:
+          type: string
+          format: date-time
+      description: IntegratorJobTaskV2QueryData
+      type: object
+    JobTaskQueryData:
+      title: JobTaskQueryData
+      properties:
+        Id:
+          type: string
+        CustomerId:
+          type: string
+        DueDate:
+          type: string
+          format: date-time
+        CreatedOn:
+          type: string
+          format: date-time
+        UpdatedOn:
+          type: string
+          format: date-time
+        ClosedOn:
+          type: string
+          format: date-time
+        Summary:
+          type: string
+        Description:
+          type: string
+        SupplierInstructions:
+          type: string
+        SupplierInsuranceExpiryDate:
+          type: string
+          format: date-time
+        SupplierInsuranceExpiryDays:
+          type: integer
+          format: int32
+        LotId:
+          type: string
+        TenantContactId:
+          type: string
+        OwnerContactId:
+          type: string
+        ContactId:
+          type: string
+        ManagerMemberId:
+          type: string
+        QuoteId:
+          type: string
+        LotReference:
+          type: string
+        TenantReference:
+          type: string
+        OwnerReference:
+          type: string
+        ContactReference:
+          type: string
+        TenantPhone:
+          type: string
+        TenantCellPhone:
+          type: string
+        TenantNormalisedMobilePhone:
+          type: string
+        TenantHomePhone:
+          type: string
+        TenantWorkPhone:
+          type: string
+        OwnerPhone:
+          type: string
+        OwnerCellPhone:
+          type: string
+        OwnerNormalisedMobilePhone:
+          type: string
+        OwnerHomePhone:
+          type: string
+        OwnerWorkPhone:
+          type: string
+        ContactPhone:
+          type: string
+        ContactCellPhone:
+          type: string
+        ContactNormalisedMobilePhone:
+          type: string
+        ContactHomePhone:
+          type: string
+        ContactWorkPhone:
+          type: string
+        StrataContactId:
+          type: string
+        StrataReference:
+          type: string
+        StrataMobilePhone:
+          type: string
+        StrataNormalisedMobilePhone:
+          type: string
+        StrataHomePhone:
+          type: string
+        StrataWorkPhone:
+          type: string
+        StrataEmail:
+          type: string
+        TenantEmail:
+          type: string
+        OwnerEmail:
+          type: string
+        ContactEmail:
+          type: string
+        TaskManagerName:
+          type: string
+        TaskManagerEmail:
+          type: string
+        TaskManagerMobile:
+          type: string
+        TaskManagerWork:
+          type: string
+        LotActiveManagerMemberId:
+          type: string
+        LotManagerName:
+          type: string
+        LotManagerEmail:
+          type: string
+        LotManagerMobile:
+          type: string
+        LotManagerWork:
+          type: string
+        ManagerName:
+          type: string
+        ManagerMobile:
+          type: string
+        ManagerWork:
+          type: string
+        ManagerEmail:
+          type: string
+        Number:
+          type: integer
+          format: int32
+        Status:
+          type: string
+        ReportedContactType:
+          type: string
+        Access:
+          type: string
+        Labels:
+          type: string
+        MainPhotoDocumentId:
+          type: string
+        Timestamp:
+          type: integer
+          format: int64
+        TaskType:
+          type: string
+        OwnerAttending:
+          type: boolean
+        TenantAttending:
+          type: boolean
+        StrataAttending:
+          type: boolean
+        SupplierReference:
+          type: string
+        DisplayNumber:
+          type: string
+        Label:
+          type: string
+      description: JobTaskQueryData
+      type: object
+    AddressDetail:
+      title: AddressDetail
+      properties:
+        Unit:
+          type: string
+        Number:
+          type: string
+        Street:
+          type: string
+        Suburb:
+          type: string
+        Locality:
+          type: string
+        PostalCode:
+          type: string
+        State:
+          type: string
+        Country:
+          type: string
+        BuildingName:
+          type: string
+        MailboxName:
+          type: string
+        Latitude:
+          type: number
+          format: double
+        Longitude:
+          type: number
+          format: double
+        StreetLongName:
+          type: string
+        Text:
+          type: string
+        Reference:
+          type: string
+      description: AddressDetail
+      type: object
+    TaskQueryData:
+      title: TaskQueryData
+      properties:
+        LotReference:
+          type: string
+        TenantReference:
+          type: string
+        OwnerReference:
+          type: string
+        ContactReference:
+          type: string
+        TenantPhone:
+          type: string
+        TenantCellPhone:
+          type: string
+        TenantHomePhone:
+          type: string
+        TenantWorkPhone:
+          type: string
+        OwnerPhone:
+          type: string
+        OwnerCellPhone:
+          type: string
+        OwnerHomePhone:
+          type: string
+        OwnerWorkPhone:
+          type: string
+        ContactPhone:
+          type: string
+        ContactCellPhone:
+          type: string
+        ContactHomePhone:
+          type: string
+        ContactWorkPhone:
+          type: string
+        TenantEmail:
+          type: string
+        OwnerEmail:
+          type: string
+        ContactEmail:
+          type: string
+        ManagerName:
+          type: string
+        PropertyType:
+          type: string
+        Bedrooms:
+          type: integer
+          format: int32
+        Bathrooms:
+          type: integer
+          format: int32
+        CarSpaces:
+          type: integer
+          format: int32
+        MainPhotoDocumentId:
+          type: string
+        LotManagerMemberId:
+          type: string
+        LotManagerName:
+          type: string
+        Timestamp:
+          type: integer
+          format: int64
+        Status:
+          type: string
+        IsLetterStatement:
+          type: boolean
+        StatementId:
+          type: string
+        TaskType:
+          type: string
+        TaskChecklists:
+          type: array
+          items:
+            $ref: '#/components/schemas/TaskChecklist'
+        CreatedByUser:
+          type: string
+        ClosedByUser:
+          type: string
+        Label:
+          type: string
+        Type:
+          type: string
+        Priority:
+          type: integer
+          format: int32
+        TaskStatus:
+          type: string
+        CreatedBy:
+          type: string
+        ClosedBy:
+          type: string
+        Id:
+          type: string
+        CustomerId:
+          type: string
+        DueDate:
+          type: string
+          format: date-time
+        CreatedOn:
+          type: string
+          format: date-time
+        ClosedOn:
+          type: string
+          format: date-time
+        Summary:
+          type: string
+        Description:
+          type: string
+        LotId:
+          type: string
+        TenantContactId:
+          type: string
+        OwnerContactId:
+          type: string
+        ContactId:
+          type: string
+        ManagerMemberId:
+          type: string
+        Labels:
+          type: string
+        UpdatedOn:
+          type: string
+          format: date-time
+      description: TaskQueryData
+      type: object
+    MobTaskQueryData:
+      title: MobTaskQueryData
+      properties:
+        LotReference:
+          type: string
+        TenantReference:
+          type: string
+        OwnerReference:
+          type: string
+        ContactReference:
+          type: string
+        ManagerName:
+          type: string
+        ActivePropertyManagerId:
+          type: string
+        TaskChecklists:
+          type: array
+          items:
+            $ref: '#/components/schemas/TaskChecklistMobile'
+        TaskType:
+          type: string
+        Timestamp:
+          type: integer
+          format: int64
+        Type:
+          type: string
+        Priority:
+          type: integer
+          format: int32
+        TaskStatus:
+          type: string
+        CreatedBy:
+          type: string
+        ClosedBy:
+          type: string
+        Id:
+          type: string
+        CustomerId:
+          type: string
+        DueDate:
+          type: string
+          format: date-time
+        CreatedOn:
+          type: string
+          format: date-time
+        ClosedOn:
+          type: string
+          format: date-time
+        Summary:
+          type: string
+        Description:
+          type: string
+        LotId:
+          type: string
+        TenantContactId:
+          type: string
+        OwnerContactId:
+          type: string
+        ContactId:
+          type: string
+        ManagerMemberId:
+          type: string
+        Labels:
+          type: string
+        UpdatedOn:
+          type: string
+          format: date-time
+      description: MobTaskQueryData
+      type: object
+    ConsolidatedInspectionReportItem:
+      title: ConsolidatedInspectionReportItem
+      properties:
+        InspectionReportAreaId:
+          type: string
+        Name:
+          type: string
+        ConditionType:
+          type: string
+        Conditions:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConditionEntry'
+        AgentComment:
+          type: string
+        TenantAgrees:
+          type: boolean
+        TenantComment:
+          type: string
+      description: ConsolidatedInspectionReportItem
+      type: object
+    HashSet_CommunicationType_:
+      title: HashSet`1
+      properties: {}
+      description: HashSet<CommunicationType>
+      type: object
+    InspectInspectionRequest:
+      title: InspectInspectionRequest
+      required:
+      - Id
+      properties:
+        Id:
+          description: Inspection Id
+          type: string
+      description: PropertyMe Rest API
+      type: object
+    ResponseStatus:
+      title: ResponseStatus
+      properties:
+        ErrorCode:
+          type: string
+        Message:
+          type: string
+        StackTrace:
+          type: string
+        Errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ResponseError'
+        Meta:
+          $ref: '#/components/schemas/Dictionary_String_String_'
+      description: ResponseStatus
+      type: object
+    MobJobTaskQueryData:
+      title: MobJobTaskQueryData
+      properties:
+        LotReference:
+          type: string
+        TenantReference:
+          type: string
+        OwnerReference:
+          type: string
+        ContactReference:
+          type: string
+        ManagerName:
+          type: string
+        IsLetterStatement:
+          type: boolean
+        StatementId:
+          type: string
+        TaskType:
+          type: string
+        Timestamp:
+          type: integer
+          format: int64
+        OwnerAttending:
+          type: boolean
+        TenantAttending:
+          type: boolean
+        SupplierReference:
+          type: string
+        DisplayNumber:
+          type: string
+        Number:
+          type: integer
+          format: int32
+        Status:
+          type: string
+        ReportedContactType:
+          type: string
+        Access:
+          type: string
+        MainPhotoDocumentId:
+          type: string
+        DocumentLinkTextName:
+          type: string
+        QuoteId:
+          type: string
+        SupplierInstructions:
+          type: string
+        Id:
+          type: string
+        CustomerId:
+          type: string
+        DueDate:
+          type: string
+          format: date-time
+        CreatedOn:
+          type: string
+          format: date-time
+        ClosedOn:
+          type: string
+          format: date-time
+        Summary:
+          type: string
+        Description:
+          type: string
+        LotId:
+          type: string
+        TenantContactId:
+          type: string
+        OwnerContactId:
+          type: string
+        ContactId:
+          type: string
+        ManagerMemberId:
+          type: string
+        Labels:
+          type: string
+        UpdatedOn:
+          type: string
+          format: date-time
+      description: MobJobTaskQueryData
+      type: object
+    ContactPerson:
+      title: ContactPerson
+      properties:
+        Id:
+          type: string
+        CustomerId:
+          type: string
+        ContactId:
+          type: string
+        Salutation:
+          type: string
+        FirstName:
+          type: string
+        LastName:
+          type: string
+        CompanyName:
+          type: string
+        Email:
+          type: string
+        SecondaryEmailAddresses:
+          type: array
+          items:
+            $ref: '#/components/schemas/AdditionalEmail'
+        HomePhone:
+          type: string
+        WorkPhone:
+          type: string
+        CellPhone:
+          type: string
+        NormalisedMobilePhone:
+          type: string
+        CommunicationPreferences:
+          $ref: '#/components/schemas/HashSet_CommunicationType_'
+        PhysicalAddress:
+          $ref: '#/components/schemas/AddressDetail'
+        PostalAddress:
+          $ref: '#/components/schemas/AddressDetail'
+        IsPrimary:
+          type: boolean
+        SortOrder:
+          type: integer
+          format: int32
+        FullName:
+          type: string
+        CombinedPhones:
+          type: string
+      description: ContactPerson
+      type: object
+    AddJobDocumentsRequest:
+      title: AddJobDocumentsRequest
+      required:
+      - Id
+      properties:
+        Id:
+          description: Id of the job
+          type: string
+      description: PropertyMe Rest API
+      type: object
+    IDictionary_String_String_:
+      title: IDictionary<String,String>
+      additionalProperties:
+        type: string
+      description: IDictionary<String,String>
+      type: object
+    GetReportDetailedResponse:
+      title: GetReportDetailedResponse
+      properties:
+        Inspection:
+          $ref: '#/components/schemas/InspectionTaskData'
+        Property:
+          $ref: '#/components/schemas/Lot'
+        Owner:
+          $ref: '#/components/schemas/Contact'
+        Tenancy:
+          $ref: '#/components/schemas/Tenancy'
+        OwnerFolioId:
+          type: string
+        FrontSection:
+          $ref: '#/components/schemas/FrontSectionBase'
+        HasTenantAnswersRequiringReview:
+          type: boolean
+        RelatedInspection:
+          $ref: '#/components/schemas/RelatedInspection'
+        InspectionTenantStatus:
+          $ref: '#/components/schemas/InspectionTenantStatusDto'
+        SubscriptionAllowsTenantToReviewECR:
+          type: boolean
+        IsModificationLockedForAgent:
+          type: boolean
+        RequiresTenantReviewsEcrFeature:
+          type: boolean
+        InspectionReport:
+          $ref: '#/components/schemas/InspectionReport'
+        ResponseStatus:
+          $ref: '#/components/schemas/ResponseStatus'
+        IsSuccessful:
+          type: boolean
+      description: GetReportDetailedResponse
+      type: object
+    AddJobImagesRequest:
+      title: AddJobImagesRequest
+      required:
+      - Id
+      properties:
+        Id:
+          description: Id of the job
+          type: string
+      description: PropertyMe Rest API
+      type: object
+    ValueWidget:
+      title: ValueWidget
+      properties:
+        Label:
+          type: string
+        Amount:
+          type: number
+          format: double
+        Quantity:
+          type: integer
+          format: int64
+        Percent:
+          type: number
+          format: double
+        IsMemberView:
+          type: boolean
+        FilterType:
+          type: string
+        AlertLevel:
+          type: string
+      description: ValueWidget
+      type: object
+    ResponseError:
+      title: ResponseError
+      properties:
+        ErrorCode:
+          type: string
+        FieldName:
+          type: string
+        Message:
+          type: string
+        Meta:
+          $ref: '#/components/schemas/Dictionary_String_String_'
+      description: ResponseError
+      type: object
+    RejectJobTaskRequest:
+      title: RejectJobTaskRequest
+      required:
+      - Id
+      properties:
+        Id:
+          description: Id of the job
+          type: string
+      description: PropertyMe Rest API
+      type: object
+    CompleteJobTaskRequest:
+      title: CompleteJobTaskRequest
+      required:
+      - Id
+      properties:
+        Id:
+          description: Id of the job
+          type: string
+      description: PropertyMe Rest API
+      type: object
+    AssignTaskRequest:
+      title: AssignTaskRequest
+      required:
+      - Id
+      properties:
+        Id:
+          description: Id of the job
+          type: string
+        SupplierContactId:
+          description: Id of the supplier
+          type: string
+        OwnerAttending:
+          description: Is Owner attending
+          type: boolean
+        TenantAttending:
+          description: Is Tenant attending
+          type: boolean
+      description: PropertyMe Rest API
+      type: object
+    InspectionTenantStatusDto:
+      title: InspectionTenantStatusDto
+      properties:
+        TenantStatus:
+          type: string
+        TenantReturnedDate:
+          type: string
+          format: date-time
+      description: InspectionTenantStatusDto
+      type: object
+    MobTaskChecklistAutomationActionResult:
+      title: MobTaskChecklistAutomationActionResult
+      properties:
+        ActionName:
+          type: string
+        ActionArguments:
+          $ref: '#/components/schemas/IDictionary_String_String_'
+        Succeeded:
+          type: boolean
+      description: MobTaskChecklistAutomationActionResult
+      type: object
+    TaskChecklist:
+      title: TaskChecklist
+      properties:
+        Id:
+          type: string
+        CustomerId:
+          type: string
+        CreatedOn:
+          type: string
+          format: date-time
+        CompletedOn:
+          type: string
+          format: date-time
+        TaskId:
+          type: string
+        Name:
+          type: string
+        Rank:
+          type: integer
+          format: int32
+        IsCompleted:
+          type: boolean
+        CreatedBy:
+          type: string
+        CompletedBy:
+          type: string
+        AutomationRuleId:
+          type: string
+        CompletedByUser:
+          type: string
+      description: TaskChecklist
+      type: object
+    TaskResponse:
+      title: TaskResponse
+      properties:
+        TaskId:
+          type: string
+        ResponseStatus:
+          $ref: '#/components/schemas/ResponseStatus'
+        IsSuccessful:
+          type: boolean
+      description: TaskResponse
+      type: object
+    InspectionReportArea:
+      title: InspectionReportArea
+      properties:
+        Id:
+          type: string
+        CustomerId:
+          type: string
+        InspectionReportId:
+          type: string
+        Number:
+          type: integer
+          format: int32
+        Name:
+          type: string
+        Note:
+          type: string
+        Photos:
+          type: array
+          items:
+            $ref: '#/components/schemas/InspectionReportPhoto'
+        TenantPhotos:
+          type: array
+          items:
+            $ref: '#/components/schemas/TenantInspectionReportPhoto'
+        Items:
+          type: array
+          items:
+            $ref: '#/components/schemas/InspectionReportItem'
+        ConsolidatedInspectionReportItems:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConsolidatedInspectionReportItem'
+        IsDeleted:
+          type: boolean
+        CreatedOn:
+          type: string
+          format: date-time
+        UpdatedOn:
+          type: string
+          format: date-time
+        Hash:
+          type: string
+        IsConflict:
+          type: boolean
+        UpdatedByMemberId:
+          type: string
+      description: InspectionReportArea
+      type: object
+    ChangedInspectionData:
+      title: ChangedInspectionData
+      properties:
+        LotReference:
+          type: string
+        AddressText:
+          type: string
+        KeyNumber:
+          type: string
+        Longitude:
+          type: number
+          format: double
+        Latitude:
+          type: number
+          format: double
+        TenantReference:
+          type: string
+        OwnerReference:
+          type: string
+        PublishOn:
+          type: string
+          format: date-time
+        LotMainPhotoDocumentId:
+          type: string
+        ManagerName:
+          type: string
+        Timestamp:
+          type: integer
+          format: int64
+        InspectionReport:
+          $ref: '#/components/schemas/InspectionReport'
+        PreviousExitReport:
+          $ref: '#/components/schemas/InspectionReport'
+        CurrentRentAmount:
+          type: number
+          format: double
+        CurrentRentPeriod:
+          type: string
+        StatusText:
+          type: string
+        StartTimeText:
+          type: string
+        IsPublished:
+          type: boolean
+        StartTime:
+          type: string
+          format: date-time
+        Duration:
+          type: integer
+          format: int32
+        Type:
+          type: string
+        Status:
+          type: string
+        ListingId:
+          type: string
+        TenantReturnDate:
+          type: string
+          format: date-time
+        AssignedToTenantDate:
+          type: string
+          format: date-time
+        InspectionSnapshotId:
+          type: string
+        StatusPriorToClosing:
+          type: string
+        Id:
+          type: string
+        CustomerId:
+          type: string
+        DueDate:
+          type: string
+          format: date-time
+        CreatedOn:
+          type: string
+          format: date-time
+        ClosedOn:
+          type: string
+          format: date-time
+        Summary:
+          type: string
+        Description:
+          type: string
+        LotId:
+          type: string
+        TenantContactId:
+          type: string
+        OwnerContactId:
+          type: string
+        ContactId:
+          type: string
+        ManagerMemberId:
+          type: string
+        Labels:
+          type: string
+        UpdatedOn:
+          type: string
+          format: date-time
+      description: ChangedInspectionData
+      type: object
+    InspectionReport:
+      title: InspectionReport
+      properties:
+        Id:
+          type: string
+        CustomerId:
+          type: string
+        InspectionTaskId:
+          type: string
+        CreatedOn:
+          type: string
+          format: date-time
+        UpdatedOn:
+          type: string
+          format: date-time
+        VersionNumber:
+          type: integer
+          format: int32
+        RentReview:
+          type: number
+          format: double
+        WaterMeter:
+          type: integer
+          format: int64
+        PublishOn:
+          type: string
+          format: date-time
+        PublishToTenant:
+          type: boolean
+        Notes:
+          type: string
+        FollowUpActions:
+          type: array
+          items:
+            type: string
+        Areas:
+          type: array
+          items:
+            $ref: '#/components/schemas/InspectionReportArea'
+        EntryInspectionTaskId:
+          type: string
+        InspectionReportTemplateId:
+          type: string
+        CopiedFromReportDate:
+          type: string
+          format: date-time
+        IsDeleted:
+          type: boolean
+        CopiedReportId:
+          type: string
+        FrontSection:
+          type: string
+        MemberSignatureId:
+          type: string
+        IncludeMemberImageSignatureOnEachPage:
+          type: boolean
+      description: InspectionReport
+      type: object
+    InspectionDataTableRow:
+      title: InspectionDataTableRow
+      properties:
+        Id:
+          type: string
+        CustomerId:
+          type: string
+        DueDate:
+          type: string
+          format: date-time
+        ClosedOn:
+          type: string
+          format: date-time
+        StartTime:
+          type: string
+          format: date-time
+        Type:
+          type: string
+        PublishOn:
+          type: string
+          format: date-time
+        Summary:
+          type: string
+        LotReference:
+          type: string
+        TenantReference:
+          type: string
+        ManagerName:
+          type: string
+        MemberFirstName:
+          type: string
+        MemberLastName:
+          type: string
+        Status:
+          type: string
+        IsPublished:
+          type: boolean
+        StartTimeText:
+          type: string
+        StatusText:
+          type: string
+        AssignedToTenantDate:
+          type: string
+          format: date-time
+        TenantReturnDueDate:
+          type: string
+          format: date-time
+        TenantProgress:
+          type: string
+        TenantReturnDate:
+          type: string
+          format: date-time
+        DaysPastOrRemaining:
+          type: integer
+          format: int32
+        Labels:
+          type: string
+        GeneratedPdfId:
+          type: string
+        GeneratedPdfFileName:
+          type: string
+        GeneratedPdfStatus:
+          type: string
+      description: InspectionDataTableRow
+      type: object
+    FrontSectionBase:
+      title: FrontSectionBase
+      properties:
+        Version:
+          type: integer
+          format: int32
+        Region:
+          type: string
+        InspectionType:
+          type: string
+      description: FrontSectionBase
+      type: object
+    TaskChecklistMobile:
+      title: TaskChecklistMobile
+      properties:
+        AutomationStatus:
+          type: string
+        AutomationRuleData:
+          type: array
+          items:
+            $ref: '#/components/schemas/MobTaskChecklistAutomationActionData'
+        Id:
+          type: string
+        CustomerId:
+          type: string
+        CreatedOn:
+          type: string
+          format: date-time
+        CompletedOn:
+          type: string
+          format: date-time
+        TaskId:
+          type: string
+        Name:
+          type: string
+        Rank:
+          type: integer
+          format: int32
+        IsCompleted:
+          type: boolean
+        CreatedBy:
+          type: string
+        CompletedBy:
+          type: string
+        AutomationRuleId:
+          type: string
+        CompletedByUser:
+          type: string
+      description: TaskChecklistMobile
+      type: object
+    AddInspectionDocumentRequest:
+      title: AddInspectionDocumentRequest
+      required:
+      - Id
+      properties:
+        Id:
+          description: Id of the inspection
+          type: string
+        IsClientVisible:
+          description: Visible on the owner portal
+          type: boolean
+      description: PropertyMe Rest API
+      type: object
+    InspectionTask:
+      title: InspectionTask
+      properties:
+        StartTime:
+          type: string
+          format: date-time
+        Duration:
+          type: integer
+          format: int32
+        Type:
+          type: string
+        Status:
+          type: string
+        ListingId:
+          type: string
+        TenantReturnDate:
+          type: string
+          format: date-time
+        AssignedToTenantDate:
+          type: string
+          format: date-time
+        InspectionSnapshotId:
+          type: string
+        StatusPriorToClosing:
+          type: string
+        Id:
+          type: string
+        CustomerId:
+          type: string
+        DueDate:
+          type: string
+          format: date-time
+        CreatedOn:
+          type: string
+          format: date-time
+        ClosedOn:
+          type: string
+          format: date-time
+        Summary:
+          type: string
+        Description:
+          type: string
+        LotId:
+          type: string
+        TenantContactId:
+          type: string
+        OwnerContactId:
+          type: string
+        ContactId:
+          type: string
+        ManagerMemberId:
+          type: string
+        Labels:
+          type: string
+        UpdatedOn:
+          type: string
+          format: date-time
+      description: InspectionTask
+      type: object
+  parameters:
+    Accept:
+      name: Accept
+      in: header
+      description: Accept Header
+      required: true
+      schema:
+        type: string
+        enum:
+        - application/json
+  securitySchemes:
+    Bearer:
+      type: apiKey
+      name: Authorization
+      in: header

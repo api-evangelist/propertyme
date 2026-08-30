@@ -1,0 +1,64 @@
+openapi: 3.2.0
+info:
+  title: PropertyMe Connection API
+  version: '1.0'
+servers:
+- url: https://app.propertyme.com/api
+tags:
+- name: Connection
+paths:
+  /v1/portfolios/disconnect:
+    parameters:
+    - $ref: '#/components/parameters/Accept'
+    delete:
+      tags:
+      - Connection
+      summary: Disconnect from current portfolio
+      description: Cannot be undone, portfolio user will have to choose to reconnect. Current access token remains valid until it expires.
+      operationId: DisconnectPortfolioRequestportfoliosdisconnect_Delete
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DisconnectResponse'
+        '500':
+          description: An internal error has occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DisconnectResponse'
+        '400':
+          description: Cannot identitify customer portfolio
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DisconnectResponse'
+      deprecated: false
+      security:
+      - Bearer: []
+components:
+  schemas:
+    DisconnectResponse:
+      title: DisconnectResponse
+      properties:
+        Disconnected:
+          type: boolean
+      description: DisconnectResponse
+      type: object
+  parameters:
+    Accept:
+      name: Accept
+      in: header
+      description: Accept Header
+      required: true
+      schema:
+        type: string
+        enum:
+        - application/json
+  securitySchemes:
+    Bearer:
+      type: apiKey
+      name: Authorization
+      in: header

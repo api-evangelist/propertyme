@@ -1,0 +1,226 @@
+openapi: 3.2.0
+info:
+  title: 'PropertyMe Scope: Bills API'
+  version: '1.0'
+servers:
+- url: https://app.propertyme.com/api
+tags:
+- name: ' Scope: Bills'
+paths:
+  /v1/bills:
+    parameters:
+    - $ref: '#/components/parameters/Accept'
+    post:
+      tags:
+      - ' Scope: Bills'
+      summary: Create a new bill including a document
+      description: The auth token must contain a scope of transaction:write.
+      operationId: AddBillRequestbills_Post
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FinancialResponse'
+        '500':
+          description: An internal error has occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FinancialResponse'
+        '400':
+          description: Invalid bill request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FinancialResponse'
+      deprecated: false
+      security:
+      - Bearer: []
+      requestBody:
+        content:
+          application/json:
+            schema: {}
+        description: approved bill
+  /v1/dashboards/transactions/{Type}:
+    parameters:
+    - $ref: '#/components/parameters/Accept'
+    get:
+      tags:
+      - ' Scope: Bills'
+      summary: Get activity dashboard item by type
+      description: The auth token must contain a scope of transaction:read.
+      operationId: TransactionDashboardRequestdashboardstransactionsType_Get
+      parameters:
+      - name: Type
+        in: path
+        description: 'The available dashboard type: Disbursements, RentArrears, Banking, Withdrawals, Reconciliation, UnprocessedBankTransactions, Bills, RentInvoicing, RentReviews'
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DashboardResponse'
+        '502':
+          description: Dashboard type is not supplied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DashboardResponse'
+        '500':
+          description: An internal error has occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DashboardResponse'
+      deprecated: false
+      security:
+      - Bearer: []
+components:
+  schemas:
+    ResponseError:
+      title: ResponseError
+      properties:
+        ErrorCode:
+          type: string
+        FieldName:
+          type: string
+        Message:
+          type: string
+        Meta:
+          $ref: '#/components/schemas/Dictionary_String_String_'
+      description: ResponseError
+      type: object
+    DetailWidget:
+      title: DetailWidget
+      properties:
+        Label:
+          type: string
+        Amount:
+          type: number
+          format: double
+        Quantity:
+          type: integer
+          format: int64
+        Percent:
+          type: number
+          format: double
+        IsMemberView:
+          type: boolean
+        FilterType:
+          type: string
+        AlertLevel:
+          type: string
+        Type:
+          type: string
+        Values:
+          type: array
+          items:
+            $ref: '#/components/schemas/ValueWidget'
+        Date:
+          type: string
+          format: date-time
+        AdditionalValue:
+          type: integer
+          format: int32
+      description: DetailWidget
+      type: object
+    FinancialResponse:
+      title: FinancialResponse
+      properties:
+        TrackingIds:
+          type: array
+          items:
+            type: string
+        ResponseStatus:
+          $ref: '#/components/schemas/ResponseStatus'
+        IsSuccessful:
+          type: boolean
+      description: FinancialResponse
+      type: object
+    DashboardResponse:
+      title: DashboardResponse
+      properties:
+        ValueWidgets:
+          type: array
+          items:
+            $ref: '#/components/schemas/ValueWidget'
+        SpecialValues:
+          type: array
+          items:
+            $ref: '#/components/schemas/ValueWidget'
+        DetailWidgets:
+          type: array
+          items:
+            $ref: '#/components/schemas/DetailWidget'
+        ResponseStatus:
+          $ref: '#/components/schemas/ResponseStatus'
+        IsSuccessful:
+          type: boolean
+      description: DashboardResponse
+      type: object
+    ResponseStatus:
+      title: ResponseStatus
+      properties:
+        ErrorCode:
+          type: string
+        Message:
+          type: string
+        StackTrace:
+          type: string
+        Errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ResponseError'
+        Meta:
+          $ref: '#/components/schemas/Dictionary_String_String_'
+      description: ResponseStatus
+      type: object
+    ValueWidget:
+      title: ValueWidget
+      properties:
+        Label:
+          type: string
+        Amount:
+          type: number
+          format: double
+        Quantity:
+          type: integer
+          format: int64
+        Percent:
+          type: number
+          format: double
+        IsMemberView:
+          type: boolean
+        FilterType:
+          type: string
+        AlertLevel:
+          type: string
+      description: ValueWidget
+      type: object
+    Dictionary_String_String_:
+      title: Dictionary<String,String>
+      additionalProperties:
+        type: string
+      description: Dictionary<String,String>
+      type: object
+  parameters:
+    Accept:
+      name: Accept
+      in: header
+      description: Accept Header
+      required: true
+      schema:
+        type: string
+        enum:
+        - application/json
+  securitySchemes:
+    Bearer:
+      type: apiKey
+      name: Authorization
+      in: header

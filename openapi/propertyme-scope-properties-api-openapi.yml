@@ -1,0 +1,3104 @@
+openapi: 3.2.0
+info:
+  title: 'PropertyMe Scope: Properties API'
+  version: '1.0'
+servers:
+- url: https://app.propertyme.com/api
+tags:
+- name: ' Scope: Properties'
+paths:
+  /v1/tenancies:
+    parameters:
+    - $ref: '#/components/parameters/Accept'
+    get:
+      tags:
+      - ' Scope: Properties'
+      summary: List of all tenancies
+      description: The auth token must contain a scope of property:read.
+      operationId: TenancyRequesttenancies_Get
+      parameters:
+      - name: ContactId
+        in: query
+        description: Id of the contact associated with the tenancies
+        required: false
+        schema:
+          type: string
+      - name: LotId
+        in: query
+        description: Id of the property associated with the tenancies
+        required: false
+        schema:
+          type: string
+      - name: HasOwnership
+        in: query
+        description: Flag indicating whether tenancy has an ownership
+        required: false
+        schema:
+          type: boolean
+      - name: IncludeClosed
+        in: query
+        description: Flag to include/exclude closed tenancies
+        required: false
+        schema:
+          type: boolean
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                title: List<TenancyApiData>
+                type: array
+                items:
+                  $ref: '#/components/schemas/TenancyApiData'
+        '500':
+          description: An internal error has occurred
+          content:
+            application/json:
+              schema:
+                title: List<TenancyApiData>
+                type: array
+                items:
+                  $ref: '#/components/schemas/TenancyApiData'
+        '400':
+          description: Invalid contact and/or lot id(s)
+          content:
+            application/json:
+              schema:
+                title: List<TenancyApiData>
+                type: array
+                items:
+                  $ref: '#/components/schemas/TenancyApiData'
+      deprecated: false
+      security:
+      - Bearer: []
+  /v1/lots:
+    parameters:
+    - $ref: '#/components/parameters/Accept'
+    get:
+      tags:
+      - ' Scope: Properties'
+      summary: List all lots that have changed since a given timestamp
+      description: The auth token must contain a scope of property:read.
+      operationId: ChangedLotRequestlots_Get
+      parameters:
+      - name: Timestamp
+        in: query
+        description: Records returned will have a changed timestamp greater than this value
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                title: List<MobLotGridData>
+                type: array
+                items:
+                  $ref: '#/components/schemas/MobLotGridData'
+        '502':
+          description: Timestamp value is not supplied
+          content:
+            application/json:
+              schema:
+                title: List<MobLotGridData>
+                type: array
+                items:
+                  $ref: '#/components/schemas/MobLotGridData'
+        '500':
+          description: An internal error has occurred
+          content:
+            application/json:
+              schema:
+                title: List<MobLotGridData>
+                type: array
+                items:
+                  $ref: '#/components/schemas/MobLotGridData'
+      deprecated: false
+      security:
+      - Bearer: []
+  /v1/tenancies/balances:
+    parameters:
+    - $ref: '#/components/parameters/Accept'
+    get:
+      tags:
+      - ' Scope: Properties'
+      summary: List of all tenancy balances
+      description: The auth token must contain a scope of property:read.
+      operationId: TenancyBalanceRequesttenanciesbalances_Get
+      parameters:
+      - name: ContactId
+        in: query
+        description: Id of the contact associated with the balance
+        required: false
+        schema:
+          type: string
+      - name: LotId
+        in: query
+        description: Id of the property associated with the balance
+        required: false
+        schema:
+          type: string
+      - name: LastUpdated
+        in: query
+        description: Only records updated on or after this last updated date time (UTC) will be included in the results set
+        required: false
+        schema:
+          type: string
+          format: date-time
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                title: List<TenancyBalanceData>
+                type: array
+                items:
+                  $ref: '#/components/schemas/TenancyBalanceData'
+        '500':
+          description: An internal error has occurred
+          content:
+            application/json:
+              schema:
+                title: List<TenancyBalanceData>
+                type: array
+                items:
+                  $ref: '#/components/schemas/TenancyBalanceData'
+        '400':
+          description: Invalid contact and/or lot id(s)
+          content:
+            application/json:
+              schema:
+                title: List<TenancyBalanceData>
+                type: array
+                items:
+                  $ref: '#/components/schemas/TenancyBalanceData'
+      deprecated: false
+      security:
+      - Bearer: []
+  /v1/lots/sales:
+    parameters:
+    - $ref: '#/components/parameters/Accept'
+    get:
+      tags:
+      - ' Scope: Properties'
+      summary: List of all lots describing active sales
+      description: The auth token must contain a scope of property:read.
+      operationId: LotActiveSalesRequestlotssales_Get
+      parameters:
+      - name: RentalOnly
+        in: query
+        description: Rental only
+        required: false
+        schema:
+          type: boolean
+      - name: Offset
+        in: query
+        description: The number of rows to skip before beginning to return rows. An offset of 0 is the same as omitting the offset parameter.
+        required: true
+        schema:
+          type: integer
+          format: int32
+      - name: Limit
+        in: query
+        description: The maximum number of results to be returned. There may be less if the query returned less than the maximum.
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                title: List<SalePropertyQueryData>
+                type: array
+                items:
+                  $ref: '#/components/schemas/SalePropertyQueryData'
+        '500':
+          description: An internal error has occurred
+          content:
+            application/json:
+              schema:
+                title: List<SalePropertyQueryData>
+                type: array
+                items:
+                  $ref: '#/components/schemas/SalePropertyQueryData'
+        '400':
+          description: Invalid value of offset or limit
+          content:
+            application/json:
+              schema:
+                title: List<SalePropertyQueryData>
+                type: array
+                items:
+                  $ref: '#/components/schemas/SalePropertyQueryData'
+      deprecated: false
+      security:
+      - Bearer: []
+  /v1/lots/archived:
+    parameters:
+    - $ref: '#/components/parameters/Accept'
+    get:
+      tags:
+      - ' Scope: Properties'
+      summary: List of all lots described as archived lots
+      description: The auth token must contain a scope of property:read.
+      operationId: LotArchivedRequestlotsarchived_Get
+      parameters:
+      - name: ArchivedSince
+        in: query
+        description: Only records updated on or after this archived since date time (UTC) will be included in the results set
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: Offset
+        in: query
+        description: The number of rows to skip before beginning to return rows. An offset of 0 is the same as omitting the offset parameter.
+        required: true
+        schema:
+          type: integer
+          format: int32
+      - name: Limit
+        in: query
+        description: The maximum number of results to be returned. There may be less if the query returned less than the maximum.
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                title: List<LotGridData>
+                type: array
+                items:
+                  $ref: '#/components/schemas/LotGridData'
+        '500':
+          description: An internal error has occurred
+          content:
+            application/json:
+              schema:
+                title: List<LotGridData>
+                type: array
+                items:
+                  $ref: '#/components/schemas/LotGridData'
+        '400':
+          description: Invalid value of offset or limit
+          content:
+            application/json:
+              schema:
+                title: List<LotGridData>
+                type: array
+                items:
+                  $ref: '#/components/schemas/LotGridData'
+      deprecated: false
+      security:
+      - Bearer: []
+  /v1/lots/{Id}:
+    parameters:
+    - $ref: '#/components/parameters/Accept'
+    get:
+      tags:
+      - ' Scope: Properties'
+      summary: Find a lot by id
+      description: The auth token must contain a scope of property:read.
+      operationId: LotRequestlotsId_Get
+      parameters:
+      - name: Id
+        in: path
+        description: Id of the lot
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Lot'
+        '500':
+          description: An internal error has occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Lot'
+      deprecated: false
+      security:
+      - Bearer: []
+  /v1/lots/rentals:
+    parameters:
+    - $ref: '#/components/parameters/Accept'
+    get:
+      tags:
+      - ' Scope: Properties'
+      summary: List all rentals described as rentals
+      description: The auth token must contain a scope of property:read.
+      operationId: LotRentalsRequestlotsrentals_Get
+      parameters:
+      - name: Offset
+        in: query
+        description: The number of rows to skip before beginning to return rows. An offset of 0 is the same as omitting the offset parameter.
+        required: true
+        schema:
+          type: integer
+          format: int32
+      - name: Limit
+        in: query
+        description: The maximum number of results to be returned. There may be less if the query returned less than the maximum.
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                title: List<RentalLotQueryData>
+                type: array
+                items:
+                  $ref: '#/components/schemas/RentalLotQueryData'
+        '500':
+          description: An internal error has occurred
+          content:
+            application/json:
+              schema:
+                title: List<RentalLotQueryData>
+                type: array
+                items:
+                  $ref: '#/components/schemas/RentalLotQueryData'
+        '400':
+          description: Invalid value of offset or limit
+          content:
+            application/json:
+              schema:
+                title: List<RentalLotQueryData>
+                type: array
+                items:
+                  $ref: '#/components/schemas/RentalLotQueryData'
+      deprecated: false
+      security:
+      - Bearer: []
+  /v1/lots/vacancy:
+    parameters:
+    - $ref: '#/components/parameters/Accept'
+    get:
+      tags:
+      - ' Scope: Properties'
+      summary: List of all lots described as vacant
+      description: The auth token must contain a scope of property:read.
+      operationId: LotVacantSalesRequestlotsvacancy_Get
+      parameters:
+      - name: RentalOnly
+        in: query
+        description: Rental only
+        required: false
+        schema:
+          type: boolean
+      - name: Offset
+        in: query
+        description: The number of rows to skip before beginning to return rows. An offset of 0 is the same as omitting the offset parameter.
+        required: true
+        schema:
+          type: integer
+          format: int32
+      - name: Limit
+        in: query
+        description: The maximum number of results to be returned. There may be less if the query returned less than the maximum.
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                title: List<LotsQueryData>
+                type: array
+                items:
+                  $ref: '#/components/schemas/LotsQueryData'
+        '500':
+          description: An internal error has occurred
+          content:
+            application/json:
+              schema:
+                title: List<LotsQueryData>
+                type: array
+                items:
+                  $ref: '#/components/schemas/LotsQueryData'
+        '400':
+          description: Invalid value of offset or limit
+          content:
+            application/json:
+              schema:
+                title: List<LotsQueryData>
+                type: array
+                items:
+                  $ref: '#/components/schemas/LotsQueryData'
+      deprecated: false
+      security:
+      - Bearer: []
+  /v1/tenancies/balances/{id}:
+    parameters:
+    - $ref: '#/components/parameters/Accept'
+    get:
+      tags:
+      - ' Scope: Properties'
+      summary: Find a tenancy balance record by Id
+      description: The auth token must contain a scope of property:read.
+      operationId: SingleTenancyBalanceRequesttenanciesbalancesid_Get
+      parameters:
+      - name: Id
+        in: path
+        description: Id of the tenancy balance record
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TenancyBalanceData'
+        '500':
+          description: An internal error has occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TenancyBalanceData'
+        '400':
+          description: Invalid Id)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TenancyBalanceData'
+      deprecated: false
+      security:
+      - Bearer: []
+  /v1/lots/{Id}/comments:
+    parameters:
+    - $ref: '#/components/parameters/Accept'
+    post:
+      tags:
+      - ' Scope: Properties'
+      summary: Create a new comment for a given lot
+      description: The auth token must contain a scope of property:write.
+      operationId: AddLotCommentRequestlotsIdcomments_Post
+      parameters:
+      - name: Id
+        in: query
+        description: The id of the lot
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseBase'
+        '500':
+          description: An internal error has occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseBase'
+        '400':
+          description: Invalid lot id
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseBase'
+      deprecated: false
+      security:
+      - Bearer: []
+      requestBody:
+        content:
+          application/json:
+            schema: {}
+        description: comment
+  /v1/lots/{Id}/documents:
+    parameters:
+    - $ref: '#/components/parameters/Accept'
+    post:
+      tags:
+      - ' Scope: Properties'
+      summary: Create a new document for a given lot
+      description: The auth token must contain a scope of property:write.
+      operationId: AddLotDocumentRequestlotsIddocuments_Post
+      parameters:
+      - name: Id
+        in: path
+        description: Id of the lot
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseBase'
+        '500':
+          description: An internal error has occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseBase'
+        '400':
+          description: Invalid lot id
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseBase'
+      deprecated: false
+      security:
+      - Bearer: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddLotDocumentRequest'
+  /v1/lots/{Id}/images:
+    parameters:
+    - $ref: '#/components/parameters/Accept'
+    get:
+      tags:
+      - ' Scope: Properties'
+      summary: List all images for a given lot
+      description: The auth token must contain a scope of property:read.
+      operationId: GetLotImageslotsIdimages_Get
+      parameters:
+      - name: Id
+        in: path
+        description: Id of the lot
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                title: List<QueryDocumentData>
+                type: array
+                items:
+                  $ref: '#/components/schemas/QueryDocumentData'
+        '500':
+          description: An internal error has occurred
+          content:
+            application/json:
+              schema:
+                title: List<QueryDocumentData>
+                type: array
+                items:
+                  $ref: '#/components/schemas/QueryDocumentData'
+        '400':
+          description: Invalid lot id
+          content:
+            application/json:
+              schema:
+                title: List<QueryDocumentData>
+                type: array
+                items:
+                  $ref: '#/components/schemas/QueryDocumentData'
+      deprecated: false
+      security:
+      - Bearer: []
+  /v1/lots/{Id}/detail:
+    parameters:
+    - $ref: '#/components/parameters/Accept'
+    get:
+      tags:
+      - ' Scope: Properties'
+      summary: Find a lot by id
+      description: The auth token must contain a scope of property:read.
+      operationId: LotDetailRequestlotsIddetail_Get
+      parameters:
+      - name: Id
+        in: path
+        description: Id of the lot
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LotDetailApiResponse'
+        '500':
+          description: An internal error has occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LotDetailApiResponse'
+      deprecated: false
+      security:
+      - Bearer: []
+  /v1/lots/{Id}/members:
+    parameters:
+    - $ref: '#/components/parameters/Accept'
+    get:
+      tags:
+      - ' Scope: Properties'
+      summary: Find a lot manager by lot id
+      description: The auth token must contain a scope of property:read.
+      operationId: LotManagerRequestlotsIdmembers_Get
+      parameters:
+      - name: Id
+        in: path
+        description: Id of the lot
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerMemberData'
+        '500':
+          description: An internal error has occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerMemberData'
+      deprecated: false
+      security:
+      - Bearer: []
+  /v1/dashboards/lots/{Type}:
+    parameters:
+    - $ref: '#/components/parameters/Accept'
+    get:
+      tags:
+      - ' Scope: Properties'
+      summary: Get dashboard item by type
+      description: The auth token must contain a scope of property:read.
+      operationId: LotDashboardRequestdashboardslotsType_Get
+      parameters:
+      - name: Type
+        in: path
+        description: 'The available dashboard type: AllProperties, Vacancies'
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DashboardResponse'
+        '502':
+          description: Dashboard type is not supplied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DashboardResponse'
+        '500':
+          description: An internal error has occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DashboardResponse'
+      deprecated: false
+      security:
+      - Bearer: []
+  /v1/lots/{Id}/folio/documents:
+    parameters:
+    - $ref: '#/components/parameters/Accept'
+    post:
+      tags:
+      - ' Scope: Properties'
+      summary: Create a new document for a given owner or tenant
+      description: The auth token must contain a scope of property:write.
+      operationId: AddLotFolioDocumentRequestlotsIdfoliodocuments_Post
+      parameters:
+      - name: Id
+        in: path
+        description: Id of the lot
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseBase'
+        '500':
+          description: An internal error has occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseBase'
+        '400':
+          description: Invalid lot id or folio id
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseBase'
+      deprecated: false
+      security:
+      - Bearer: []
+      requestBody:
+        content:
+          application/json:
+            schema: {}
+        description: Visible on the portal
+        required: true
+  /v1/lots/{Id}/alerts/{Type}:
+    parameters:
+    - $ref: '#/components/parameters/Accept'
+    get:
+      tags:
+      - ' Scope: Properties'
+      summary: List all contact alerts for a given lot by contact alert type
+      description: The auth token must contain a scope of property:read.
+      operationId: GetContactAlertsRequestlotsIdalertsType_Get
+      parameters:
+      - name: Id
+        in: path
+        description: Id of the contact
+        required: true
+        schema:
+          type: string
+      - name: Type
+        in: path
+        description: Contact alert type can be one of Property, Job and Inspection
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                title: List<ContactAlert>
+                type: array
+                items:
+                  $ref: '#/components/schemas/ContactAlert'
+        '500':
+          description: An internal error has occurred
+          content:
+            application/json:
+              schema:
+                title: List<ContactAlert>
+                type: array
+                items:
+                  $ref: '#/components/schemas/ContactAlert'
+        '400':
+          description: Invalid lot id or contact alert type
+          content:
+            application/json:
+              schema:
+                title: List<ContactAlert>
+                type: array
+                items:
+                  $ref: '#/components/schemas/ContactAlert'
+      deprecated: false
+      security:
+      - Bearer: []
+components:
+  schemas:
+    TenancyBalanceData:
+      title: TenancyBalanceData
+      properties:
+        FirstName:
+          type: string
+        LastName:
+          type: string
+        Salutation:
+          type: string
+        LotAddress:
+          type: string
+        LotReference:
+          type: string
+        ContactReference:
+          type: string
+        ContactEmail:
+          type: string
+        HomePhone:
+          type: string
+        WorkPhone:
+          type: string
+        CellPhone:
+          type: string
+        NormalisedMobilePhone:
+          type: string
+        FolioNumber:
+          type: integer
+          format: int32
+        Code:
+          type: string
+        IsActive:
+          type: boolean
+        BondReceipted:
+          type: number
+          format: double
+        Deposited:
+          type: number
+          format: double
+        DirectDeposited:
+          type: number
+          format: double
+        ArrearsDays:
+          type: integer
+          format: int32
+        InvoiceDaysInArrears:
+          type: integer
+          format: int32
+        InvoiceArrears:
+          type: number
+          format: double
+        ClosedOn:
+          type: string
+          format: date-time
+        ProrataRentDue:
+          type: number
+          format: double
+        MostRentDue:
+          type: number
+          format: double
+        RentDueByPeriod:
+          type: number
+          format: double
+        TotalRentPaid:
+          type: number
+          format: double
+        UnclearedBalance:
+          type: number
+          format: double
+        PendingPayments:
+          type: number
+          format: double
+        PendingRentPayments:
+          type: number
+          format: double
+        PendingInvoicePayments:
+          type: number
+          format: double
+        PendingDepositPayments:
+          type: number
+          format: double
+        PendingBondPayments:
+          type: number
+          format: double
+        MepayStatus:
+          type: string
+        ActiveOwnershipId:
+          type: string
+        HasActiveOwner:
+          type: boolean
+        ContactPersonCount:
+          type: integer
+          format: int32
+        DaysInArrears:
+          type: integer
+          format: int32
+        RentArrears:
+          type: number
+          format: double
+        RentArrearsByPeriod:
+          type: number
+          format: double
+        FolioId:
+          type: string
+        BondArrears:
+          type: number
+          format: double
+        TotalArrears:
+          type: number
+          format: double
+        TotalArrearsByPeriod:
+          type: number
+          format: double
+        IsClosed:
+          type: boolean
+        Label:
+          type: string
+        SearchText:
+          type: string
+        Name:
+          type: string
+        Id:
+          type: string
+        CustomerId:
+          type: string
+        LotId:
+          type: string
+        ContactId:
+          type: string
+        TenancyStart:
+          type: string
+          format: date-time
+        AgreementStart:
+          type: string
+          format: date-time
+        AgreementEnd:
+          type: string
+          format: date-time
+        Periodic:
+          type: boolean
+        TenancyEnd:
+          type: string
+          format: date-time
+        Termination:
+          type: string
+          format: date-time
+        BreakLease:
+          type: string
+          format: date-time
+        Notes:
+          type: string
+        RentAmount:
+          type: number
+          format: double
+        RentPeriod:
+          type: string
+        BondAmount:
+          type: number
+          format: double
+        OpenBondReceived:
+          type: number
+          format: double
+        BondReference:
+          type: string
+        BondInTrust:
+          type: number
+          format: double
+        BankReference:
+          type: string
+        TaxOnRent:
+          type: boolean
+        GenerateRentInvoice:
+          type: boolean
+        RentInvoiceDaysInAdvance:
+          type: integer
+          format: int32
+        ReceiptWarning:
+          type: string
+        NextIncreaseAmount:
+          type: number
+          format: double
+        NextIncreaseDate:
+          type: string
+          format: date-time
+        RentSequence:
+          type: integer
+          format: int32
+        PaidTo:
+          type: string
+          format: date-time
+        EffectivePaidTo:
+          type: string
+          format: date-time
+        PartPaid:
+          type: number
+          format: double
+        ProrataTo:
+          type: string
+          format: date-time
+        AllowMepayPayments:
+          type: boolean
+        ReviewFrequency:
+          type: integer
+          format: int32
+        NextReviewDate:
+          type: string
+          format: date-time
+        LastReviewedOn:
+          type: string
+          format: date-time
+        DirectDebit:
+          type: boolean
+        DirectDebitFixedAmount:
+          type: number
+          format: double
+        DirectDebitFrequency:
+          type: string
+        NextDirectDebitDate:
+          type: string
+          format: date-time
+        CreatedOn:
+          type: string
+          format: date-time
+        UpdatedOn:
+          type: string
+          format: date-time
+        ExcludeArrearsAutomation:
+          type: boolean
+        IsWaterUsageCharged:
+          type: boolean
+        BondDueDate:
+          type: string
+          format: date-time
+      description: TenancyBalanceData
+      type: object
+    MobLotGridData:
+      title: MobLotGridData
+      properties:
+        OwnerContactReference:
+          type: string
+        TenantContactReference:
+          type: string
+        RentAmount:
+          type: number
+          format: double
+        RentPeriod:
+          type: string
+        TenancyStart:
+          type: string
+          format: date-time
+        TenancyEnd:
+          type: string
+          format: date-time
+        AgreementStart:
+          type: string
+          format: date-time
+        AgreementEnd:
+          type: string
+          format: date-time
+        OwnerContactId:
+          type: string
+        TenantContactId:
+          type: string
+        Vacant:
+          type: boolean
+        ManagerName:
+          type: string
+        EffectivePaidTo:
+          type: string
+          format: date-time
+        OwnershipUpdatedOn:
+          type: string
+          format: date-time
+        TenancyUpdatedOn:
+          type: string
+          format: date-time
+        SaleAgreementUpdatedOn:
+          type: string
+          format: date-time
+        StrataManagerContactName:
+          type: string
+        HasAccessDetails:
+          type: boolean
+        PetStatus:
+          type: string
+        Pets:
+          type: integer
+          format: int32
+        PetDetails:
+          type: string
+        Reason:
+          type: string
+        Occupants:
+          type: integer
+          format: int32
+        Leaseholders:
+          type: integer
+          format: int32
+        AdditionalOccupants:
+          type: integer
+          format: int32
+        Details:
+          type: string
+        Timestamp:
+          type: integer
+          format: int64
+        PropertyType:
+          type: string
+        CommercialCategory:
+          type: string
+        Id:
+          type: string
+        CustomerId:
+          type: string
+        Reference:
+          type: string
+        Address:
+          $ref: '#/components/schemas/AddressDetail'
+        AddressText:
+          type: string
+        PrimaryType:
+          type: string
+        PropertySubtype:
+          type: string
+        Bedrooms:
+          type: integer
+          format: int32
+        Bathrooms:
+          type: integer
+          format: int32
+        CarSpaces:
+          type: integer
+          format: int32
+        Area:
+          type: number
+          format: double
+        AreaUnit:
+          type: string
+        LandArea:
+          type: number
+          format: double
+        LandAreaUnit:
+          type: string
+        Description:
+          type: string
+        Notes:
+          type: string
+        NextInspectionOn:
+          type: string
+          format: date-time
+        KeyNumber:
+          type: string
+        ArchivedOn:
+          type: string
+          format: date-time
+        AdRentAmount:
+          type: number
+          format: double
+        AdRentPeriod:
+          type: string
+        ActiveOwnershipId:
+          type: string
+        ActiveSaleAgreementId:
+          type: string
+        ActiveTenancyId:
+          type: string
+        Longitude:
+          type: number
+          format: double
+        Latitude:
+          type: number
+          format: double
+        InspectionFrequency:
+          type: integer
+          format: int32
+        InspectionFrequencyType:
+          type: string
+        InitialInspectionFrequency:
+          type: integer
+          format: int32
+        InitialInspectionFrequencyType:
+          type: string
+        MainPhotoDocumentId:
+          type: string
+        ActiveManagerMemberId:
+          type: string
+        Labels:
+          type: string
+        StrataManagerContactId:
+          type: string
+        RuralCategory:
+          type: string
+        DisplayAddress:
+          type: boolean
+        IsRental:
+          type: boolean
+        IsArchived:
+          type: boolean
+        CreatedOn:
+          type: string
+          format: date-time
+        UpdatedOn:
+          type: string
+          format: date-time
+        ExternalListingId:
+          type: string
+        ActiveRentalListingId:
+          type: string
+        ActiveSaleListingId:
+          type: string
+      description: MobLotGridData
+      type: object
+    QueryDocumentData:
+      title: QueryDocumentData
+      properties:
+        LotId:
+          type: string
+        ContactId:
+          type: string
+        TenantInvoiceId:
+          type: string
+        InspectionTaskId:
+          type: string
+        IsClientVisible:
+          type: boolean
+        DocumentLinkId:
+          type: string
+        TenantInvoiceNumber:
+          type: integer
+          format: int32
+        ChartAccountName:
+          type: string
+        JobTaskId:
+          type: string
+        TaskId:
+          type: string
+        JobTaskSummary:
+          type: string
+        Number:
+          type: integer
+          format: int32
+        FolioType:
+          type: string
+        LotReference:
+          type: string
+        Id:
+          type: string
+        CustomerId:
+          type: string
+        CreatedOn:
+          type: string
+          format: date-time
+        MimeType:
+          type: string
+        FileType:
+          type: string
+        FileName:
+          type: string
+        Size:
+          type: integer
+          format: int64
+        ThumbnailsFileSize:
+          type: integer
+          format: int64
+        Status:
+          type: string
+        IsReadOnly:
+          type: boolean
+        DocumentType:
+          type: string
+        DocumentArea:
+          type: string
+      description: QueryDocumentData
+      type: object
+    RentalLotQueryData:
+      title: RentalLotQueryData
+      properties:
+        DaysInArrears:
+          type: integer
+          format: int32
+        LotReference:
+          type: string
+        OwnerContactReference:
+          type: string
+        TenantContactReference:
+          type: string
+        ManagerName:
+          type: string
+        Teams:
+          type: string
+        RentAmount:
+          type: number
+          format: double
+        RentPeriod:
+          type: string
+        EffectivePaidTo:
+          type: string
+          format: date-time
+        TenancyStart:
+          type: string
+          format: date-time
+        TenancyEnd:
+          type: string
+          format: date-time
+        Termination:
+          type: string
+          format: date-time
+        BreakLease:
+          type: string
+          format: date-time
+        AgreementStart:
+          type: string
+          format: date-time
+        AgreementEnd:
+          type: string
+          format: date-time
+        OwnerContactId:
+          type: string
+        TenantContactId:
+          type: string
+        OwnerFolioCode:
+          type: string
+        TenantFolioCode:
+          type: string
+        SellerFolioCode:
+          type: string
+        Relet:
+          type: boolean
+        SearchText:
+          type: string
+        Periodic:
+          type: boolean
+        Id:
+          type: string
+        CustomerId:
+          type: string
+        Reference:
+          type: string
+        Address:
+          $ref: '#/components/schemas/AddressDetail'
+        AddressText:
+          type: string
+        PrimaryType:
+          type: string
+        PropertySubtype:
+          type: string
+        Bedrooms:
+          type: integer
+          format: int32
+        Bathrooms:
+          type: integer
+          format: int32
+        CarSpaces:
+          type: integer
+          format: int32
+        Area:
+          type: number
+          format: double
+        AreaUnit:
+          type: string
+        LandArea:
+          type: number
+          format: double
+        LandAreaUnit:
+          type: string
+        Description:
+          type: string
+        Notes:
+          type: string
+        NextInspectionOn:
+          type: string
+          format: date-time
+        KeyNumber:
+          type: string
+        ArchivedOn:
+          type: string
+          format: date-time
+        AdRentAmount:
+          type: number
+          format: double
+        AdRentPeriod:
+          type: string
+        ActiveOwnershipId:
+          type: string
+        ActiveSaleAgreementId:
+          type: string
+        ActiveTenancyId:
+          type: string
+        Longitude:
+          type: number
+          format: double
+        Latitude:
+          type: number
+          format: double
+        InspectionFrequency:
+          type: integer
+          format: int32
+        InspectionFrequencyType:
+          type: string
+        InitialInspectionFrequency:
+          type: integer
+          format: int32
+        InitialInspectionFrequencyType:
+          type: string
+        MainPhotoDocumentId:
+          type: string
+        ActiveManagerMemberId:
+          type: string
+        Labels:
+          type: string
+        StrataManagerContactId:
+          type: string
+        RuralCategory:
+          type: string
+        DisplayAddress:
+          type: boolean
+        IsRental:
+          type: boolean
+        IsArchived:
+          type: boolean
+        CreatedOn:
+          type: string
+          format: date-time
+        UpdatedOn:
+          type: string
+          format: date-time
+        ExternalListingId:
+          type: string
+        ActiveRentalListingId:
+          type: string
+        ActiveSaleListingId:
+          type: string
+      description: RentalLotQueryData
+      type: object
+    ResponseBase:
+      title: ResponseBase
+      properties:
+        ResponseStatus:
+          $ref: '#/components/schemas/ResponseStatus'
+        IsSuccessful:
+          type: boolean
+      description: ResponseBase
+      type: object
+    DashboardResponse:
+      title: DashboardResponse
+      properties:
+        ValueWidgets:
+          type: array
+          items:
+            $ref: '#/components/schemas/ValueWidget'
+        SpecialValues:
+          type: array
+          items:
+            $ref: '#/components/schemas/ValueWidget'
+        DetailWidgets:
+          type: array
+          items:
+            $ref: '#/components/schemas/DetailWidget'
+        ResponseStatus:
+          $ref: '#/components/schemas/ResponseStatus'
+        IsSuccessful:
+          type: boolean
+      description: DashboardResponse
+      type: object
+    AdditionalEmail:
+      title: AdditionalEmail
+      properties:
+        Email:
+          type: string
+        AllScope:
+          type: boolean
+      description: AdditionalEmail
+      type: object
+    Dictionary_String_String_:
+      title: Dictionary<String,String>
+      additionalProperties:
+        type: string
+      description: Dictionary<String,String>
+      type: object
+    LandAttributes:
+      title: LandAttributes
+      properties:
+        LandSize:
+          type: integer
+          format: int32
+        Frontage:
+          type: integer
+          format: int32
+        RearDepth:
+          type: integer
+          format: int32
+        RightDepth:
+          type: integer
+          format: int32
+        LeftDepth:
+          type: integer
+          format: int32
+        CrossOverType:
+          type: string
+      description: LandAttributes
+      type: object
+    CustomerMemberData:
+      title: CustomerMemberData
+      properties:
+        Id:
+          type: string
+        CustomerId:
+          type: string
+        UserId:
+          type: integer
+          format: int32
+        Role:
+          type: string
+        ExpireOn:
+          type: string
+          format: date-time
+        FirstName:
+          type: string
+        LastName:
+          type: string
+        CompanyName:
+          type: string
+        RegisteredEmail:
+          type: string
+        RegisteredOn:
+          type: string
+          format: date-time
+        WorkPhone:
+          type: string
+        MobilePhone:
+          type: string
+        IsActivated:
+          type: boolean
+        AgreeConditionsOn:
+          type: string
+          format: date-time
+        RegionCode:
+          type: string
+        Permissions:
+          type: string
+        CurrentMemberAccessId:
+          type: string
+        JobTitle:
+          type: string
+        Teams:
+          type: string
+        IsSupport:
+          type: boolean
+        IsBillingRecipient:
+          type: boolean
+        IsTwoFactorAuthenticationEnabled:
+          type: boolean
+        Name:
+          type: string
+      description: CustomerMemberData
+      type: object
+    Lot:
+      title: Lot
+      properties:
+        Id:
+          type: string
+        CustomerId:
+          type: string
+        Reference:
+          type: string
+        Address:
+          $ref: '#/components/schemas/AddressDetail'
+        AddressText:
+          type: string
+        PrimaryType:
+          type: string
+        PropertySubtype:
+          type: string
+        Bedrooms:
+          type: integer
+          format: int32
+        Bathrooms:
+          type: integer
+          format: int32
+        CarSpaces:
+          type: integer
+          format: int32
+        Area:
+          type: number
+          format: double
+        AreaUnit:
+          type: string
+        LandArea:
+          type: number
+          format: double
+        LandAreaUnit:
+          type: string
+        Description:
+          type: string
+        Notes:
+          type: string
+        NextInspectionOn:
+          type: string
+          format: date-time
+        KeyNumber:
+          type: string
+        ArchivedOn:
+          type: string
+          format: date-time
+        AdRentAmount:
+          type: number
+          format: double
+        AdRentPeriod:
+          type: string
+        ActiveOwnershipId:
+          type: string
+        ActiveSaleAgreementId:
+          type: string
+        ActiveTenancyId:
+          type: string
+        Longitude:
+          type: number
+          format: double
+        Latitude:
+          type: number
+          format: double
+        InspectionFrequency:
+          type: integer
+          format: int32
+        InspectionFrequencyType:
+          type: string
+        InitialInspectionFrequency:
+          type: integer
+          format: int32
+        InitialInspectionFrequencyType:
+          type: string
+        MainPhotoDocumentId:
+          type: string
+        ActiveManagerMemberId:
+          type: string
+        Labels:
+          type: string
+        StrataManagerContactId:
+          type: string
+        RuralCategory:
+          type: string
+        DisplayAddress:
+          type: boolean
+        IsRental:
+          type: boolean
+        IsArchived:
+          type: boolean
+        CreatedOn:
+          type: string
+          format: date-time
+        UpdatedOn:
+          type: string
+          format: date-time
+        ExternalListingId:
+          type: string
+        ActiveRentalListingId:
+          type: string
+        ActiveSaleListingId:
+          type: string
+      description: Lot
+      type: object
+    Contact:
+      title: Contact
+      properties:
+        Id:
+          type: string
+        CustomerId:
+          type: string
+        SpecialType:
+          type: string
+        Roles:
+          type: array
+          items:
+            type: string
+        ArchivedOn:
+          type: string
+          format: date-time
+        AccountDetails:
+          type: array
+          items:
+            $ref: '#/components/schemas/FolioAccount'
+        Reference:
+          type: string
+        Website:
+          type: string
+        ABN:
+          type: string
+        PersonMigrated:
+          type: boolean
+        Labels:
+          type: string
+        Notes:
+          type: string
+        NameText:
+          type: string
+        PostalAddressText:
+          type: string
+        PhysicalAddressText:
+          type: string
+        HasTenantInvoiceAccount:
+          type: boolean
+        HomePhone:
+          type: string
+        WorkPhone:
+          type: string
+        CellPhone:
+          type: string
+        TradeName:
+          type: string
+        Email:
+          type: string
+        SupplierChartAccountId:
+          type: string
+        IsArchived:
+          type: boolean
+        IsSupplier:
+          type: boolean
+        IsTenant:
+          type: boolean
+        IsOwner:
+          type: boolean
+        IsSeller:
+          type: boolean
+        PhoneText:
+          type: string
+        WorkPhoneText:
+          type: string
+        ContactPhone:
+          type: string
+        CreatedOn:
+          type: string
+          format: date-time
+        UpdatedOn:
+          type: string
+          format: date-time
+        ContactPersons:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContactPerson'
+        PrimaryContactPerson:
+          $ref: '#/components/schemas/ContactPerson'
+      description: Contact
+      type: object
+    AddLotDocumentRequest:
+      title: AddLotDocumentRequest
+      required:
+      - Id
+      properties:
+        Id:
+          description: Id of the lot
+          type: string
+      description: PropertyMe Rest API
+      type: object
+    ListingStatus:
+      title: ListingStatus
+      properties:
+        Id:
+          type: string
+        CustomerId:
+          type: string
+        ListingId:
+          type: string
+        LogId:
+          type: integer
+          format: int32
+        ListingCompany:
+          type: string
+        State:
+          type: string
+        Status:
+          type: string
+        NewState:
+          type: string
+        ListOn:
+          type: string
+          format: date-time
+        Description:
+          type: string
+        IsEnabled:
+          type: boolean
+        ExternalId:
+          type: string
+        SecondExternalId:
+          type: string
+        ListingProviderId:
+          type: string
+        ListingCompanyDescription:
+          type: string
+        StatusDescription:
+          type: string
+        HtmlDescription:
+          type: string
+      description: ListingStatus
+      type: object
+    FolioAccount:
+      title: FolioAccount
+      properties:
+        Id:
+          type: string
+        CustomerId:
+          type: string
+        FolioId:
+          type: string
+        Index:
+          type: integer
+          format: int32
+        BSB:
+          type: string
+        AccountNumber:
+          type: string
+        BillerCode:
+          type: string
+        BillerReference:
+          type: string
+        Payee:
+          type: string
+        PaymentMethod:
+          type: string
+        Name:
+          type: string
+        Value:
+          type: number
+          format: double
+        Percentage:
+          type: number
+          format: double
+        IsMarkedForDeletion:
+          type: boolean
+      description: FolioAccount
+      type: object
+    ListingAdditionalAttributes:
+      title: ListingAdditionalAttributes
+      properties:
+        LandAttributes:
+          $ref: '#/components/schemas/LandAttributes'
+      description: ListingAdditionalAttributes
+      type: object
+    ListingInfo:
+      title: ListingInfo
+      properties:
+        DaysOnMarket:
+          type: integer
+          format: int32
+        ListingAgentsName:
+          type: string
+        NextInspectionOn:
+          type: string
+          format: date-time
+        PmState:
+          type: string
+        DaysAvaliable:
+          type: integer
+          format: int32
+        Id:
+          type: string
+        CustomerId:
+          type: string
+        LotId:
+          type: string
+        ManagerMemberId:
+          type: string
+        ManagerMemberId2:
+          type: string
+        CreatedOn:
+          type: string
+          format: date-time
+        UpdatedOn:
+          type: string
+          format: date-time
+        ClosedOn:
+          type: string
+          format: date-time
+        Labels:
+          type: string
+        PublishedOn:
+          type: string
+          format: date-time
+        ListingType:
+          type: string
+        State:
+          type: string
+        Headline:
+          type: string
+        Description:
+          type: string
+        Ensuite:
+          type: integer
+          format: int32
+        LivingAreas:
+          type: integer
+          format: int32
+        VideoLink:
+          type: string
+        TourLink:
+          type: string
+        InformationStatementUrl:
+          type: string
+        ListingStatuses:
+          type: array
+          items:
+            $ref: '#/components/schemas/ListingStatus'
+        Garages:
+          type: integer
+          format: int32
+        OpenSpaces:
+          type: integer
+          format: int32
+        Carports:
+          type: integer
+          format: int32
+        Toilets:
+          type: integer
+          format: int32
+        ParkingType:
+          type: string
+        Features:
+          type: string
+        RentAmount:
+          type: number
+          format: double
+        RentPeriod:
+          type: string
+        IsDisplayRentAmount:
+          type: boolean
+        PriceDisplayText:
+          type: string
+        BondAmount:
+          type: number
+          format: double
+        DateAvailable:
+          type: string
+          format: date-time
+        PropertyPrice:
+          type: number
+          format: double
+        DisplaySalePrice:
+          type: boolean
+        PropertyPriceView:
+          type: string
+        Authority:
+          type: string
+        AuctionDateTime:
+          type: string
+          format: date-time
+        SetSaleDateTime:
+          type: string
+          format: date-time
+        UnderOffer:
+          type: boolean
+        DisplaySoldPrice:
+          type: boolean
+        SoldDateTime:
+          type: string
+          format: date-time
+        SoldPrice:
+          type: number
+          format: double
+        AuctionLocation:
+          type: string
+        AdditionalAttributes:
+          $ref: '#/components/schemas/ListingAdditionalAttributes'
+        CommercialRentPerAnnum:
+          type: number
+          format: double
+        CommercialRentTax:
+          type: string
+        Outgoings:
+          type: number
+          format: double
+        CommercialRentMax:
+          type: number
+          format: double
+        CommercialRentMin:
+          type: number
+          format: double
+        PlusOutgoings:
+          type: boolean
+        CommercialListingType:
+          type: string
+        Highlight1:
+          type: string
+        Highlight2:
+          type: string
+        Highlight3:
+          type: string
+        OccupancyTitle:
+          type: string
+        CommercialSalePriceTax:
+          type: string
+        Exclusivity:
+          type: string
+        Fencing:
+          type: string
+        AnnualRainfall:
+          type: string
+        Improvements:
+          type: string
+        Irrigation:
+          type: string
+        CarryingCapacity:
+          type: string
+        SoilTypes:
+          type: string
+        CouncilRates:
+          type: string
+        LotLastUpdatedOn:
+          type: string
+          format: date-time
+        FeatureList:
+          type: array
+          items:
+            type: string
+      description: ListingInfo
+      type: object
+    DetailWidget:
+      title: DetailWidget
+      properties:
+        Label:
+          type: string
+        Amount:
+          type: number
+          format: double
+        Quantity:
+          type: integer
+          format: int64
+        Percent:
+          type: number
+          format: double
+        IsMemberView:
+          type: boolean
+        FilterType:
+          type: string
+        AlertLevel:
+          type: string
+        Type:
+          type: string
+        Values:
+          type: array
+          items:
+            $ref: '#/components/schemas/ValueWidget'
+        Date:
+          type: string
+          format: date-time
+        AdditionalValue:
+          type: integer
+          format: int32
+      description: DetailWidget
+      type: object
+    AddressDetail:
+      title: AddressDetail
+      properties:
+        Unit:
+          type: string
+        Number:
+          type: string
+        Street:
+          type: string
+        Suburb:
+          type: string
+        Locality:
+          type: string
+        PostalCode:
+          type: string
+        State:
+          type: string
+        Country:
+          type: string
+        BuildingName:
+          type: string
+        MailboxName:
+          type: string
+        Latitude:
+          type: number
+          format: double
+        Longitude:
+          type: number
+          format: double
+        StreetLongName:
+          type: string
+        Text:
+          type: string
+        Reference:
+          type: string
+      description: AddressDetail
+      type: object
+    SalePropertyQueryData:
+      title: SalePropertyQueryData
+      properties:
+        LotReference:
+          type: string
+        SaleAgreementId:
+          type: string
+        OwnerContactId:
+          type: string
+        BuyerContactId:
+          type: string
+        Status:
+          type: string
+        AgreementStartDate:
+          type: string
+          format: date-time
+        AgreementEndDate:
+          type: string
+          format: date-time
+        ContractExchangeDate:
+          type: string
+          format: date-time
+        DepositDueDate:
+          type: string
+          format: date-time
+        SettlementDate:
+          type: string
+          format: date-time
+        AskingPrice:
+          type: number
+          format: double
+        PurchasePrice:
+          type: number
+          format: double
+        CommissionAmount:
+          type: number
+          format: double
+        OwnerReference:
+          type: string
+        BuyerReference:
+          type: string
+        ManagerName:
+          type: string
+        Teams:
+          type: string
+        SellerFolioCode:
+          type: string
+        SearchText:
+          type: string
+        Id:
+          type: string
+        CustomerId:
+          type: string
+        Reference:
+          type: string
+        Address:
+          $ref: '#/components/schemas/AddressDetail'
+        AddressText:
+          type: string
+        PrimaryType:
+          type: string
+        PropertySubtype:
+          type: string
+        Bedrooms:
+          type: integer
+          format: int32
+        Bathrooms:
+          type: integer
+          format: int32
+        CarSpaces:
+          type: integer
+          format: int32
+        Area:
+          type: number
+          format: double
+        AreaUnit:
+          type: string
+        LandArea:
+          type: number
+          format: double
+        LandAreaUnit:
+          type: string
+        Description:
+          type: string
+        Notes:
+          type: string
+        NextInspectionOn:
+          type: string
+          format: date-time
+        KeyNumber:
+          type: string
+        ArchivedOn:
+          type: string
+          format: date-time
+        AdRentAmount:
+          type: number
+          format: double
+        AdRentPeriod:
+          type: string
+        ActiveOwnershipId:
+          type: string
+        ActiveSaleAgreementId:
+          type: string
+        ActiveTenancyId:
+          type: string
+        Longitude:
+          type: number
+          format: double
+        Latitude:
+          type: number
+          format: double
+        InspectionFrequency:
+          type: integer
+          format: int32
+        InspectionFrequencyType:
+          type: string
+        InitialInspectionFrequency:
+          type: integer
+          format: int32
+        InitialInspectionFrequencyType:
+          type: string
+        MainPhotoDocumentId:
+          type: string
+        ActiveManagerMemberId:
+          type: string
+        Labels:
+          type: string
+        StrataManagerContactId:
+          type: string
+        RuralCategory:
+          type: string
+        DisplayAddress:
+          type: boolean
+        IsRental:
+          type: boolean
+        IsArchived:
+          type: boolean
+        CreatedOn:
+          type: string
+          format: date-time
+        UpdatedOn:
+          type: string
+          format: date-time
+        ExternalListingId:
+          type: string
+        ActiveRentalListingId:
+          type: string
+        ActiveSaleListingId:
+          type: string
+      description: SalePropertyQueryData
+      type: object
+    Object:
+      properties: {}
+      description: Object
+      type: object
+    HashSet_CommunicationType_:
+      title: HashSet`1
+      properties: {}
+      description: HashSet<CommunicationType>
+      type: object
+    ResponseStatus:
+      title: ResponseStatus
+      properties:
+        ErrorCode:
+          type: string
+        Message:
+          type: string
+        StackTrace:
+          type: string
+        Errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ResponseError'
+        Meta:
+          $ref: '#/components/schemas/Dictionary_String_String_'
+      description: ResponseStatus
+      type: object
+    ValueWidget:
+      title: ValueWidget
+      properties:
+        Label:
+          type: string
+        Amount:
+          type: number
+          format: double
+        Quantity:
+          type: integer
+          format: int64
+        Percent:
+          type: number
+          format: double
+        IsMemberView:
+          type: boolean
+        FilterType:
+          type: string
+        AlertLevel:
+          type: string
+      description: ValueWidget
+      type: object
+    ContactPerson:
+      title: ContactPerson
+      properties:
+        Id:
+          type: string
+        CustomerId:
+          type: string
+        ContactId:
+          type: string
+        Salutation:
+          type: string
+        FirstName:
+          type: string
+        LastName:
+          type: string
+        CompanyName:
+          type: string
+        Email:
+          type: string
+        SecondaryEmailAddresses:
+          type: array
+          items:
+            $ref: '#/components/schemas/AdditionalEmail'
+        HomePhone:
+          type: string
+        WorkPhone:
+          type: string
+        CellPhone:
+          type: string
+        NormalisedMobilePhone:
+          type: string
+        CommunicationPreferences:
+          $ref: '#/components/schemas/HashSet_CommunicationType_'
+        PhysicalAddress:
+          $ref: '#/components/schemas/AddressDetail'
+        PostalAddress:
+          $ref: '#/components/schemas/AddressDetail'
+        IsPrimary:
+          type: boolean
+        SortOrder:
+          type: integer
+          format: int32
+        FullName:
+          type: string
+        CombinedPhones:
+          type: string
+      description: ContactPerson
+      type: object
+    LotDetailApiResponse:
+      title: LotDetailApiResponse
+      properties:
+        Ownership:
+          $ref: '#/components/schemas/OwnershipSqlApiData'
+        ActiveOwnershipId:
+          type: string
+        ActiveSaleAgreementId:
+          type: string
+        ActiveTenancyId:
+          type: string
+        ActiveRentalListingId:
+          type: string
+        ActiveSaleListingId:
+          type: string
+        Address:
+          $ref: '#/components/schemas/AddressDetail'
+        AddressText:
+          type: string
+        ArchivedOn:
+          type: string
+          format: date-time
+        Bathrooms:
+          type: integer
+          format: int32
+        Bedrooms:
+          type: integer
+          format: int32
+        CarSpaces:
+          type: integer
+          format: int32
+        Area:
+          type: number
+          format: double
+        AreaUnit:
+          type: string
+        LandArea:
+          type: number
+          format: double
+        LandAreaUnit:
+          type: string
+        Description:
+          type: string
+        Id:
+          type: string
+        KeyNumber:
+          type: string
+        Labels:
+          type: string
+        NextInspectionOn:
+          type: string
+          format: date-time
+        Notes:
+          type: string
+        PropertyManager:
+          type: string
+        PrimaryType:
+          type: string
+        PropertySubtype:
+          type: string
+        Reference:
+          type: string
+        Longitude:
+          type: number
+          format: double
+        Latitude:
+          type: number
+          format: double
+        TaskRemindersCount:
+          type: integer
+          format: int64
+        Tenancy:
+          $ref: '#/components/schemas/TenancyBalanceData'
+        SaleListing:
+          $ref: '#/components/schemas/ListingInfo'
+        RentalListing:
+          $ref: '#/components/schemas/ListingInfo'
+        HasListingProviderImportInProgress:
+          type: boolean
+        RentOwingPreVacate:
+          type: number
+          format: double
+        RentOverpaid:
+          type: number
+          format: double
+        ProRataStatus:
+          $ref: '#/components/schemas/FolioBalanceInfo'
+        StrataManagerContactId:
+          type: string
+        StrataManagerContactName:
+          type: string
+        HasActiveInvoiceTemplate:
+          type: boolean
+        HasAccessDetails:
+          type: boolean
+        ResponseStatus:
+          $ref: '#/components/schemas/ResponseStatus'
+        IsSuccessful:
+          type: boolean
+      description: LotDetailApiResponse
+      type: object
+    LotsQueryData:
+      title: LotsQueryData
+      properties:
+        LotReference:
+          type: string
+        OwnerContactReference:
+          type: string
+        TenantContactReference:
+          type: string
+        ManagerName:
+          type: string
+        Teams:
+          type: string
+        RentAmount:
+          type: number
+          format: double
+        RentPeriod:
+          type: string
+        EffectivePaidTo:
+          type: string
+          format: date-time
+        TenancyStart:
+          type: string
+          format: date-time
+        TenancyEnd:
+          type: string
+          format: date-time
+        Termination:
+          type: string
+          format: date-time
+        BreakLease:
+          type: string
+          format: date-time
+        AgreementStart:
+          type: string
+          format: date-time
+        AgreementEnd:
+          type: string
+          format: date-time
+        OwnerContactId:
+          type: string
+        TenantContactId:
+          type: string
+        OwnerFolioCode:
+          type: string
+        TenantFolioCode:
+          type: string
+        SellerFolioCode:
+          type: string
+        Relet:
+          type: boolean
+        SearchText:
+          type: string
+        Periodic:
+          type: boolean
+        OwnershipUpdatedOn:
+          type: string
+          format: date-time
+        TenancyUpdatedOn:
+          type: string
+          format: date-time
+        CommercialCategory:
+          type: string
+        SaleAgreementUpdatedOn:
+          type: string
+          format: date-time
+        LotUpdatedTimestamp:
+          type: integer
+          format: int64
+        Id:
+          type: string
+        CustomerId:
+          type: string
+        Reference:
+          type: string
+        Address:
+          $ref: '#/components/schemas/AddressDetail'
+        AddressText:
+          type: string
+        PrimaryType:
+          type: string
+        PropertySubtype:
+          type: string
+        Bedrooms:
+          type: integer
+          format: int32
+        Bathrooms:
+          type: integer
+          format: int32
+        CarSpaces:
+          type: integer
+          format: int32
+        Area:
+          type: number
+          format: double
+        AreaUnit:
+          type: string
+        LandArea:
+          type: number
+          format: double
+        LandAreaUnit:
+          type: string
+        Description:
+          type: string
+        Notes:
+          type: string
+        NextInspectionOn:
+          type: string
+          format: date-time
+        KeyNumber:
+          type: string
+        ArchivedOn:
+          type: string
+          format: date-time
+        AdRentAmount:
+          type: number
+          format: double
+        AdRentPeriod:
+          type: string
+        ActiveOwnershipId:
+          type: string
+        ActiveSaleAgreementId:
+          type: string
+        ActiveTenancyId:
+          type: string
+        Longitude:
+          type: number
+          format: double
+        Latitude:
+          type: number
+          format: double
+        InspectionFrequency:
+          type: integer
+          format: int32
+        InspectionFrequencyType:
+          type: string
+        InitialInspectionFrequency:
+          type: integer
+          format: int32
+        InitialInspectionFrequencyType:
+          type: string
+        MainPhotoDocumentId:
+          type: string
+        ActiveManagerMemberId:
+          type: string
+        Labels:
+          type: string
+        StrataManagerContactId:
+          type: string
+        RuralCategory:
+          type: string
+        DisplayAddress:
+          type: boolean
+        IsRental:
+          type: boolean
+        IsArchived:
+          type: boolean
+        CreatedOn:
+          type: string
+          format: date-time
+        UpdatedOn:
+          type: string
+          format: date-time
+        ExternalListingId:
+          type: string
+        ActiveRentalListingId:
+          type: string
+        ActiveSaleListingId:
+          type: string
+      description: LotsQueryData
+      type: object
+    ResponseError:
+      title: ResponseError
+      properties:
+        ErrorCode:
+          type: string
+        FieldName:
+          type: string
+        Message:
+          type: string
+        Meta:
+          $ref: '#/components/schemas/Dictionary_String_String_'
+      description: ResponseError
+      type: object
+    TenancyApiData:
+      title: TenancyApiData
+      properties:
+        ContactReference:
+          type: string
+        LotAddress:
+          type: string
+        LotReference:
+          type: string
+        FolioNumber:
+          type: integer
+          format: int32
+        ContactEmail:
+          type: string
+        ContactNormalisedMobilePhone:
+          type: string
+        ContactCellPhone:
+          type: string
+        ContactWorkPhone:
+          type: string
+        ContactHomePhone:
+          type: string
+        ContactPhone:
+          type: string
+        IsActive:
+          type: boolean
+        IsClosed:
+          type: boolean
+        ActiveOwnershipId:
+          type: string
+        Code:
+          type: string
+        IsClientAccessDisabled:
+          type: boolean
+        Label:
+          type: string
+        SearchText:
+          $ref: '#/components/schemas/Object'
+        Name:
+          type: string
+        HasBeenReceipted:
+          type: boolean
+        Id:
+          type: string
+        CustomerId:
+          type: string
+        LotId:
+          type: string
+        ContactId:
+          type: string
+        TenancyStart:
+          type: string
+          format: date-time
+        AgreementStart:
+          type: string
+          format: date-time
+        AgreementEnd:
+          type: string
+          format: date-time
+        Periodic:
+          type: boolean
+        TenancyEnd:
+          type: string
+          format: date-time
+        Termination:
+          type: string
+          format: date-time
+        BreakLease:
+          type: string
+          format: date-time
+        Notes:
+          type: string
+        RentAmount:
+          type: number
+          format: double
+        RentPeriod:
+          type: string
+        BondAmount:
+          type: number
+          format: double
+        OpenBondReceived:
+          type: number
+          format: double
+        BondReference:
+          type: string
+        BondInTrust:
+          type: number
+          format: double
+        BankReference:
+          type: string
+        TaxOnRent:
+          type: boolean
+        GenerateRentInvoice:
+          type: boolean
+        RentInvoiceDaysInAdvance:
+          type: integer
+          format: int32
+        ReceiptWarning:
+          type: string
+        NextIncreaseAmount:
+          type: number
+          format: double
+        NextIncreaseDate:
+          type: string
+          format: date-time
+        RentSequence:
+          type: integer
+          format: int32
+        PaidTo:
+          type: string
+          format: date-time
+        EffectivePaidTo:
+          type: string
+          format: date-time
+        PartPaid:
+          type: number
+          format: double
+        ProrataTo:
+          type: string
+          format: date-time
+        ReviewFrequency:
+          type: integer
+          format: int32
+        NextReviewDate:
+          type: string
+          format: date-time
+        LastReviewedOn:
+          type: string
+          format: date-time
+        DirectDebit:
+          type: boolean
+        DirectDebitFixedAmount:
+          type: number
+          format: double
+        DirectDebitFrequency:
+          type: string
+        NextDirectDebitDate:
+          type: string
+          format: date-time
+        CreatedOn:
+          type: string
+          format: date-time
+        UpdatedOn:
+          type: string
+          format: date-time
+        ExcludeArrearsAutomation:
+          type: boolean
+        IsWaterUsageCharged:
+          type: boolean
+        BondDueDate:
+          type: string
+          format: date-time
+      description: TenancyApiData
+      type: object
+    ContactAlert:
+      title: ContactAlert
+      properties:
+        Id:
+          type: string
+        CustomerId:
+          type: string
+        ContactId:
+          type: string
+        Contact:
+          $ref: '#/components/schemas/Contact'
+        Type:
+          type: string
+        LotId:
+          type: string
+        Priority:
+          type: string
+        Note:
+          type: string
+        CreatedOn:
+          type: string
+          format: date-time
+        ModifiedOn:
+          type: string
+          format: date-time
+      description: ContactAlert
+      type: object
+    OwnershipSqlApiData:
+      title: OwnershipSqlApiData
+      properties:
+        ContactReference:
+          type: string
+        AccountDetails:
+          type: array
+          items:
+            $ref: '#/components/schemas/IAccountDetail'
+        FirstName:
+          type: string
+        LastName:
+          type: string
+        Salutation:
+          type: string
+        HomePhone:
+          type: string
+        WorkPhone:
+          type: string
+        CellPhone:
+          type: string
+        NormalisedMobilePhone:
+          type: string
+        Email:
+          type: string
+        DisburseFrequency:
+          type: string
+        DisburseBalance:
+          type: number
+          format: double
+        DisburseIncome:
+          type: number
+          format: double
+        NextDisburseDate:
+          type: string
+          format: date-time
+        Code:
+          type: string
+        LotReference:
+          type: string
+        LotAddressText:
+          type: string
+        GainReason:
+          type: string
+        LostReason:
+          type: string
+        FeesCount:
+          type: integer
+          format: int32
+        Label:
+          type: string
+        ContactPersonCount:
+          type: integer
+          format: int32
+        Id:
+          type: string
+        CustomerId:
+          type: string
+        LotId:
+          type: string
+        ContactId:
+          type: string
+        FolioId:
+          type: string
+        InvoiceFrom:
+          type: string
+          format: date-time
+        OwnedFrom:
+          type: string
+          format: date-time
+        SettlementDate:
+          type: string
+          format: date-time
+        AgreementStartDate:
+          type: string
+          format: date-time
+        AgreementEndDate:
+          type: string
+          format: date-time
+        GainDate:
+          type: string
+          format: date-time
+        GainReasonId:
+          type: string
+        GainComment:
+          type: string
+        LostDate:
+          type: string
+          format: date-time
+        LostReasonId:
+          type: string
+        LostComment:
+          type: string
+        CreatedOn:
+          type: string
+          format: date-time
+        UpdatedOn:
+          type: string
+          format: date-time
+        IsReletAllowed:
+          type: boolean
+        DoNotReletReason:
+          type: string
+      description: OwnershipSqlApiData
+      type: object
+    IAccountDetail:
+      title: IAccountDetail
+      properties: {}
+      description: IAccountDetail
+      type: object
+    FolioBalanceInfo:
+      title: FolioBalanceInfo
+      properties:
+        Text:
+          type: string
+        Amount:
+          type: number
+          format: double
+        Label:
+          type: string
+      description: FolioBalanceInfo
+      type: object
+    LotGridData:
+      title: LotGridData
+      properties:
+        OwnerContactReference:
+          type: string
+        TenantContactReference:
+          type: string
+        ManagerName:
+          type: string
+        ActiveManagerTeams:
+          type: string
+        RentAmount:
+          type: number
+          format: double
+        RentPeriod:
+          type: string
+        EffectivePaidTo:
+          type: string
+          format: date-time
+        TenancyStart:
+          type: string
+          format: date-time
+        TenancyEnd:
+          type: string
+          format: date-time
+        AgreementStart:
+          type: string
+          format: date-time
+        AgreementEnd:
+          type: string
+          format: date-time
+        OwnerContactId:
+          type: string
+        TenantContactId:
+          type: string
+        OwnerFolioCode:
+          type: string
+        TenantFolioCode:
+          type: string
+        SellerFolioCode:
+          type: string
+        SearchText:
+          type: string
+        Id:
+          type: string
+        CustomerId:
+          type: string
+        Reference:
+          type: string
+        Address:
+          $ref: '#/components/schemas/AddressDetail'
+        AddressText:
+          type: string
+        PrimaryType:
+          type: string
+        PropertySubtype:
+          type: string
+        Bedrooms:
+          type: integer
+          format: int32
+        Bathrooms:
+          type: integer
+          format: int32
+        CarSpaces:
+          type: integer
+          format: int32
+        Area:
+          type: number
+          format: double
+        AreaUnit:
+          type: string
+        LandArea:
+          type: number
+          format: double
+        LandAreaUnit:
+          type: string
+        Description:
+          type: string
+        Notes:
+          type: string
+        NextInspectionOn:
+          type: string
+          format: date-time
+        KeyNumber:
+          type: string
+        ArchivedOn:
+          type: string
+          format: date-time
+        AdRentAmount:
+          type: number
+          format: double
+        AdRentPeriod:
+          type: string
+        ActiveOwnershipId:
+          type: string
+        ActiveSaleAgreementId:
+          type: string
+        ActiveTenancyId:
+          type: string
+        Longitude:
+          type: number
+          format: double
+        Latitude:
+          type: number
+          format: double
+        InspectionFrequency:
+          type: integer
+          format: int32
+        InspectionFrequencyType:
+          type: string
+        InitialInspectionFrequency:
+          type: integer
+          format: int32
+        InitialInspectionFrequencyType:
+          type: string
+        MainPhotoDocumentId:
+          type: string
+        ActiveManagerMemberId:
+          type: string
+        Labels:
+          type: string
+        StrataManagerContactId:
+          type: string
+        RuralCategory:
+          type: string
+        DisplayAddress:
+          type: boolean
+        IsRental:
+          type: boolean
+        IsArchived:
+          type: boolean
+        CreatedOn:
+          type: string
+          format: date-time
+        UpdatedOn:
+          type: string
+          format: date-time
+        ExternalListingId:
+          type: string
+        ActiveRentalListingId:
+          type: string
+        ActiveSaleListingId:
+          type: string
+      description: LotGridData
+      type: object
+  parameters:
+    Accept:
+      name: Accept
+      in: header
+      description: Accept Header
+      required: true
+      schema:
+        type: string
+        enum:
+        - application/json
+  securitySchemes:
+    Bearer:
+      type: apiKey
+      name: Authorization
+      in: header

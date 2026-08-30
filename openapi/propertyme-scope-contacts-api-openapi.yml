@@ -1,0 +1,1306 @@
+openapi: 3.2.0
+info:
+  title: 'PropertyMe Scope: Contacts API'
+  version: '1.0'
+servers:
+- url: https://app.propertyme.com/api
+tags:
+- name: ' Scope: Contacts'
+paths:
+  /v1/members:
+    parameters:
+    - $ref: '#/components/parameters/Accept'
+    get:
+      tags:
+      - ' Scope: Contacts'
+      summary: List all members
+      description: The auth token must contain a scope of contact:read.
+      operationId: MembersRequestmembers_Get
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                title: List<CustomerMemberData>
+                type: array
+                items:
+                  $ref: '#/components/schemas/CustomerMemberData'
+        '500':
+          description: An internal error has occurred
+          content:
+            application/json:
+              schema:
+                title: List<CustomerMemberData>
+                type: array
+                items:
+                  $ref: '#/components/schemas/CustomerMemberData'
+      deprecated: false
+      security:
+      - Bearer: []
+  /v1/contacts:
+    parameters:
+    - $ref: '#/components/parameters/Accept'
+    get:
+      tags:
+      - ' Scope: Contacts'
+      summary: Find any contacts changed since a given timestamp
+      description: The auth token must contain a scope of contact:read.
+      operationId: ChangedContactsRequestcontacts_Get
+      parameters:
+      - name: Timestamp
+        in: query
+        description: Records returned will have a changed timestamp greater than this value
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: IncludeArchived
+        in: query
+        description: Includes archived contacts
+        required: false
+        schema:
+          type: boolean
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                title: List<MobContactData>
+                type: array
+                items:
+                  $ref: '#/components/schemas/MobContactData'
+        '500':
+          description: An internal error has occurred
+          content:
+            application/json:
+              schema:
+                title: List<MobContactData>
+                type: array
+                items:
+                  $ref: '#/components/schemas/MobContactData'
+        '400':
+          description: Invalid timestamp value
+          content:
+            application/json:
+              schema:
+                title: List<MobContactData>
+                type: array
+                items:
+                  $ref: '#/components/schemas/MobContactData'
+      deprecated: false
+      security:
+      - Bearer: []
+  /v1/contacts/agency:
+    parameters:
+    - $ref: '#/components/parameters/Accept'
+    get:
+      tags:
+      - ' Scope: Contacts'
+      summary: Returns an agency contact
+      description: The auth token must contain a scope of contact:read.
+      operationId: AgencyRequestcontactsagency_Get
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetAgencyResponse'
+        '500':
+          description: An internal error has occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetAgencyResponse'
+      deprecated: false
+      security:
+      - Bearer: []
+  /v1/contacts/{Id}:
+    parameters:
+    - $ref: '#/components/parameters/Accept'
+    get:
+      tags:
+      - ' Scope: Contacts'
+      summary: Find a contact by Id
+      description: The auth token must contain a scope of contact:read.
+      operationId: ContactRequestcontactsId_Get
+      parameters:
+      - name: Id
+        in: path
+        description: Id of the contact
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetContactResponse'
+        '500':
+          description: An internal error has occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetContactResponse'
+        '400':
+          description: Invalid id
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetContactResponse'
+      deprecated: false
+      security:
+      - Bearer: []
+  /v1/contacts/ownerships:
+    parameters:
+    - $ref: '#/components/parameters/Accept'
+    get:
+      tags:
+      - ' Scope: Contacts'
+      summary: List of all owners in relation to the contact
+      description: The auth token must contain a scope of contact:read.
+      operationId: ContactOwnershipsRequestcontactsownerships_Get
+      parameters:
+      - name: Offset
+        in: query
+        description: The number of rows to skip before beginning to return rows. An offset of 0 is the same as omitting the offset parameter.
+        required: true
+        schema:
+          type: integer
+          format: int32
+      - name: Limit
+        in: query
+        description: The maximum number of results to be returned. There may be less if the query returned less than the maximum.
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                title: List<OwnerQueryData>
+                type: array
+                items:
+                  $ref: '#/components/schemas/OwnerQueryData'
+        '500':
+          description: An internal error has occurred
+          content:
+            application/json:
+              schema:
+                title: List<OwnerQueryData>
+                type: array
+                items:
+                  $ref: '#/components/schemas/OwnerQueryData'
+        '400':
+          description: Invalid value of offset or limit
+          content:
+            application/json:
+              schema:
+                title: List<OwnerQueryData>
+                type: array
+                items:
+                  $ref: '#/components/schemas/OwnerQueryData'
+      deprecated: false
+      security:
+      - Bearer: []
+  /v1/contacts/suppliers:
+    parameters:
+    - $ref: '#/components/parameters/Accept'
+    get:
+      tags:
+      - ' Scope: Contacts'
+      summary: List of all suppliers in relation to the contact
+      description: The auth token must contain a scope of contact:read.
+      operationId: QuerySuppliersRequestcontactssuppliers_Get
+      parameters:
+      - name: Offset
+        in: query
+        description: The number of rows to skip before beginning to return rows. An offset of 0 is the same as omitting the offset parameter.
+        required: true
+        schema:
+          type: integer
+          format: int32
+      - name: Limit
+        in: query
+        description: The maximum number of results to be returned. There may be less if the query returned less than the maximum.
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                title: List<QuerySuppliersResponse>
+                type: array
+                items:
+                  $ref: '#/components/schemas/QuerySuppliersResponse'
+        '202':
+          description: Success
+          content:
+            application/json:
+              schema:
+                title: List<QuerySuppliersResponse>
+                type: array
+                items:
+                  $ref: '#/components/schemas/QuerySuppliersResponse'
+        '400':
+          description: Invalid value of offset or limit
+          content:
+            application/json:
+              schema:
+                title: List<QuerySuppliersResponse>
+                type: array
+                items:
+                  $ref: '#/components/schemas/QuerySuppliersResponse'
+        '500':
+          description: An internal error has occurred
+          content:
+            application/json:
+              schema:
+                title: List<QuerySuppliersResponse>
+                type: array
+                items:
+                  $ref: '#/components/schemas/QuerySuppliersResponse'
+      deprecated: false
+      security:
+      - Bearer: []
+  /v1/contacts/tenants:
+    parameters:
+    - $ref: '#/components/parameters/Accept'
+    get:
+      tags:
+      - ' Scope: Contacts'
+      summary: List of all tenants in relation to the contact
+      description: The auth token must contain a scope of contact:read.
+      operationId: ContactTenantsRequestcontactstenants_Get
+      parameters:
+      - name: Offset
+        in: query
+        description: The number of rows to skip before beginning to return rows. An offset of 0 is the same as omitting the offset parameter.
+        required: true
+        schema:
+          type: integer
+          format: int32
+      - name: Limit
+        in: query
+        description: The maximum number of results to be returned. There may be less if the query returned less than the maximum.
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                title: List<ContactGridData>
+                type: array
+                items:
+                  $ref: '#/components/schemas/ContactGridData'
+        '500':
+          description: An internal error has occurred
+          content:
+            application/json:
+              schema:
+                title: List<ContactGridData>
+                type: array
+                items:
+                  $ref: '#/components/schemas/ContactGridData'
+        '400':
+          description: Invalid value of offset or limit
+          content:
+            application/json:
+              schema:
+                title: List<ContactGridData>
+                type: array
+                items:
+                  $ref: '#/components/schemas/ContactGridData'
+      deprecated: false
+      security:
+      - Bearer: []
+  /v1/contacts/{Id}/comments:
+    parameters:
+    - $ref: '#/components/parameters/Accept'
+    post:
+      tags:
+      - ' Scope: Contacts'
+      summary: Create a new comment for a given contact
+      description: The auth token must contain a scope of contact:write.
+      operationId: AddContactCommentRequestcontactsIdcomments_Post
+      parameters:
+      - name: Id
+        in: path
+        description: The id of the contact
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseBase'
+        '500':
+          description: An internal error has occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseBase'
+        '400':
+          description: Invalid contact id
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseBase'
+      deprecated: false
+      security:
+      - Bearer: []
+      requestBody:
+        content:
+          application/json:
+            schema: {}
+        description: comment
+  /v1/contacts/{Id}/documents:
+    parameters:
+    - $ref: '#/components/parameters/Accept'
+    post:
+      tags:
+      - ' Scope: Contacts'
+      summary: Create a new document for a given contact
+      description: The auth token must contain a scope of contact:write.
+      operationId: AddContactDocumentRequestcontactsIddocuments_Post
+      parameters:
+      - name: Id
+        in: path
+        description: Id of the contact
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseBase'
+        '500':
+          description: An internal error has occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseBase'
+        '400':
+          description: Invalid contact id
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseBase'
+      deprecated: false
+      security:
+      - Bearer: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddContactDocumentRequest'
+  /v1/contacts/{Id}/images:
+    parameters:
+    - $ref: '#/components/parameters/Accept'
+    get:
+      tags:
+      - ' Scope: Contacts'
+      summary: List all images for a given contact
+      description: The auth token must contain a scope of contact:read.
+      operationId: GetContactImagescontactsIdimages_Get
+      parameters:
+      - name: Id
+        in: path
+        description: Id of the contact
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                title: List<QueryDocumentData>
+                type: array
+                items:
+                  $ref: '#/components/schemas/QueryDocumentData'
+        '500':
+          description: An internal error has occurred
+          content:
+            application/json:
+              schema:
+                title: List<QueryDocumentData>
+                type: array
+                items:
+                  $ref: '#/components/schemas/QueryDocumentData'
+        '400':
+          description: Invalid contact id
+          content:
+            application/json:
+              schema:
+                title: List<QueryDocumentData>
+                type: array
+                items:
+                  $ref: '#/components/schemas/QueryDocumentData'
+      deprecated: false
+      security:
+      - Bearer: []
+  /v1/contacts/{Id}/alerts/{Type}:
+    parameters:
+    - $ref: '#/components/parameters/Accept'
+    get:
+      tags:
+      - ' Scope: Contacts'
+      summary: List of all Contact alerts for a given contact and filtered by contact alert type
+      description: The auth token must contain a scope of contact:read.
+      operationId: GetContactAlertsRequestcontactsIdalertsType_Get
+      parameters:
+      - name: Id
+        in: path
+        description: Id of the contact
+        required: true
+        schema:
+          type: string
+      - name: Type
+        in: path
+        description: Contact alert type. Can be one of Property, Job and Inspection
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                title: List<ContactAlert>
+                type: array
+                items:
+                  $ref: '#/components/schemas/ContactAlert'
+        '500':
+          description: An internal error has occurred
+          content:
+            application/json:
+              schema:
+                title: List<ContactAlert>
+                type: array
+                items:
+                  $ref: '#/components/schemas/ContactAlert'
+        '400':
+          description: Invalid contact id or contact alert type
+          content:
+            application/json:
+              schema:
+                title: List<ContactAlert>
+                type: array
+                items:
+                  $ref: '#/components/schemas/ContactAlert'
+      deprecated: false
+      security:
+      - Bearer: []
+components:
+  schemas:
+    QueryDocumentData:
+      title: QueryDocumentData
+      properties:
+        LotId:
+          type: string
+        ContactId:
+          type: string
+        TenantInvoiceId:
+          type: string
+        InspectionTaskId:
+          type: string
+        IsClientVisible:
+          type: boolean
+        DocumentLinkId:
+          type: string
+        TenantInvoiceNumber:
+          type: integer
+          format: int32
+        ChartAccountName:
+          type: string
+        JobTaskId:
+          type: string
+        TaskId:
+          type: string
+        JobTaskSummary:
+          type: string
+        Number:
+          type: integer
+          format: int32
+        FolioType:
+          type: string
+        LotReference:
+          type: string
+        Id:
+          type: string
+        CustomerId:
+          type: string
+        CreatedOn:
+          type: string
+          format: date-time
+        MimeType:
+          type: string
+        FileType:
+          type: string
+        FileName:
+          type: string
+        Size:
+          type: integer
+          format: int64
+        ThumbnailsFileSize:
+          type: integer
+          format: int64
+        Status:
+          type: string
+        IsReadOnly:
+          type: boolean
+        DocumentType:
+          type: string
+        DocumentArea:
+          type: string
+      description: QueryDocumentData
+      type: object
+    GetContactResponse:
+      title: GetContactResponse
+      properties:
+        Contact:
+          $ref: '#/components/schemas/Contact'
+        ContactPersons:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContactPersonInfo'
+        Code:
+          type: string
+        FolioId:
+          type: string
+        PaymentPriority:
+          type: integer
+          format: int32
+        AutoApproveBill:
+          type: boolean
+        TenantInvoiceChartAccountId:
+          type: string
+        ReminderCount:
+          type: integer
+          format: int32
+      description: GetContactResponse
+      type: object
+    ResponseBase:
+      title: ResponseBase
+      properties:
+        ResponseStatus:
+          $ref: '#/components/schemas/ResponseStatus'
+        IsSuccessful:
+          type: boolean
+      description: ResponseBase
+      type: object
+    AdditionalEmail:
+      title: AdditionalEmail
+      properties:
+        Email:
+          type: string
+        AllScope:
+          type: boolean
+      description: AdditionalEmail
+      type: object
+    Dictionary_String_String_:
+      title: Dictionary<String,String>
+      additionalProperties:
+        type: string
+      description: Dictionary<String,String>
+      type: object
+    CustomerMemberData:
+      title: CustomerMemberData
+      properties:
+        Id:
+          type: string
+        CustomerId:
+          type: string
+        UserId:
+          type: integer
+          format: int32
+        Role:
+          type: string
+        ExpireOn:
+          type: string
+          format: date-time
+        FirstName:
+          type: string
+        LastName:
+          type: string
+        CompanyName:
+          type: string
+        RegisteredEmail:
+          type: string
+        RegisteredOn:
+          type: string
+          format: date-time
+        WorkPhone:
+          type: string
+        MobilePhone:
+          type: string
+        IsActivated:
+          type: boolean
+        AgreeConditionsOn:
+          type: string
+          format: date-time
+        RegionCode:
+          type: string
+        Permissions:
+          type: string
+        CurrentMemberAccessId:
+          type: string
+        JobTitle:
+          type: string
+        Teams:
+          type: string
+        IsSupport:
+          type: boolean
+        IsBillingRecipient:
+          type: boolean
+        IsTwoFactorAuthenticationEnabled:
+          type: boolean
+        Name:
+          type: string
+      description: CustomerMemberData
+      type: object
+    MobContactPersonData:
+      title: MobContactPersonData
+      properties:
+        IsChatAvailable:
+          type: boolean
+        Id:
+          type: string
+        CustomerId:
+          type: string
+        ContactId:
+          type: string
+        Salutation:
+          type: string
+        FirstName:
+          type: string
+        LastName:
+          type: string
+        CompanyName:
+          type: string
+        Email:
+          type: string
+        SecondaryEmailAddresses:
+          type: array
+          items:
+            $ref: '#/components/schemas/AdditionalEmail'
+        HomePhone:
+          type: string
+        WorkPhone:
+          type: string
+        CellPhone:
+          type: string
+        NormalisedMobilePhone:
+          type: string
+        CommunicationPreferences:
+          $ref: '#/components/schemas/HashSet_CommunicationType_'
+        PhysicalAddress:
+          $ref: '#/components/schemas/AddressDetail'
+        PostalAddress:
+          $ref: '#/components/schemas/AddressDetail'
+        IsPrimary:
+          type: boolean
+        SortOrder:
+          type: integer
+          format: int32
+        FullName:
+          type: string
+        CombinedPhones:
+          type: string
+      description: MobContactPersonData
+      type: object
+    Contact:
+      title: Contact
+      properties:
+        Id:
+          type: string
+        CustomerId:
+          type: string
+        SpecialType:
+          type: string
+        Roles:
+          type: array
+          items:
+            type: string
+        ArchivedOn:
+          type: string
+          format: date-time
+        AccountDetails:
+          type: array
+          items:
+            $ref: '#/components/schemas/FolioAccount'
+        Reference:
+          type: string
+        Website:
+          type: string
+        ABN:
+          type: string
+        PersonMigrated:
+          type: boolean
+        Labels:
+          type: string
+        Notes:
+          type: string
+        NameText:
+          type: string
+        PostalAddressText:
+          type: string
+        PhysicalAddressText:
+          type: string
+        HasTenantInvoiceAccount:
+          type: boolean
+        HomePhone:
+          type: string
+        WorkPhone:
+          type: string
+        CellPhone:
+          type: string
+        TradeName:
+          type: string
+        Email:
+          type: string
+        SupplierChartAccountId:
+          type: string
+        IsArchived:
+          type: boolean
+        IsSupplier:
+          type: boolean
+        IsTenant:
+          type: boolean
+        IsOwner:
+          type: boolean
+        IsSeller:
+          type: boolean
+        PhoneText:
+          type: string
+        WorkPhoneText:
+          type: string
+        ContactPhone:
+          type: string
+        CreatedOn:
+          type: string
+          format: date-time
+        UpdatedOn:
+          type: string
+          format: date-time
+        ContactPersons:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContactPerson'
+        PrimaryContactPerson:
+          $ref: '#/components/schemas/ContactPerson'
+      description: Contact
+      type: object
+    FolioAccount:
+      title: FolioAccount
+      properties:
+        Id:
+          type: string
+        CustomerId:
+          type: string
+        FolioId:
+          type: string
+        Index:
+          type: integer
+          format: int32
+        BSB:
+          type: string
+        AccountNumber:
+          type: string
+        BillerCode:
+          type: string
+        BillerReference:
+          type: string
+        Payee:
+          type: string
+        PaymentMethod:
+          type: string
+        Name:
+          type: string
+        Value:
+          type: number
+          format: double
+        Percentage:
+          type: number
+          format: double
+        IsMarkedForDeletion:
+          type: boolean
+      description: FolioAccount
+      type: object
+    AddContactDocumentRequest:
+      title: AddContactDocumentRequest
+      required:
+      - Id
+      properties:
+        Id:
+          description: Id of the contact
+          type: string
+      description: PropertyMe Rest API
+      type: object
+    AddressDetail:
+      title: AddressDetail
+      properties:
+        Unit:
+          type: string
+        Number:
+          type: string
+        Street:
+          type: string
+        Suburb:
+          type: string
+        Locality:
+          type: string
+        PostalCode:
+          type: string
+        State:
+          type: string
+        Country:
+          type: string
+        BuildingName:
+          type: string
+        MailboxName:
+          type: string
+        Latitude:
+          type: number
+          format: double
+        Longitude:
+          type: number
+          format: double
+        StreetLongName:
+          type: string
+        Text:
+          type: string
+        Reference:
+          type: string
+      description: AddressDetail
+      type: object
+    ContactPersonInfo:
+      title: ContactPersonInfo
+      properties:
+        MemberAccessRole:
+          type: string
+        IsChatAvailable:
+          type: boolean
+        Id:
+          type: string
+        CustomerId:
+          type: string
+        ContactId:
+          type: string
+        Salutation:
+          type: string
+        FirstName:
+          type: string
+        LastName:
+          type: string
+        CompanyName:
+          type: string
+        Email:
+          type: string
+        SecondaryEmailAddresses:
+          type: array
+          items:
+            $ref: '#/components/schemas/AdditionalEmail'
+        HomePhone:
+          type: string
+        WorkPhone:
+          type: string
+        CellPhone:
+          type: string
+        NormalisedMobilePhone:
+          type: string
+        CommunicationPreferences:
+          $ref: '#/components/schemas/HashSet_CommunicationType_'
+        PhysicalAddress:
+          $ref: '#/components/schemas/AddressDetail'
+        PostalAddress:
+          $ref: '#/components/schemas/AddressDetail'
+        IsPrimary:
+          type: boolean
+        SortOrder:
+          type: integer
+          format: int32
+        FullName:
+          type: string
+        CombinedPhones:
+          type: string
+      description: ContactPersonInfo
+      type: object
+    HashSet_CommunicationType_:
+      title: HashSet`1
+      properties: {}
+      description: HashSet<CommunicationType>
+      type: object
+    ResponseStatus:
+      title: ResponseStatus
+      properties:
+        ErrorCode:
+          type: string
+        Message:
+          type: string
+        StackTrace:
+          type: string
+        Errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ResponseError'
+        Meta:
+          $ref: '#/components/schemas/Dictionary_String_String_'
+      description: ResponseStatus
+      type: object
+    ContactPerson:
+      title: ContactPerson
+      properties:
+        Id:
+          type: string
+        CustomerId:
+          type: string
+        ContactId:
+          type: string
+        Salutation:
+          type: string
+        FirstName:
+          type: string
+        LastName:
+          type: string
+        CompanyName:
+          type: string
+        Email:
+          type: string
+        SecondaryEmailAddresses:
+          type: array
+          items:
+            $ref: '#/components/schemas/AdditionalEmail'
+        HomePhone:
+          type: string
+        WorkPhone:
+          type: string
+        CellPhone:
+          type: string
+        NormalisedMobilePhone:
+          type: string
+        CommunicationPreferences:
+          $ref: '#/components/schemas/HashSet_CommunicationType_'
+        PhysicalAddress:
+          $ref: '#/components/schemas/AddressDetail'
+        PostalAddress:
+          $ref: '#/components/schemas/AddressDetail'
+        IsPrimary:
+          type: boolean
+        SortOrder:
+          type: integer
+          format: int32
+        FullName:
+          type: string
+        CombinedPhones:
+          type: string
+      description: ContactPerson
+      type: object
+    QuerySuppliersResponse:
+      title: QuerySuppliersResponse
+      properties:
+        PaymentPriority:
+          type: integer
+          format: int32
+        FolioId:
+          type: string
+        Balance:
+          type: number
+          format: double
+        PaymentsDue:
+          type: number
+          format: double
+        ABN:
+          type: string
+        Id:
+          type: string
+        CustomerId:
+          type: string
+        Reference:
+          type: string
+        Labels:
+          type: string
+        PrimaryPerson:
+          type: string
+        HomePhone:
+          type: string
+        WorkPhone:
+          type: string
+        CellPhone:
+          type: string
+        PostalAddressText:
+          type: string
+        PhysicalAddressText:
+          type: string
+        Roles:
+          type: array
+          items:
+            type: string
+        RolesString:
+          type: string
+        Phone:
+          type: string
+      description: QuerySuppliersResponse
+      type: object
+    ResponseError:
+      title: ResponseError
+      properties:
+        ErrorCode:
+          type: string
+        FieldName:
+          type: string
+        Message:
+          type: string
+        Meta:
+          $ref: '#/components/schemas/Dictionary_String_String_'
+      description: ResponseError
+      type: object
+    ContactAlert:
+      title: ContactAlert
+      properties:
+        Id:
+          type: string
+        CustomerId:
+          type: string
+        ContactId:
+          type: string
+        Contact:
+          $ref: '#/components/schemas/Contact'
+        Type:
+          type: string
+        LotId:
+          type: string
+        Priority:
+          type: string
+        Note:
+          type: string
+        CreatedOn:
+          type: string
+          format: date-time
+        ModifiedOn:
+          type: string
+          format: date-time
+      description: ContactAlert
+      type: object
+    MobContactData:
+      title: MobContactData
+      properties:
+        Id:
+          type: string
+        CustomerId:
+          type: string
+        SpecialType:
+          type: string
+        Roles:
+          type: array
+          items:
+            type: string
+        ArchivedOn:
+          type: string
+          format: date-time
+        AccountDetails:
+          type: array
+          items:
+            $ref: '#/components/schemas/FolioAccount'
+        Reference:
+          type: string
+        Website:
+          type: string
+        ABN:
+          type: string
+        PersonMigrated:
+          type: boolean
+        Labels:
+          type: string
+        Notes:
+          type: string
+        NameText:
+          type: string
+        PostalAddressText:
+          type: string
+        PhysicalAddressText:
+          type: string
+        CreatedOn:
+          type: string
+          format: date-time
+        UpdatedOn:
+          type: string
+          format: date-time
+        TradeName:
+          type: string
+        HomePhone:
+          type: string
+        WorkPhone:
+          type: string
+        CellPhone:
+          type: string
+        Email:
+          type: string
+        SupplierChartAccountId:
+          type: string
+        IsArchived:
+          type: boolean
+        IsSupplier:
+          type: boolean
+        IsTenant:
+          type: boolean
+        IsOwner:
+          type: boolean
+        IsSeller:
+          type: boolean
+        PhoneText:
+          type: string
+        WorkPhoneText:
+          type: string
+        ContactPhone:
+          type: string
+        ContactPersons:
+          type: array
+          items:
+            $ref: '#/components/schemas/MobContactPersonData'
+        PrimaryContactPerson:
+          $ref: '#/components/schemas/MobContactPersonData'
+        Timestamp:
+          type: integer
+          format: int64
+        PrimaryPerson:
+          type: string
+        Phone:
+          type: string
+        PrimaryPostalAddress:
+          type: string
+        PrimaryPhysicalAddress:
+          type: string
+        RolesString:
+          type: string
+      description: MobContactData
+      type: object
+    ContactGridData:
+      title: ContactGridData
+      properties:
+        Id:
+          type: string
+        CustomerId:
+          type: string
+        Reference:
+          type: string
+        Labels:
+          type: string
+        PrimaryPerson:
+          type: string
+        HomePhone:
+          type: string
+        WorkPhone:
+          type: string
+        CellPhone:
+          type: string
+        ContactPersonText:
+          type: string
+        SupplierFolioNumber:
+          type: integer
+          format: int32
+        PostalAddressText:
+          type: string
+        PhysicalAddressText:
+          type: string
+        Roles:
+          type: array
+          items:
+            type: string
+        RolesString:
+          type: string
+        SupplierFolioCode:
+          type: string
+        Phone:
+          type: string
+      description: ContactGridData
+      type: object
+    GetAgencyResponse:
+      title: GetAgencyResponse
+      properties:
+        Reference:
+          type: string
+        Name:
+          type: string
+      description: GetAgencyResponse
+      type: object
+    OwnerQueryData:
+      title: OwnerQueryData
+      properties:
+        BillsDue:
+          type: number
+          format: double
+        Balance:
+          type: number
+          format: double
+        IsPmDirectEnabled:
+          type: boolean
+        Id:
+          type: string
+        CustomerId:
+          type: string
+        Reference:
+          type: string
+        Labels:
+          type: string
+        PrimaryPerson:
+          type: string
+        HomePhone:
+          type: string
+        WorkPhone:
+          type: string
+        CellPhone:
+          type: string
+        PostalAddressText:
+          type: string
+        PhysicalAddressText:
+          type: string
+        Roles:
+          type: array
+          items:
+            type: string
+        RolesString:
+          type: string
+        Phone:
+          type: string
+      description: OwnerQueryData
+      type: object
+  parameters:
+    Accept:
+      name: Accept
+      in: header
+      description: Accept Header
+      required: true
+      schema:
+        type: string
+        enum:
+        - application/json
+  securitySchemes:
+    Bearer:
+      type: apiKey
+      name: Authorization
+      in: header
