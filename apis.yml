@@ -86,6 +86,8 @@ apis:
   humanURL: https://app.propertyme.com/api/swagger-ui/
   baseURL: https://app.propertyme.com/api
   tags:
+  - 'Scope: Activities'
+  tags_raw:
   - ' Scope: Activities'
   properties:
   - type: OpenAPI
@@ -100,6 +102,8 @@ apis:
   humanURL: https://app.propertyme.com/api/swagger-ui/
   baseURL: https://app.propertyme.com/api
   tags:
+  - 'Scope: Bills'
+  tags_raw:
   - ' Scope: Bills'
   properties:
   - type: OpenAPI
@@ -114,6 +118,8 @@ apis:
   humanURL: https://app.propertyme.com/api/swagger-ui/
   baseURL: https://app.propertyme.com/api
   tags:
+  - 'Scope: Contacts'
+  tags_raw:
   - ' Scope: Contacts'
   properties:
   - type: OpenAPI
@@ -128,6 +134,8 @@ apis:
   humanURL: https://app.propertyme.com/api/swagger-ui/
   baseURL: https://app.propertyme.com/api
   tags:
+  - 'Scope: Messages'
+  tags_raw:
   - ' Scope: Messages'
   properties:
   - type: OpenAPI
@@ -142,6 +150,8 @@ apis:
   humanURL: https://app.propertyme.com/api/swagger-ui/
   baseURL: https://app.propertyme.com/api
   tags:
+  - 'Scope: Properties'
+  tags_raw:
   - ' Scope: Properties'
   properties:
   - type: OpenAPI
