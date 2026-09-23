@@ -47,18 +47,33 @@ paths:
       - Bearer: []
 components:
   schemas:
-    ResponseError:
-      title: ResponseError
+    ValueWidget:
+      title: ValueWidget
       properties:
-        ErrorCode:
+        Label:
           type: string
-        FieldName:
+        Amount:
+          type: number
+          format: double
+        Quantity:
+          type: integer
+          format: int64
+        Percent:
+          type: number
+          format: double
+        IsMemberView:
+          type: boolean
+        FilterType:
           type: string
-        Message:
+        AlertLevel:
           type: string
-        Meta:
-          $ref: '#/components/schemas/Dictionary_String_String_'
-      description: ResponseError
+      description: ValueWidget
+      type: object
+    Dictionary_String_String_:
+      title: Dictionary<String,String>
+      additionalProperties:
+        type: string
+      description: Dictionary<String,String>
       type: object
     DetailWidget:
       title: DetailWidget
@@ -93,6 +108,19 @@ components:
           type: integer
           format: int32
       description: DetailWidget
+      type: object
+    ResponseError:
+      title: ResponseError
+      properties:
+        ErrorCode:
+          type: string
+        FieldName:
+          type: string
+        Message:
+          type: string
+        Meta:
+          $ref: '#/components/schemas/Dictionary_String_String_'
+      description: ResponseError
       type: object
     DashboardResponse:
       title: DashboardResponse
@@ -131,34 +159,6 @@ components:
         Meta:
           $ref: '#/components/schemas/Dictionary_String_String_'
       description: ResponseStatus
-      type: object
-    ValueWidget:
-      title: ValueWidget
-      properties:
-        Label:
-          type: string
-        Amount:
-          type: number
-          format: double
-        Quantity:
-          type: integer
-          format: int64
-        Percent:
-          type: number
-          format: double
-        IsMemberView:
-          type: boolean
-        FilterType:
-          type: string
-        AlertLevel:
-          type: string
-      description: ValueWidget
-      type: object
-    Dictionary_String_String_:
-      title: Dictionary<String,String>
-      additionalProperties:
-        type: string
-      description: Dictionary<String,String>
       type: object
   parameters:
     Accept:

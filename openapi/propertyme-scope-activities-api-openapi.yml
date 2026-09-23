@@ -2472,15 +2472,187 @@ paths:
               $ref: '#/components/schemas/AddJobTasksQuotationDocumentRequest'
 components:
   schemas:
-    ReopenInspectionRequest:
-      title: ReopenInspectionRequest
+    ConditionEntry:
+      title: ConditionEntry
+      properties:
+        Name:
+          type: string
+        Value:
+          type: string
+      description: ConditionEntry
+      type: object
+    AddInspectionDocumentRequest:
+      title: AddInspectionDocumentRequest
       required:
       - Id
       properties:
         Id:
-          description: Inspection Id
+          description: Id of the inspection
           type: string
+        IsClientVisible:
+          description: Visible on the owner portal
+          type: boolean
       description: PropertyMe Rest API
+      type: object
+    InspectionReport:
+      title: InspectionReport
+      properties:
+        Id:
+          type: string
+        CustomerId:
+          type: string
+        InspectionTaskId:
+          type: string
+        CreatedOn:
+          type: string
+          format: date-time
+        UpdatedOn:
+          type: string
+          format: date-time
+        VersionNumber:
+          type: integer
+          format: int32
+        RentReview:
+          type: number
+          format: double
+        WaterMeter:
+          type: integer
+          format: int64
+        PublishOn:
+          type: string
+          format: date-time
+        PublishToTenant:
+          type: boolean
+        Notes:
+          type: string
+        FollowUpActions:
+          type: array
+          items:
+            type: string
+        Areas:
+          type: array
+          items:
+            $ref: '#/components/schemas/InspectionReportArea'
+        EntryInspectionTaskId:
+          type: string
+        InspectionReportTemplateId:
+          type: string
+        CopiedFromReportDate:
+          type: string
+          format: date-time
+        IsDeleted:
+          type: boolean
+        CopiedReportId:
+          type: string
+        FrontSection:
+          type: string
+        MemberSignatureId:
+          type: string
+        IncludeMemberImageSignatureOnEachPage:
+          type: boolean
+      description: InspectionReport
+      type: object
+    AddressDetail:
+      title: AddressDetail
+      properties:
+        Unit:
+          type: string
+        Number:
+          type: string
+        Street:
+          type: string
+        Suburb:
+          type: string
+        Locality:
+          type: string
+        PostalCode:
+          type: string
+        State:
+          type: string
+        Country:
+          type: string
+        BuildingName:
+          type: string
+        MailboxName:
+          type: string
+        Latitude:
+          type: number
+          format: double
+        Longitude:
+          type: number
+          format: double
+        StreetLongName:
+          type: string
+        Text:
+          type: string
+        Reference:
+          type: string
+      description: AddressDetail
+      type: object
+    InspectionDataTableRow:
+      title: InspectionDataTableRow
+      properties:
+        Id:
+          type: string
+        CustomerId:
+          type: string
+        DueDate:
+          type: string
+          format: date-time
+        ClosedOn:
+          type: string
+          format: date-time
+        StartTime:
+          type: string
+          format: date-time
+        Type:
+          type: string
+        PublishOn:
+          type: string
+          format: date-time
+        Summary:
+          type: string
+        LotReference:
+          type: string
+        TenantReference:
+          type: string
+        ManagerName:
+          type: string
+        MemberFirstName:
+          type: string
+        MemberLastName:
+          type: string
+        Status:
+          type: string
+        IsPublished:
+          type: boolean
+        StartTimeText:
+          type: string
+        StatusText:
+          type: string
+        AssignedToTenantDate:
+          type: string
+          format: date-time
+        TenantReturnDueDate:
+          type: string
+          format: date-time
+        TenantProgress:
+          type: string
+        TenantReturnDate:
+          type: string
+          format: date-time
+        DaysPastOrRemaining:
+          type: integer
+          format: int32
+        Labels:
+          type: string
+        GeneratedPdfId:
+          type: string
+        GeneratedPdfFileName:
+          type: string
+        GeneratedPdfStatus:
+          type: string
+      description: InspectionDataTableRow
       type: object
     CloseInspectionRequest:
       title: CloseInspectionRequest
@@ -2492,217 +2664,21 @@ components:
           type: string
       description: PropertyMe Rest API
       type: object
-    QueryDocumentData:
-      title: QueryDocumentData
+    JobTaskResponse:
+      title: JobTaskResponse
       properties:
-        LotId:
-          type: string
-        ContactId:
-          type: string
-        TenantInvoiceId:
-          type: string
-        InspectionTaskId:
-          type: string
-        IsClientVisible:
-          type: boolean
-        DocumentLinkId:
-          type: string
-        TenantInvoiceNumber:
-          type: integer
-          format: int32
-        ChartAccountName:
-          type: string
         JobTaskId:
           type: string
-        TaskId:
+        JobQuoteId:
           type: string
-        JobTaskSummary:
-          type: string
-        Number:
+        SupplierInsuranceExpiryDays:
           type: integer
           format: int32
-        FolioType:
-          type: string
-        LotReference:
-          type: string
-        Id:
-          type: string
-        CustomerId:
-          type: string
-        CreatedOn:
-          type: string
-          format: date-time
-        MimeType:
-          type: string
-        FileType:
-          type: string
-        FileName:
-          type: string
-        Size:
-          type: integer
-          format: int64
-        ThumbnailsFileSize:
-          type: integer
-          format: int64
-        Status:
-          type: string
-        IsReadOnly:
-          type: boolean
-        DocumentType:
-          type: string
-        DocumentArea:
-          type: string
-      description: QueryDocumentData
-      type: object
-    JobQueryV2Data:
-      title: JobQueryV2Data
-      properties:
-        Id:
-          type: string
-        CustomerId:
-          type: string
-        DueDate:
-          type: string
-          format: date-time
-        CreatedOn:
-          type: string
-          format: date-time
-        ClosedOn:
-          type: string
-          format: date-time
-        Summary:
-          type: string
-        Description:
-          type: string
-        Labels:
-          type: string
-        LotId:
-          type: string
-        OwnerContactId:
-          type: string
-        TenantContactId:
-          type: string
-        ContactId:
-          type: string
-        ManagerMemberId:
-          type: string
-        LotReference:
-          type: string
-        ContactReference:
-          type: string
-        JobTaskQuotationReference:
-          type: string
-        ManagerName:
-          type: string
-        MemberFirstName:
-          type: string
-        MemberLastName:
-          type: string
-        Status:
-          type: string
-        Number:
-          type: integer
-          format: int32
-        OwnerAttending:
-          type: boolean
-        TenantAttending:
-          type: boolean
-        SupplierReference:
-          type: string
-        DisplayNumber:
-          type: string
-        QuoteReference:
-          type: string
-        Priority:
-          type: string
-          enum:
-          - Low
-          - Medium
-          - High
-          - Urgent
-      description: JobQueryV2Data
-      type: object
-    JobQueryData:
-      title: JobQueryData
-      properties:
-        Id:
-          type: string
-        CustomerId:
-          type: string
-        DueDate:
-          type: string
-          format: date-time
-        CreatedOn:
-          type: string
-          format: date-time
-        ClosedOn:
-          type: string
-          format: date-time
-        Summary:
-          type: string
-        Description:
-          type: string
-        Labels:
-          type: string
-        LotId:
-          type: string
-        OwnerContactId:
-          type: string
-        TenantContactId:
-          type: string
-        ContactId:
-          type: string
-        ManagerMemberId:
-          type: string
-        LotReference:
-          type: string
-        ContactReference:
-          type: string
-        JobTaskQuotationReference:
-          type: string
-        ManagerName:
-          type: string
-        MemberFirstName:
-          type: string
-        MemberLastName:
-          type: string
-        Status:
-          type: string
-        Number:
-          type: integer
-          format: int32
-        OwnerAttending:
-          type: boolean
-        TenantAttending:
-          type: boolean
-        SupplierReference:
-          type: string
-        DisplayNumber:
-          type: string
-        QuoteReference:
-          type: string
-      description: JobQueryData
-      type: object
-    ApproveJobTaskRequest:
-      title: ApproveJobTaskRequest
-      required:
-      - Id
-      properties:
-        Id:
-          description: Id of the job
-          type: string
-      description: PropertyMe Rest API
-      type: object
-    JobTaskQuoteResponse:
-      title: JobTaskQuoteResponse
-      properties:
-        JobTaskQuoteId:
-          type: string
         ResponseStatus:
           $ref: '#/components/schemas/ResponseStatus'
         IsSuccessful:
           type: boolean
-      description: JobTaskQuoteResponse
+      description: JobTaskResponse
       type: object
     InspectionReportPhoto:
       title: InspectionReportPhoto
@@ -2728,196 +2704,6 @@ components:
           type: string
           format: date-time
       description: InspectionReportPhoto
-      type: object
-    ResponseBase:
-      title: ResponseBase
-      properties:
-        ResponseStatus:
-          $ref: '#/components/schemas/ResponseStatus'
-        IsSuccessful:
-          type: boolean
-      description: ResponseBase
-      type: object
-    ScheduleInspectionResponse:
-      title: ScheduleInspectionResponse
-      properties:
-        Ids:
-          type: array
-          items:
-            type: string
-        ResponseStatus:
-          $ref: '#/components/schemas/ResponseStatus'
-        IsSuccessful:
-          type: boolean
-      description: ScheduleInspectionResponse
-      type: object
-    ScheduleInspectionRequest:
-      title: ScheduleInspectionRequest
-      required:
-      - Id
-      properties:
-        Id:
-          description: Inspection Id
-          type: string
-      description: PropertyMe Rest API
-      type: object
-    AdditionalEmail:
-      title: AdditionalEmail
-      properties:
-        Email:
-          type: string
-        AllScope:
-          type: boolean
-      description: AdditionalEmail
-      type: object
-    DashboardResponse:
-      title: DashboardResponse
-      properties:
-        ValueWidgets:
-          type: array
-          items:
-            $ref: '#/components/schemas/ValueWidget'
-        SpecialValues:
-          type: array
-          items:
-            $ref: '#/components/schemas/ValueWidget'
-        DetailWidgets:
-          type: array
-          items:
-            $ref: '#/components/schemas/DetailWidget'
-        ResponseStatus:
-          $ref: '#/components/schemas/ResponseStatus'
-        IsSuccessful:
-          type: boolean
-      description: DashboardResponse
-      type: object
-    InspectionReportResponse:
-      title: InspectionReportResponse
-      properties:
-        InspectionReport:
-          $ref: '#/components/schemas/InspectionReport'
-        ResponseStatus:
-          $ref: '#/components/schemas/ResponseStatus'
-        IsSuccessful:
-          type: boolean
-      description: InspectionReportResponse
-      type: object
-    MobTaskChecklistAutomationActionData:
-      title: MobTaskChecklistAutomationActionData
-      properties:
-        ActionName:
-          type: string
-        ActionArgumentKey:
-          type: string
-        ActionDescription:
-          type: string
-        ActionArgumentData:
-          $ref: '#/components/schemas/IArgumentData'
-        IsValid:
-          type: boolean
-        ValidationMessage:
-          type: string
-        ActionResult:
-          $ref: '#/components/schemas/MobTaskChecklistAutomationActionResult'
-        ChildActions:
-          type: array
-          items:
-            $ref: '#/components/schemas/MobTaskChecklistAutomationActionData'
-      description: MobTaskChecklistAutomationActionData
-      type: object
-    Dictionary_String_String_:
-      title: Dictionary<String,String>
-      additionalProperties:
-        type: string
-      description: Dictionary<String,String>
-      type: object
-    ConditionEntry:
-      title: ConditionEntry
-      properties:
-        Name:
-          type: string
-        Value:
-          type: string
-      description: ConditionEntry
-      type: object
-    AddJobTasksQuotationDocumentRequest:
-      title: AddJobTasksQuotationDocumentRequest
-      required:
-      - Id
-      - QuoteId
-      properties:
-        Id:
-          description: Job Id
-          type: string
-        QuoteId:
-          description: Quotation Id
-          type: string
-      description: PropertyMe Rest API
-      type: object
-    AddTaskDocumentRequest:
-      title: AddTaskDocumentRequest
-      required:
-      - Id
-      properties:
-        Id:
-          description: Id of the task
-          type: string
-      description: PropertyMe Rest API
-      type: object
-    CustomerMemberData:
-      title: CustomerMemberData
-      properties:
-        Id:
-          type: string
-        CustomerId:
-          type: string
-        UserId:
-          type: integer
-          format: int32
-        Role:
-          type: string
-        ExpireOn:
-          type: string
-          format: date-time
-        FirstName:
-          type: string
-        LastName:
-          type: string
-        CompanyName:
-          type: string
-        RegisteredEmail:
-          type: string
-        RegisteredOn:
-          type: string
-          format: date-time
-        WorkPhone:
-          type: string
-        MobilePhone:
-          type: string
-        IsActivated:
-          type: boolean
-        AgreeConditionsOn:
-          type: string
-          format: date-time
-        RegionCode:
-          type: string
-        Permissions:
-          type: string
-        CurrentMemberAccessId:
-          type: string
-        JobTitle:
-          type: string
-        Teams:
-          type: string
-        IsSupport:
-          type: boolean
-        IsBillingRecipient:
-          type: boolean
-        IsTwoFactorAuthenticationEnabled:
-          type: boolean
-        Name:
-          type: string
-      description: CustomerMemberData
       type: object
     Lot:
       title: Lot
@@ -3024,133 +2810,301 @@ components:
           type: string
       description: Lot
       type: object
-    GetInspectionResponse:
-      title: GetInspectionResponse
+    CustomerMemberData:
+      title: CustomerMemberData
       properties:
-        Inspection:
-          $ref: '#/components/schemas/InspectionTaskData'
-        Property:
-          $ref: '#/components/schemas/Lot'
-        Tenant:
-          $ref: '#/components/schemas/Contact'
-        Owner:
-          $ref: '#/components/schemas/Contact'
-        InspectionReport:
-          $ref: '#/components/schemas/InspectionReport'
-        CurrentRentAmount:
-          type: number
-          format: double
-        CurrentRentPeriod:
+        Id:
           type: string
-        OwnerFolioId:
+        CustomerId:
           type: string
-        ListingInfo:
-          type: string
-        InspectionTenantStatus:
-          $ref: '#/components/schemas/InspectionTenantStatusDto'
-        TenantHasReviewed:
-          type: boolean
-        SubscriptionAllowsTenantToReviewECR:
-          type: boolean
-        RequiresTenantReviewsEcrFeature:
-          type: boolean
-        ResponseStatus:
-          $ref: '#/components/schemas/ResponseStatus'
-        IsSuccessful:
-          type: boolean
-      description: GetInspectionResponse
-      type: object
-    JobTaskResponse:
-      title: JobTaskResponse
-      properties:
-        JobTaskId:
-          type: string
-        JobQuoteId:
-          type: string
-        SupplierInsuranceExpiryDays:
+        UserId:
           type: integer
           format: int32
+        Role:
+          type: string
+        ExpireOn:
+          type: string
+          format: date-time
+        FirstName:
+          type: string
+        LastName:
+          type: string
+        CompanyName:
+          type: string
+        RegisteredEmail:
+          type: string
+        RegisteredOn:
+          type: string
+          format: date-time
+        WorkPhone:
+          type: string
+        MobilePhone:
+          type: string
+        IsActivated:
+          type: boolean
+        AgreeConditionsOn:
+          type: string
+          format: date-time
+        RegionCode:
+          type: string
+        Permissions:
+          type: string
+        CurrentMemberAccessId:
+          type: string
+        JobTitle:
+          type: string
+        Teams:
+          type: string
+        IsSupport:
+          type: boolean
+        IsBillingRecipient:
+          type: boolean
+        IsTwoFactorAuthenticationEnabled:
+          type: boolean
+        Name:
+          type: string
+      description: CustomerMemberData
+      type: object
+    AddJobDocumentsRequest:
+      title: AddJobDocumentsRequest
+      required:
+      - Id
+      properties:
+        Id:
+          description: Id of the job
+          type: string
+      description: PropertyMe Rest API
+      type: object
+    InspectionReportArea:
+      title: InspectionReportArea
+      properties:
+        Id:
+          type: string
+        CustomerId:
+          type: string
+        InspectionReportId:
+          type: string
+        Number:
+          type: integer
+          format: int32
+        Name:
+          type: string
+        Note:
+          type: string
+        Photos:
+          type: array
+          items:
+            $ref: '#/components/schemas/InspectionReportPhoto'
+        TenantPhotos:
+          type: array
+          items:
+            $ref: '#/components/schemas/TenantInspectionReportPhoto'
+        Items:
+          type: array
+          items:
+            $ref: '#/components/schemas/InspectionReportItem'
+        ConsolidatedInspectionReportItems:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConsolidatedInspectionReportItem'
+        IsDeleted:
+          type: boolean
+        CreatedOn:
+          type: string
+          format: date-time
+        UpdatedOn:
+          type: string
+          format: date-time
+        Hash:
+          type: string
+        IsConflict:
+          type: boolean
+        UpdatedByMemberId:
+          type: string
+      description: InspectionReportArea
+      type: object
+    FrontSectionBase:
+      title: FrontSectionBase
+      properties:
+        Version:
+          type: integer
+          format: int32
+        Region:
+          type: string
+        InspectionType:
+          type: string
+      description: FrontSectionBase
+      type: object
+    AddJobImagesRequest:
+      title: AddJobImagesRequest
+      required:
+      - Id
+      properties:
+        Id:
+          description: Id of the job
+          type: string
+      description: PropertyMe Rest API
+      type: object
+    AddJobTasksQuotationDocumentRequest:
+      title: AddJobTasksQuotationDocumentRequest
+      required:
+      - Id
+      - QuoteId
+      properties:
+        Id:
+          description: Job Id
+          type: string
+        QuoteId:
+          description: Quotation Id
+          type: string
+      description: PropertyMe Rest API
+      type: object
+    TaskChecklist:
+      title: TaskChecklist
+      properties:
+        Id:
+          type: string
+        CustomerId:
+          type: string
+        CreatedOn:
+          type: string
+          format: date-time
+        CompletedOn:
+          type: string
+          format: date-time
+        TaskId:
+          type: string
+        Name:
+          type: string
+        Rank:
+          type: integer
+          format: int32
+        IsCompleted:
+          type: boolean
+        CreatedBy:
+          type: string
+        CompletedBy:
+          type: string
+        AutomationRuleId:
+          type: string
+        CompletedByUser:
+          type: string
+      description: TaskChecklist
+      type: object
+    ResponseError:
+      title: ResponseError
+      properties:
+        ErrorCode:
+          type: string
+        FieldName:
+          type: string
+        Message:
+          type: string
+        Meta:
+          $ref: '#/components/schemas/Dictionary_String_String_'
+      description: ResponseError
+      type: object
+    AssignTaskRequest:
+      title: AssignTaskRequest
+      required:
+      - Id
+      properties:
+        Id:
+          description: Id of the job
+          type: string
+        SupplierContactId:
+          description: Id of the supplier
+          type: string
+        OwnerAttending:
+          description: Is Owner attending
+          type: boolean
+        TenantAttending:
+          description: Is Tenant attending
+          type: boolean
+      description: PropertyMe Rest API
+      type: object
+    DashboardResponse:
+      title: DashboardResponse
+      properties:
+        ValueWidgets:
+          type: array
+          items:
+            $ref: '#/components/schemas/ValueWidget'
+        SpecialValues:
+          type: array
+          items:
+            $ref: '#/components/schemas/ValueWidget'
+        DetailWidgets:
+          type: array
+          items:
+            $ref: '#/components/schemas/DetailWidget'
         ResponseStatus:
           $ref: '#/components/schemas/ResponseStatus'
         IsSuccessful:
           type: boolean
-      description: JobTaskResponse
+      description: DashboardResponse
       type: object
-    RelatedInspection:
-      title: RelatedInspection
+    InspectInspectionRequest:
+      title: InspectInspectionRequest
+      required:
+      - Id
       properties:
-        InspectionReport:
-          $ref: '#/components/schemas/InspectionReport'
-        Inspection:
-          $ref: '#/components/schemas/InspectionTaskData'
-      description: RelatedInspection
+        Id:
+          description: Inspection Id
+          type: string
+      description: PropertyMe Rest API
       type: object
-    InspectionTaskData:
-      title: InspectionTaskData
+    ResponseStatus:
+      title: ResponseStatus
+      properties:
+        ErrorCode:
+          type: string
+        Message:
+          type: string
+        StackTrace:
+          type: string
+        Errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ResponseError'
+        Meta:
+          $ref: '#/components/schemas/Dictionary_String_String_'
+      description: ResponseStatus
+      type: object
+    MobTaskQueryData:
+      title: MobTaskQueryData
       properties:
         LotReference:
           type: string
-        AddressText:
-          type: string
-        KeyNumber:
-          type: string
-        Longitude:
-          type: number
-          format: double
-        Latitude:
-          type: number
-          format: double
         TenantReference:
           type: string
         OwnerReference:
           type: string
-        PublishOn:
-          type: string
-          format: date-time
-        LotMainPhotoDocumentId:
+        ContactReference:
           type: string
         ManagerName:
           type: string
-        ActiveManagerMemberId:
+        ActivePropertyManagerId:
           type: string
-        ActiveManagerTeams:
-          type: string
-        ManagerMemberTeams:
+        TaskChecklists:
+          type: array
+          items:
+            $ref: '#/components/schemas/TaskChecklistMobile'
+        TaskType:
           type: string
         Timestamp:
           type: integer
           format: int64
-        TenantHasReviewed:
-          type: boolean
-        StatusText:
-          type: string
-        StartTimeText:
-          type: string
-        IsPublished:
-          type: boolean
-        SearchText:
-          type: string
-        StartTime:
-          type: string
-          format: date-time
-        Duration:
-          type: integer
-          format: int32
         Type:
           type: string
-        Status:
+        Priority:
+          type: integer
+          format: int32
+        TaskStatus:
           type: string
-        ListingId:
+        CreatedBy:
           type: string
-        TenantReturnDate:
-          type: string
-          format: date-time
-        AssignedToTenantDate:
-          type: string
-          format: date-time
-        InspectionSnapshotId:
-          type: string
-        StatusPriorToClosing:
+        ClosedBy:
           type: string
         Id:
           type: string
@@ -3184,165 +3138,37 @@ components:
         UpdatedOn:
           type: string
           format: date-time
-      description: InspectionTaskData
+      description: MobTaskQueryData
       type: object
-    JobTaskQuoteData:
-      title: JobTaskQuoteData
+    TaskResponse:
+      title: TaskResponse
       properties:
-        Id:
+        TaskId:
           type: string
-        Reference:
-          type: string
-        CustomerId:
-          type: string
-        JobTaskId:
-          type: string
-        FolioId:
-          type: string
-        ContactId:
-          type: string
-        DocumentStorageId:
-          type: string
-        Amount:
-          type: number
-          format: double
-        QuotedOn:
-          type: string
-          format: date-time
-        ContactReference:
-          type: string
-        FileName:
-          type: string
-        Size:
-          type: integer
-          format: int64
-        FileType:
-          type: string
-      description: JobTaskQuoteData
+        ResponseStatus:
+          $ref: '#/components/schemas/ResponseStatus'
+        IsSuccessful:
+          type: boolean
+      description: TaskResponse
       type: object
-    Contact:
-      title: Contact
-      properties:
-        Id:
-          type: string
-        CustomerId:
-          type: string
-        SpecialType:
-          type: string
-        Roles:
-          type: array
-          items:
-            type: string
-        ArchivedOn:
-          type: string
-          format: date-time
-        AccountDetails:
-          type: array
-          items:
-            $ref: '#/components/schemas/FolioAccount'
-        Reference:
-          type: string
-        Website:
-          type: string
-        ABN:
-          type: string
-        PersonMigrated:
-          type: boolean
-        Labels:
-          type: string
-        Notes:
-          type: string
-        NameText:
-          type: string
-        PostalAddressText:
-          type: string
-        PhysicalAddressText:
-          type: string
-        HasTenantInvoiceAccount:
-          type: boolean
-        HomePhone:
-          type: string
-        WorkPhone:
-          type: string
-        CellPhone:
-          type: string
-        TradeName:
-          type: string
-        Email:
-          type: string
-        SupplierChartAccountId:
-          type: string
-        IsArchived:
-          type: boolean
-        IsSupplier:
-          type: boolean
-        IsTenant:
-          type: boolean
-        IsOwner:
-          type: boolean
-        IsSeller:
-          type: boolean
-        PhoneText:
-          type: string
-        WorkPhoneText:
-          type: string
-        ContactPhone:
-          type: string
-        CreatedOn:
-          type: string
-          format: date-time
-        UpdatedOn:
-          type: string
-          format: date-time
-        ContactPersons:
-          type: array
-          items:
-            $ref: '#/components/schemas/ContactPerson'
-        PrimaryContactPerson:
-          $ref: '#/components/schemas/ContactPerson'
-      description: Contact
-      type: object
-    TenantInspectionReportPhoto:
-      title: TenantInspectionReportPhoto
-      properties:
-        InspectionAreaId:
-          type: string
-        Number:
-          type: integer
-          format: int32
-        Note:
-          type: string
-        DocumentStorageId:
-          type: string
-        TenantPhotoId:
-          type: string
-        IsDeleted:
-          type: boolean
-        DocumentType:
-          type: string
-        FileName:
-          type: string
-        FileType:
-          type: string
-        CreatedOn:
-          type: string
-          format: date-time
-      description: TenantInspectionReportPhoto
-      type: object
-    ReopenJobTaskRequest:
-      title: ReopenJobTaskRequest
+    AddTaskDocumentRequest:
+      title: AddTaskDocumentRequest
       required:
       - Id
       properties:
         Id:
-          description: Id of the job
+          description: Id of the task
           type: string
       description: PropertyMe Rest API
       type: object
-    IArgumentData:
-      title: IArgumentData
-      properties: {}
-      description: IArgumentData
+    AdditionalEmail:
+      title: AdditionalEmail
+      properties:
+        Email:
+          type: string
+        AllScope:
+          type: boolean
+      description: AdditionalEmail
       type: object
     Tenancy:
       title: Tenancy
@@ -3463,41 +3289,40 @@ components:
           format: date-time
       description: Tenancy
       type: object
-    FolioAccount:
-      title: FolioAccount
+    GetReportDetailedResponse:
+      title: GetReportDetailedResponse
       properties:
-        Id:
+        Inspection:
+          $ref: '#/components/schemas/InspectionTaskData'
+        Property:
+          $ref: '#/components/schemas/Lot'
+        Owner:
+          $ref: '#/components/schemas/Contact'
+        Tenancy:
+          $ref: '#/components/schemas/Tenancy'
+        OwnerFolioId:
           type: string
-        CustomerId:
-          type: string
-        FolioId:
-          type: string
-        Index:
-          type: integer
-          format: int32
-        BSB:
-          type: string
-        AccountNumber:
-          type: string
-        BillerCode:
-          type: string
-        BillerReference:
-          type: string
-        Payee:
-          type: string
-        PaymentMethod:
-          type: string
-        Name:
-          type: string
-        Value:
-          type: number
-          format: double
-        Percentage:
-          type: number
-          format: double
-        IsMarkedForDeletion:
+        FrontSection:
+          $ref: '#/components/schemas/FrontSectionBase'
+        HasTenantAnswersRequiringReview:
           type: boolean
-      description: FolioAccount
+        RelatedInspection:
+          $ref: '#/components/schemas/RelatedInspection'
+        InspectionTenantStatus:
+          $ref: '#/components/schemas/InspectionTenantStatusDto'
+        SubscriptionAllowsTenantToReviewECR:
+          type: boolean
+        IsModificationLockedForAgent:
+          type: boolean
+        RequiresTenantReviewsEcrFeature:
+          type: boolean
+        InspectionReport:
+          $ref: '#/components/schemas/InspectionReport'
+        ResponseStatus:
+          $ref: '#/components/schemas/ResponseStatus'
+        IsSuccessful:
+          type: boolean
+      description: GetReportDetailedResponse
       type: object
     JobTaskV2QueryData:
       title: JobTaskV2QueryData
@@ -3665,6 +3490,115 @@ components:
           type: string
       description: JobTaskV2QueryData
       type: object
+    Dictionary_String_String_:
+      title: Dictionary<String,String>
+      additionalProperties:
+        type: string
+      description: Dictionary<String,String>
+      type: object
+    ConsolidatedInspectionReportItem:
+      title: ConsolidatedInspectionReportItem
+      properties:
+        InspectionReportAreaId:
+          type: string
+        Name:
+          type: string
+        ConditionType:
+          type: string
+        Conditions:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConditionEntry'
+        AgentComment:
+          type: string
+        TenantAgrees:
+          type: boolean
+        TenantComment:
+          type: string
+      description: ConsolidatedInspectionReportItem
+      type: object
+    CompleteJobTaskRequest:
+      title: CompleteJobTaskRequest
+      required:
+      - Id
+      properties:
+        Id:
+          description: Id of the job
+          type: string
+      description: PropertyMe Rest API
+      type: object
+    JobQueryData:
+      title: JobQueryData
+      properties:
+        Id:
+          type: string
+        CustomerId:
+          type: string
+        DueDate:
+          type: string
+          format: date-time
+        CreatedOn:
+          type: string
+          format: date-time
+        ClosedOn:
+          type: string
+          format: date-time
+        Summary:
+          type: string
+        Description:
+          type: string
+        Labels:
+          type: string
+        LotId:
+          type: string
+        OwnerContactId:
+          type: string
+        TenantContactId:
+          type: string
+        ContactId:
+          type: string
+        ManagerMemberId:
+          type: string
+        LotReference:
+          type: string
+        ContactReference:
+          type: string
+        JobTaskQuotationReference:
+          type: string
+        ManagerName:
+          type: string
+        MemberFirstName:
+          type: string
+        MemberLastName:
+          type: string
+        Status:
+          type: string
+        Number:
+          type: integer
+          format: int32
+        OwnerAttending:
+          type: boolean
+        TenantAttending:
+          type: boolean
+        SupplierReference:
+          type: string
+        DisplayNumber:
+          type: string
+        QuoteReference:
+          type: string
+      description: JobQueryData
+      type: object
+    MobTaskChecklistAutomationActionResult:
+      title: MobTaskChecklistAutomationActionResult
+      properties:
+        ActionName:
+          type: string
+        ActionArguments:
+          $ref: '#/components/schemas/IDictionary_String_String_'
+        Succeeded:
+          type: boolean
+      description: MobTaskChecklistAutomationActionResult
+      type: object
     InspectionReportItem:
       title: InspectionReportItem
       properties:
@@ -3691,6 +3625,881 @@ components:
         TenantAgrees:
           type: boolean
       description: InspectionReportItem
+      type: object
+    ReopenInspectionRequest:
+      title: ReopenInspectionRequest
+      required:
+      - Id
+      properties:
+        Id:
+          description: Inspection Id
+          type: string
+      description: PropertyMe Rest API
+      type: object
+    ReopenJobTaskRequest:
+      title: ReopenJobTaskRequest
+      required:
+      - Id
+      properties:
+        Id:
+          description: Id of the job
+          type: string
+      description: PropertyMe Rest API
+      type: object
+    ValueWidget:
+      title: ValueWidget
+      properties:
+        Label:
+          type: string
+        Amount:
+          type: number
+          format: double
+        Quantity:
+          type: integer
+          format: int64
+        Percent:
+          type: number
+          format: double
+        IsMemberView:
+          type: boolean
+        FilterType:
+          type: string
+        AlertLevel:
+          type: string
+      description: ValueWidget
+      type: object
+    HashSet_CommunicationType_:
+      title: HashSet`1
+      properties: {}
+      description: HashSet<CommunicationType>
+      type: object
+    RejectJobTaskRequest:
+      title: RejectJobTaskRequest
+      required:
+      - Id
+      properties:
+        Id:
+          description: Id of the job
+          type: string
+      description: PropertyMe Rest API
+      type: object
+    QueryDocumentData:
+      title: QueryDocumentData
+      properties:
+        LotId:
+          type: string
+        ContactId:
+          type: string
+        TenantInvoiceId:
+          type: string
+        InspectionTaskId:
+          type: string
+        IsClientVisible:
+          type: boolean
+        DocumentLinkId:
+          type: string
+        TenantInvoiceNumber:
+          type: integer
+          format: int32
+        ChartAccountName:
+          type: string
+        JobTaskId:
+          type: string
+        TaskId:
+          type: string
+        JobTaskSummary:
+          type: string
+        Number:
+          type: integer
+          format: int32
+        FolioType:
+          type: string
+        LotReference:
+          type: string
+        Id:
+          type: string
+        CustomerId:
+          type: string
+        CreatedOn:
+          type: string
+          format: date-time
+        MimeType:
+          type: string
+        FileType:
+          type: string
+        FileName:
+          type: string
+        Size:
+          type: integer
+          format: int64
+        ThumbnailsFileSize:
+          type: integer
+          format: int64
+        Status:
+          type: string
+        IsReadOnly:
+          type: boolean
+        DocumentType:
+          type: string
+        DocumentArea:
+          type: string
+      description: QueryDocumentData
+      type: object
+    InspectionTask:
+      title: InspectionTask
+      properties:
+        StartTime:
+          type: string
+          format: date-time
+        Duration:
+          type: integer
+          format: int32
+        Type:
+          type: string
+        Status:
+          type: string
+        ListingId:
+          type: string
+        TenantReturnDate:
+          type: string
+          format: date-time
+        AssignedToTenantDate:
+          type: string
+          format: date-time
+        InspectionSnapshotId:
+          type: string
+        StatusPriorToClosing:
+          type: string
+        Id:
+          type: string
+        CustomerId:
+          type: string
+        DueDate:
+          type: string
+          format: date-time
+        CreatedOn:
+          type: string
+          format: date-time
+        ClosedOn:
+          type: string
+          format: date-time
+        Summary:
+          type: string
+        Description:
+          type: string
+        LotId:
+          type: string
+        TenantContactId:
+          type: string
+        OwnerContactId:
+          type: string
+        ContactId:
+          type: string
+        ManagerMemberId:
+          type: string
+        Labels:
+          type: string
+        UpdatedOn:
+          type: string
+          format: date-time
+      description: InspectionTask
+      type: object
+    ContactPerson:
+      title: ContactPerson
+      properties:
+        Id:
+          type: string
+        CustomerId:
+          type: string
+        ContactId:
+          type: string
+        Salutation:
+          type: string
+        FirstName:
+          type: string
+        LastName:
+          type: string
+        CompanyName:
+          type: string
+        Email:
+          type: string
+        SecondaryEmailAddresses:
+          type: array
+          items:
+            $ref: '#/components/schemas/AdditionalEmail'
+        HomePhone:
+          type: string
+        WorkPhone:
+          type: string
+        CellPhone:
+          type: string
+        NormalisedMobilePhone:
+          type: string
+        CommunicationPreferences:
+          $ref: '#/components/schemas/HashSet_CommunicationType_'
+        PhysicalAddress:
+          $ref: '#/components/schemas/AddressDetail'
+        PostalAddress:
+          $ref: '#/components/schemas/AddressDetail'
+        IsPrimary:
+          type: boolean
+        SortOrder:
+          type: integer
+          format: int32
+        FullName:
+          type: string
+        CombinedPhones:
+          type: string
+      description: ContactPerson
+      type: object
+    ResponseBase:
+      title: ResponseBase
+      properties:
+        ResponseStatus:
+          $ref: '#/components/schemas/ResponseStatus'
+        IsSuccessful:
+          type: boolean
+      description: ResponseBase
+      type: object
+    MobTaskChecklistAutomationActionData:
+      title: MobTaskChecklistAutomationActionData
+      properties:
+        ActionName:
+          type: string
+        ActionArgumentKey:
+          type: string
+        ActionDescription:
+          type: string
+        ActionArgumentData:
+          $ref: '#/components/schemas/IArgumentData'
+        IsValid:
+          type: boolean
+        ValidationMessage:
+          type: string
+        ActionResult:
+          $ref: '#/components/schemas/MobTaskChecklistAutomationActionResult'
+        ChildActions:
+          type: array
+          items:
+            $ref: '#/components/schemas/MobTaskChecklistAutomationActionData'
+      description: MobTaskChecklistAutomationActionData
+      type: object
+    JobTaskQuoteData:
+      title: JobTaskQuoteData
+      properties:
+        Id:
+          type: string
+        Reference:
+          type: string
+        CustomerId:
+          type: string
+        JobTaskId:
+          type: string
+        FolioId:
+          type: string
+        ContactId:
+          type: string
+        DocumentStorageId:
+          type: string
+        Amount:
+          type: number
+          format: double
+        QuotedOn:
+          type: string
+          format: date-time
+        ContactReference:
+          type: string
+        FileName:
+          type: string
+        Size:
+          type: integer
+          format: int64
+        FileType:
+          type: string
+      description: JobTaskQuoteData
+      type: object
+    FolioAccount:
+      title: FolioAccount
+      properties:
+        Id:
+          type: string
+        CustomerId:
+          type: string
+        FolioId:
+          type: string
+        Index:
+          type: integer
+          format: int32
+        BSB:
+          type: string
+        AccountNumber:
+          type: string
+        BillerCode:
+          type: string
+        BillerReference:
+          type: string
+        Payee:
+          type: string
+        PaymentMethod:
+          type: string
+        Name:
+          type: string
+        Value:
+          type: number
+          format: double
+        Percentage:
+          type: number
+          format: double
+        IsMarkedForDeletion:
+          type: boolean
+      description: FolioAccount
+      type: object
+    TaskChecklistMobile:
+      title: TaskChecklistMobile
+      properties:
+        AutomationStatus:
+          type: string
+        AutomationRuleData:
+          type: array
+          items:
+            $ref: '#/components/schemas/MobTaskChecklistAutomationActionData'
+        Id:
+          type: string
+        CustomerId:
+          type: string
+        CreatedOn:
+          type: string
+          format: date-time
+        CompletedOn:
+          type: string
+          format: date-time
+        TaskId:
+          type: string
+        Name:
+          type: string
+        Rank:
+          type: integer
+          format: int32
+        IsCompleted:
+          type: boolean
+        CreatedBy:
+          type: string
+        CompletedBy:
+          type: string
+        AutomationRuleId:
+          type: string
+        CompletedByUser:
+          type: string
+      description: TaskChecklistMobile
+      type: object
+    TenantInspectionReportPhoto:
+      title: TenantInspectionReportPhoto
+      properties:
+        InspectionAreaId:
+          type: string
+        Number:
+          type: integer
+          format: int32
+        Note:
+          type: string
+        DocumentStorageId:
+          type: string
+        TenantPhotoId:
+          type: string
+        IsDeleted:
+          type: boolean
+        DocumentType:
+          type: string
+        FileName:
+          type: string
+        FileType:
+          type: string
+        CreatedOn:
+          type: string
+          format: date-time
+      description: TenantInspectionReportPhoto
+      type: object
+    InspectionReportResponse:
+      title: InspectionReportResponse
+      properties:
+        InspectionReport:
+          $ref: '#/components/schemas/InspectionReport'
+        ResponseStatus:
+          $ref: '#/components/schemas/ResponseStatus'
+        IsSuccessful:
+          type: boolean
+      description: InspectionReportResponse
+      type: object
+    IDictionary_String_String_:
+      title: IDictionary<String,String>
+      additionalProperties:
+        type: string
+      description: IDictionary<String,String>
+      type: object
+    ScheduleInspectionResponse:
+      title: ScheduleInspectionResponse
+      properties:
+        Ids:
+          type: array
+          items:
+            type: string
+        ResponseStatus:
+          $ref: '#/components/schemas/ResponseStatus'
+        IsSuccessful:
+          type: boolean
+      description: ScheduleInspectionResponse
+      type: object
+    MobJobTaskQueryData:
+      title: MobJobTaskQueryData
+      properties:
+        LotReference:
+          type: string
+        TenantReference:
+          type: string
+        OwnerReference:
+          type: string
+        ContactReference:
+          type: string
+        ManagerName:
+          type: string
+        IsLetterStatement:
+          type: boolean
+        StatementId:
+          type: string
+        TaskType:
+          type: string
+        Timestamp:
+          type: integer
+          format: int64
+        OwnerAttending:
+          type: boolean
+        TenantAttending:
+          type: boolean
+        SupplierReference:
+          type: string
+        DisplayNumber:
+          type: string
+        Number:
+          type: integer
+          format: int32
+        Status:
+          type: string
+        ReportedContactType:
+          type: string
+        Access:
+          type: string
+        MainPhotoDocumentId:
+          type: string
+        DocumentLinkTextName:
+          type: string
+        QuoteId:
+          type: string
+        SupplierInstructions:
+          type: string
+        Id:
+          type: string
+        CustomerId:
+          type: string
+        DueDate:
+          type: string
+          format: date-time
+        CreatedOn:
+          type: string
+          format: date-time
+        ClosedOn:
+          type: string
+          format: date-time
+        Summary:
+          type: string
+        Description:
+          type: string
+        LotId:
+          type: string
+        TenantContactId:
+          type: string
+        OwnerContactId:
+          type: string
+        ContactId:
+          type: string
+        ManagerMemberId:
+          type: string
+        Labels:
+          type: string
+        UpdatedOn:
+          type: string
+          format: date-time
+      description: MobJobTaskQueryData
+      type: object
+    InspectionTaskData:
+      title: InspectionTaskData
+      properties:
+        LotReference:
+          type: string
+        AddressText:
+          type: string
+        KeyNumber:
+          type: string
+        Longitude:
+          type: number
+          format: double
+        Latitude:
+          type: number
+          format: double
+        TenantReference:
+          type: string
+        OwnerReference:
+          type: string
+        PublishOn:
+          type: string
+          format: date-time
+        LotMainPhotoDocumentId:
+          type: string
+        ManagerName:
+          type: string
+        ActiveManagerMemberId:
+          type: string
+        ActiveManagerTeams:
+          type: string
+        ManagerMemberTeams:
+          type: string
+        Timestamp:
+          type: integer
+          format: int64
+        TenantHasReviewed:
+          type: boolean
+        StatusText:
+          type: string
+        StartTimeText:
+          type: string
+        IsPublished:
+          type: boolean
+        SearchText:
+          type: string
+        StartTime:
+          type: string
+          format: date-time
+        Duration:
+          type: integer
+          format: int32
+        Type:
+          type: string
+        Status:
+          type: string
+        ListingId:
+          type: string
+        TenantReturnDate:
+          type: string
+          format: date-time
+        AssignedToTenantDate:
+          type: string
+          format: date-time
+        InspectionSnapshotId:
+          type: string
+        StatusPriorToClosing:
+          type: string
+        Id:
+          type: string
+        CustomerId:
+          type: string
+        DueDate:
+          type: string
+          format: date-time
+        CreatedOn:
+          type: string
+          format: date-time
+        ClosedOn:
+          type: string
+          format: date-time
+        Summary:
+          type: string
+        Description:
+          type: string
+        LotId:
+          type: string
+        TenantContactId:
+          type: string
+        OwnerContactId:
+          type: string
+        ContactId:
+          type: string
+        ManagerMemberId:
+          type: string
+        Labels:
+          type: string
+        UpdatedOn:
+          type: string
+          format: date-time
+      description: InspectionTaskData
+      type: object
+    ChangedInspectionData:
+      title: ChangedInspectionData
+      properties:
+        LotReference:
+          type: string
+        AddressText:
+          type: string
+        KeyNumber:
+          type: string
+        Longitude:
+          type: number
+          format: double
+        Latitude:
+          type: number
+          format: double
+        TenantReference:
+          type: string
+        OwnerReference:
+          type: string
+        PublishOn:
+          type: string
+          format: date-time
+        LotMainPhotoDocumentId:
+          type: string
+        ManagerName:
+          type: string
+        Timestamp:
+          type: integer
+          format: int64
+        InspectionReport:
+          $ref: '#/components/schemas/InspectionReport'
+        PreviousExitReport:
+          $ref: '#/components/schemas/InspectionReport'
+        CurrentRentAmount:
+          type: number
+          format: double
+        CurrentRentPeriod:
+          type: string
+        StatusText:
+          type: string
+        StartTimeText:
+          type: string
+        IsPublished:
+          type: boolean
+        StartTime:
+          type: string
+          format: date-time
+        Duration:
+          type: integer
+          format: int32
+        Type:
+          type: string
+        Status:
+          type: string
+        ListingId:
+          type: string
+        TenantReturnDate:
+          type: string
+          format: date-time
+        AssignedToTenantDate:
+          type: string
+          format: date-time
+        InspectionSnapshotId:
+          type: string
+        StatusPriorToClosing:
+          type: string
+        Id:
+          type: string
+        CustomerId:
+          type: string
+        DueDate:
+          type: string
+          format: date-time
+        CreatedOn:
+          type: string
+          format: date-time
+        ClosedOn:
+          type: string
+          format: date-time
+        Summary:
+          type: string
+        Description:
+          type: string
+        LotId:
+          type: string
+        TenantContactId:
+          type: string
+        OwnerContactId:
+          type: string
+        ContactId:
+          type: string
+        ManagerMemberId:
+          type: string
+        Labels:
+          type: string
+        UpdatedOn:
+          type: string
+          format: date-time
+      description: ChangedInspectionData
+      type: object
+    JobQueryV2Data:
+      title: JobQueryV2Data
+      properties:
+        Id:
+          type: string
+        CustomerId:
+          type: string
+        DueDate:
+          type: string
+          format: date-time
+        CreatedOn:
+          type: string
+          format: date-time
+        ClosedOn:
+          type: string
+          format: date-time
+        Summary:
+          type: string
+        Description:
+          type: string
+        Labels:
+          type: string
+        LotId:
+          type: string
+        OwnerContactId:
+          type: string
+        TenantContactId:
+          type: string
+        ContactId:
+          type: string
+        ManagerMemberId:
+          type: string
+        LotReference:
+          type: string
+        ContactReference:
+          type: string
+        JobTaskQuotationReference:
+          type: string
+        ManagerName:
+          type: string
+        MemberFirstName:
+          type: string
+        MemberLastName:
+          type: string
+        Status:
+          type: string
+        Number:
+          type: integer
+          format: int32
+        OwnerAttending:
+          type: boolean
+        TenantAttending:
+          type: boolean
+        SupplierReference:
+          type: string
+        DisplayNumber:
+          type: string
+        QuoteReference:
+          type: string
+        Priority:
+          type: string
+          enum:
+          - Low
+          - Medium
+          - High
+          - Urgent
+      description: JobQueryV2Data
+      type: object
+    ScheduleInspectionRequest:
+      title: ScheduleInspectionRequest
+      required:
+      - Id
+      properties:
+        Id:
+          description: Inspection Id
+          type: string
+      description: PropertyMe Rest API
+      type: object
+    Contact:
+      title: Contact
+      properties:
+        Id:
+          type: string
+        CustomerId:
+          type: string
+        SpecialType:
+          type: string
+        Roles:
+          type: array
+          items:
+            type: string
+        ArchivedOn:
+          type: string
+          format: date-time
+        AccountDetails:
+          type: array
+          items:
+            $ref: '#/components/schemas/FolioAccount'
+        Reference:
+          type: string
+        Website:
+          type: string
+        ABN:
+          type: string
+        PersonMigrated:
+          type: boolean
+        Labels:
+          type: string
+        Notes:
+          type: string
+        NameText:
+          type: string
+        PostalAddressText:
+          type: string
+        PhysicalAddressText:
+          type: string
+        HasTenantInvoiceAccount:
+          type: boolean
+        HomePhone:
+          type: string
+        WorkPhone:
+          type: string
+        CellPhone:
+          type: string
+        TradeName:
+          type: string
+        Email:
+          type: string
+        SupplierChartAccountId:
+          type: string
+        IsArchived:
+          type: boolean
+        IsSupplier:
+          type: boolean
+        IsTenant:
+          type: boolean
+        IsOwner:
+          type: boolean
+        IsSeller:
+          type: boolean
+        PhoneText:
+          type: string
+        WorkPhoneText:
+          type: string
+        ContactPhone:
+          type: string
+        CreatedOn:
+          type: string
+          format: date-time
+        UpdatedOn:
+          type: string
+          format: date-time
+        ContactPersons:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContactPerson'
+        PrimaryContactPerson:
+          $ref: '#/components/schemas/ContactPerson'
+      description: Contact
+      type: object
+    InspectionTenantStatusDto:
+      title: InspectionTenantStatusDto
+      properties:
+        TenantStatus:
+          type: string
+        TenantReturnedDate:
+          type: string
+          format: date-time
+      description: InspectionTenantStatusDto
       type: object
     DetailWidget:
       title: DetailWidget
@@ -3725,6 +4534,157 @@ components:
           type: integer
           format: int32
       description: DetailWidget
+      type: object
+    IArgumentData:
+      title: IArgumentData
+      properties: {}
+      description: IArgumentData
+      type: object
+    JobTaskQuoteResponse:
+      title: JobTaskQuoteResponse
+      properties:
+        JobTaskQuoteId:
+          type: string
+        ResponseStatus:
+          $ref: '#/components/schemas/ResponseStatus'
+        IsSuccessful:
+          type: boolean
+      description: JobTaskQuoteResponse
+      type: object
+    RelatedInspection:
+      title: RelatedInspection
+      properties:
+        InspectionReport:
+          $ref: '#/components/schemas/InspectionReport'
+        Inspection:
+          $ref: '#/components/schemas/InspectionTaskData'
+      description: RelatedInspection
+      type: object
+    TaskQueryData:
+      title: TaskQueryData
+      properties:
+        LotReference:
+          type: string
+        TenantReference:
+          type: string
+        OwnerReference:
+          type: string
+        ContactReference:
+          type: string
+        TenantPhone:
+          type: string
+        TenantCellPhone:
+          type: string
+        TenantHomePhone:
+          type: string
+        TenantWorkPhone:
+          type: string
+        OwnerPhone:
+          type: string
+        OwnerCellPhone:
+          type: string
+        OwnerHomePhone:
+          type: string
+        OwnerWorkPhone:
+          type: string
+        ContactPhone:
+          type: string
+        ContactCellPhone:
+          type: string
+        ContactHomePhone:
+          type: string
+        ContactWorkPhone:
+          type: string
+        TenantEmail:
+          type: string
+        OwnerEmail:
+          type: string
+        ContactEmail:
+          type: string
+        ManagerName:
+          type: string
+        PropertyType:
+          type: string
+        Bedrooms:
+          type: integer
+          format: int32
+        Bathrooms:
+          type: integer
+          format: int32
+        CarSpaces:
+          type: integer
+          format: int32
+        MainPhotoDocumentId:
+          type: string
+        LotManagerMemberId:
+          type: string
+        LotManagerName:
+          type: string
+        Timestamp:
+          type: integer
+          format: int64
+        Status:
+          type: string
+        IsLetterStatement:
+          type: boolean
+        StatementId:
+          type: string
+        TaskType:
+          type: string
+        TaskChecklists:
+          type: array
+          items:
+            $ref: '#/components/schemas/TaskChecklist'
+        CreatedByUser:
+          type: string
+        ClosedByUser:
+          type: string
+        Label:
+          type: string
+        Type:
+          type: string
+        Priority:
+          type: integer
+          format: int32
+        TaskStatus:
+          type: string
+        CreatedBy:
+          type: string
+        ClosedBy:
+          type: string
+        Id:
+          type: string
+        CustomerId:
+          type: string
+        DueDate:
+          type: string
+          format: date-time
+        CreatedOn:
+          type: string
+          format: date-time
+        ClosedOn:
+          type: string
+          format: date-time
+        Summary:
+          type: string
+        Description:
+          type: string
+        LotId:
+          type: string
+        TenantContactId:
+          type: string
+        OwnerContactId:
+          type: string
+        ContactId:
+          type: string
+        ManagerMemberId:
+          type: string
+        Labels:
+          type: string
+        UpdatedOn:
+          type: string
+          format: date-time
+      description: TaskQueryData
       type: object
     IntegratorJobTaskV2QueryData:
       title: IntegratorJobTaskV2QueryData
@@ -3973,1011 +4933,51 @@ components:
           type: string
       description: JobTaskQueryData
       type: object
-    AddressDetail:
-      title: AddressDetail
-      properties:
-        Unit:
-          type: string
-        Number:
-          type: string
-        Street:
-          type: string
-        Suburb:
-          type: string
-        Locality:
-          type: string
-        PostalCode:
-          type: string
-        State:
-          type: string
-        Country:
-          type: string
-        BuildingName:
-          type: string
-        MailboxName:
-          type: string
-        Latitude:
-          type: number
-          format: double
-        Longitude:
-          type: number
-          format: double
-        StreetLongName:
-          type: string
-        Text:
-          type: string
-        Reference:
-          type: string
-      description: AddressDetail
-      type: object
-    TaskQueryData:
-      title: TaskQueryData
-      properties:
-        LotReference:
-          type: string
-        TenantReference:
-          type: string
-        OwnerReference:
-          type: string
-        ContactReference:
-          type: string
-        TenantPhone:
-          type: string
-        TenantCellPhone:
-          type: string
-        TenantHomePhone:
-          type: string
-        TenantWorkPhone:
-          type: string
-        OwnerPhone:
-          type: string
-        OwnerCellPhone:
-          type: string
-        OwnerHomePhone:
-          type: string
-        OwnerWorkPhone:
-          type: string
-        ContactPhone:
-          type: string
-        ContactCellPhone:
-          type: string
-        ContactHomePhone:
-          type: string
-        ContactWorkPhone:
-          type: string
-        TenantEmail:
-          type: string
-        OwnerEmail:
-          type: string
-        ContactEmail:
-          type: string
-        ManagerName:
-          type: string
-        PropertyType:
-          type: string
-        Bedrooms:
-          type: integer
-          format: int32
-        Bathrooms:
-          type: integer
-          format: int32
-        CarSpaces:
-          type: integer
-          format: int32
-        MainPhotoDocumentId:
-          type: string
-        LotManagerMemberId:
-          type: string
-        LotManagerName:
-          type: string
-        Timestamp:
-          type: integer
-          format: int64
-        Status:
-          type: string
-        IsLetterStatement:
-          type: boolean
-        StatementId:
-          type: string
-        TaskType:
-          type: string
-        TaskChecklists:
-          type: array
-          items:
-            $ref: '#/components/schemas/TaskChecklist'
-        CreatedByUser:
-          type: string
-        ClosedByUser:
-          type: string
-        Label:
-          type: string
-        Type:
-          type: string
-        Priority:
-          type: integer
-          format: int32
-        TaskStatus:
-          type: string
-        CreatedBy:
-          type: string
-        ClosedBy:
-          type: string
-        Id:
-          type: string
-        CustomerId:
-          type: string
-        DueDate:
-          type: string
-          format: date-time
-        CreatedOn:
-          type: string
-          format: date-time
-        ClosedOn:
-          type: string
-          format: date-time
-        Summary:
-          type: string
-        Description:
-          type: string
-        LotId:
-          type: string
-        TenantContactId:
-          type: string
-        OwnerContactId:
-          type: string
-        ContactId:
-          type: string
-        ManagerMemberId:
-          type: string
-        Labels:
-          type: string
-        UpdatedOn:
-          type: string
-          format: date-time
-      description: TaskQueryData
-      type: object
-    MobTaskQueryData:
-      title: MobTaskQueryData
-      properties:
-        LotReference:
-          type: string
-        TenantReference:
-          type: string
-        OwnerReference:
-          type: string
-        ContactReference:
-          type: string
-        ManagerName:
-          type: string
-        ActivePropertyManagerId:
-          type: string
-        TaskChecklists:
-          type: array
-          items:
-            $ref: '#/components/schemas/TaskChecklistMobile'
-        TaskType:
-          type: string
-        Timestamp:
-          type: integer
-          format: int64
-        Type:
-          type: string
-        Priority:
-          type: integer
-          format: int32
-        TaskStatus:
-          type: string
-        CreatedBy:
-          type: string
-        ClosedBy:
-          type: string
-        Id:
-          type: string
-        CustomerId:
-          type: string
-        DueDate:
-          type: string
-          format: date-time
-        CreatedOn:
-          type: string
-          format: date-time
-        ClosedOn:
-          type: string
-          format: date-time
-        Summary:
-          type: string
-        Description:
-          type: string
-        LotId:
-          type: string
-        TenantContactId:
-          type: string
-        OwnerContactId:
-          type: string
-        ContactId:
-          type: string
-        ManagerMemberId:
-          type: string
-        Labels:
-          type: string
-        UpdatedOn:
-          type: string
-          format: date-time
-      description: MobTaskQueryData
-      type: object
-    ConsolidatedInspectionReportItem:
-      title: ConsolidatedInspectionReportItem
-      properties:
-        InspectionReportAreaId:
-          type: string
-        Name:
-          type: string
-        ConditionType:
-          type: string
-        Conditions:
-          type: array
-          items:
-            $ref: '#/components/schemas/ConditionEntry'
-        AgentComment:
-          type: string
-        TenantAgrees:
-          type: boolean
-        TenantComment:
-          type: string
-      description: ConsolidatedInspectionReportItem
-      type: object
-    HashSet_CommunicationType_:
-      title: HashSet`1
-      properties: {}
-      description: HashSet<CommunicationType>
-      type: object
-    InspectInspectionRequest:
-      title: InspectInspectionRequest
-      required:
-      - Id
-      properties:
-        Id:
-          description: Inspection Id
-          type: string
-      description: PropertyMe Rest API
-      type: object
-    ResponseStatus:
-      title: ResponseStatus
-      properties:
-        ErrorCode:
-          type: string
-        Message:
-          type: string
-        StackTrace:
-          type: string
-        Errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ResponseError'
-        Meta:
-          $ref: '#/components/schemas/Dictionary_String_String_'
-      description: ResponseStatus
-      type: object
-    MobJobTaskQueryData:
-      title: MobJobTaskQueryData
-      properties:
-        LotReference:
-          type: string
-        TenantReference:
-          type: string
-        OwnerReference:
-          type: string
-        ContactReference:
-          type: string
-        ManagerName:
-          type: string
-        IsLetterStatement:
-          type: boolean
-        StatementId:
-          type: string
-        TaskType:
-          type: string
-        Timestamp:
-          type: integer
-          format: int64
-        OwnerAttending:
-          type: boolean
-        TenantAttending:
-          type: boolean
-        SupplierReference:
-          type: string
-        DisplayNumber:
-          type: string
-        Number:
-          type: integer
-          format: int32
-        Status:
-          type: string
-        ReportedContactType:
-          type: string
-        Access:
-          type: string
-        MainPhotoDocumentId:
-          type: string
-        DocumentLinkTextName:
-          type: string
-        QuoteId:
-          type: string
-        SupplierInstructions:
-          type: string
-        Id:
-          type: string
-        CustomerId:
-          type: string
-        DueDate:
-          type: string
-          format: date-time
-        CreatedOn:
-          type: string
-          format: date-time
-        ClosedOn:
-          type: string
-          format: date-time
-        Summary:
-          type: string
-        Description:
-          type: string
-        LotId:
-          type: string
-        TenantContactId:
-          type: string
-        OwnerContactId:
-          type: string
-        ContactId:
-          type: string
-        ManagerMemberId:
-          type: string
-        Labels:
-          type: string
-        UpdatedOn:
-          type: string
-          format: date-time
-      description: MobJobTaskQueryData
-      type: object
-    ContactPerson:
-      title: ContactPerson
-      properties:
-        Id:
-          type: string
-        CustomerId:
-          type: string
-        ContactId:
-          type: string
-        Salutation:
-          type: string
-        FirstName:
-          type: string
-        LastName:
-          type: string
-        CompanyName:
-          type: string
-        Email:
-          type: string
-        SecondaryEmailAddresses:
-          type: array
-          items:
-            $ref: '#/components/schemas/AdditionalEmail'
-        HomePhone:
-          type: string
-        WorkPhone:
-          type: string
-        CellPhone:
-          type: string
-        NormalisedMobilePhone:
-          type: string
-        CommunicationPreferences:
-          $ref: '#/components/schemas/HashSet_CommunicationType_'
-        PhysicalAddress:
-          $ref: '#/components/schemas/AddressDetail'
-        PostalAddress:
-          $ref: '#/components/schemas/AddressDetail'
-        IsPrimary:
-          type: boolean
-        SortOrder:
-          type: integer
-          format: int32
-        FullName:
-          type: string
-        CombinedPhones:
-          type: string
-      description: ContactPerson
-      type: object
-    AddJobDocumentsRequest:
-      title: AddJobDocumentsRequest
-      required:
-      - Id
-      properties:
-        Id:
-          description: Id of the job
-          type: string
-      description: PropertyMe Rest API
-      type: object
-    IDictionary_String_String_:
-      title: IDictionary<String,String>
-      additionalProperties:
-        type: string
-      description: IDictionary<String,String>
-      type: object
-    GetReportDetailedResponse:
-      title: GetReportDetailedResponse
+    GetInspectionResponse:
+      title: GetInspectionResponse
       properties:
         Inspection:
           $ref: '#/components/schemas/InspectionTaskData'
         Property:
           $ref: '#/components/schemas/Lot'
+        Tenant:
+          $ref: '#/components/schemas/Contact'
         Owner:
           $ref: '#/components/schemas/Contact'
-        Tenancy:
-          $ref: '#/components/schemas/Tenancy'
-        OwnerFolioId:
-          type: string
-        FrontSection:
-          $ref: '#/components/schemas/FrontSectionBase'
-        HasTenantAnswersRequiringReview:
-          type: boolean
-        RelatedInspection:
-          $ref: '#/components/schemas/RelatedInspection'
-        InspectionTenantStatus:
-          $ref: '#/components/schemas/InspectionTenantStatusDto'
-        SubscriptionAllowsTenantToReviewECR:
-          type: boolean
-        IsModificationLockedForAgent:
-          type: boolean
-        RequiresTenantReviewsEcrFeature:
-          type: boolean
         InspectionReport:
-          $ref: '#/components/schemas/InspectionReport'
-        ResponseStatus:
-          $ref: '#/components/schemas/ResponseStatus'
-        IsSuccessful:
-          type: boolean
-      description: GetReportDetailedResponse
-      type: object
-    AddJobImagesRequest:
-      title: AddJobImagesRequest
-      required:
-      - Id
-      properties:
-        Id:
-          description: Id of the job
-          type: string
-      description: PropertyMe Rest API
-      type: object
-    ValueWidget:
-      title: ValueWidget
-      properties:
-        Label:
-          type: string
-        Amount:
-          type: number
-          format: double
-        Quantity:
-          type: integer
-          format: int64
-        Percent:
-          type: number
-          format: double
-        IsMemberView:
-          type: boolean
-        FilterType:
-          type: string
-        AlertLevel:
-          type: string
-      description: ValueWidget
-      type: object
-    ResponseError:
-      title: ResponseError
-      properties:
-        ErrorCode:
-          type: string
-        FieldName:
-          type: string
-        Message:
-          type: string
-        Meta:
-          $ref: '#/components/schemas/Dictionary_String_String_'
-      description: ResponseError
-      type: object
-    RejectJobTaskRequest:
-      title: RejectJobTaskRequest
-      required:
-      - Id
-      properties:
-        Id:
-          description: Id of the job
-          type: string
-      description: PropertyMe Rest API
-      type: object
-    CompleteJobTaskRequest:
-      title: CompleteJobTaskRequest
-      required:
-      - Id
-      properties:
-        Id:
-          description: Id of the job
-          type: string
-      description: PropertyMe Rest API
-      type: object
-    AssignTaskRequest:
-      title: AssignTaskRequest
-      required:
-      - Id
-      properties:
-        Id:
-          description: Id of the job
-          type: string
-        SupplierContactId:
-          description: Id of the supplier
-          type: string
-        OwnerAttending:
-          description: Is Owner attending
-          type: boolean
-        TenantAttending:
-          description: Is Tenant attending
-          type: boolean
-      description: PropertyMe Rest API
-      type: object
-    InspectionTenantStatusDto:
-      title: InspectionTenantStatusDto
-      properties:
-        TenantStatus:
-          type: string
-        TenantReturnedDate:
-          type: string
-          format: date-time
-      description: InspectionTenantStatusDto
-      type: object
-    MobTaskChecklistAutomationActionResult:
-      title: MobTaskChecklistAutomationActionResult
-      properties:
-        ActionName:
-          type: string
-        ActionArguments:
-          $ref: '#/components/schemas/IDictionary_String_String_'
-        Succeeded:
-          type: boolean
-      description: MobTaskChecklistAutomationActionResult
-      type: object
-    TaskChecklist:
-      title: TaskChecklist
-      properties:
-        Id:
-          type: string
-        CustomerId:
-          type: string
-        CreatedOn:
-          type: string
-          format: date-time
-        CompletedOn:
-          type: string
-          format: date-time
-        TaskId:
-          type: string
-        Name:
-          type: string
-        Rank:
-          type: integer
-          format: int32
-        IsCompleted:
-          type: boolean
-        CreatedBy:
-          type: string
-        CompletedBy:
-          type: string
-        AutomationRuleId:
-          type: string
-        CompletedByUser:
-          type: string
-      description: TaskChecklist
-      type: object
-    TaskResponse:
-      title: TaskResponse
-      properties:
-        TaskId:
-          type: string
-        ResponseStatus:
-          $ref: '#/components/schemas/ResponseStatus'
-        IsSuccessful:
-          type: boolean
-      description: TaskResponse
-      type: object
-    InspectionReportArea:
-      title: InspectionReportArea
-      properties:
-        Id:
-          type: string
-        CustomerId:
-          type: string
-        InspectionReportId:
-          type: string
-        Number:
-          type: integer
-          format: int32
-        Name:
-          type: string
-        Note:
-          type: string
-        Photos:
-          type: array
-          items:
-            $ref: '#/components/schemas/InspectionReportPhoto'
-        TenantPhotos:
-          type: array
-          items:
-            $ref: '#/components/schemas/TenantInspectionReportPhoto'
-        Items:
-          type: array
-          items:
-            $ref: '#/components/schemas/InspectionReportItem'
-        ConsolidatedInspectionReportItems:
-          type: array
-          items:
-            $ref: '#/components/schemas/ConsolidatedInspectionReportItem'
-        IsDeleted:
-          type: boolean
-        CreatedOn:
-          type: string
-          format: date-time
-        UpdatedOn:
-          type: string
-          format: date-time
-        Hash:
-          type: string
-        IsConflict:
-          type: boolean
-        UpdatedByMemberId:
-          type: string
-      description: InspectionReportArea
-      type: object
-    ChangedInspectionData:
-      title: ChangedInspectionData
-      properties:
-        LotReference:
-          type: string
-        AddressText:
-          type: string
-        KeyNumber:
-          type: string
-        Longitude:
-          type: number
-          format: double
-        Latitude:
-          type: number
-          format: double
-        TenantReference:
-          type: string
-        OwnerReference:
-          type: string
-        PublishOn:
-          type: string
-          format: date-time
-        LotMainPhotoDocumentId:
-          type: string
-        ManagerName:
-          type: string
-        Timestamp:
-          type: integer
-          format: int64
-        InspectionReport:
-          $ref: '#/components/schemas/InspectionReport'
-        PreviousExitReport:
           $ref: '#/components/schemas/InspectionReport'
         CurrentRentAmount:
           type: number
           format: double
         CurrentRentPeriod:
           type: string
-        StatusText:
+        OwnerFolioId:
           type: string
-        StartTimeText:
+        ListingInfo:
           type: string
-        IsPublished:
+        InspectionTenantStatus:
+          $ref: '#/components/schemas/InspectionTenantStatusDto'
+        TenantHasReviewed:
           type: boolean
-        StartTime:
-          type: string
-          format: date-time
-        Duration:
-          type: integer
-          format: int32
-        Type:
-          type: string
-        Status:
-          type: string
-        ListingId:
-          type: string
-        TenantReturnDate:
-          type: string
-          format: date-time
-        AssignedToTenantDate:
-          type: string
-          format: date-time
-        InspectionSnapshotId:
-          type: string
-        StatusPriorToClosing:
-          type: string
-        Id:
-          type: string
-        CustomerId:
-          type: string
-        DueDate:
-          type: string
-          format: date-time
-        CreatedOn:
-          type: string
-          format: date-time
-        ClosedOn:
-          type: string
-          format: date-time
-        Summary:
-          type: string
-        Description:
-          type: string
-        LotId:
-          type: string
-        TenantContactId:
-          type: string
-        OwnerContactId:
-          type: string
-        ContactId:
-          type: string
-        ManagerMemberId:
-          type: string
-        Labels:
-          type: string
-        UpdatedOn:
-          type: string
-          format: date-time
-      description: ChangedInspectionData
+        SubscriptionAllowsTenantToReviewECR:
+          type: boolean
+        RequiresTenantReviewsEcrFeature:
+          type: boolean
+        ResponseStatus:
+          $ref: '#/components/schemas/ResponseStatus'
+        IsSuccessful:
+          type: boolean
+      description: GetInspectionResponse
       type: object
-    InspectionReport:
-      title: InspectionReport
-      properties:
-        Id:
-          type: string
-        CustomerId:
-          type: string
-        InspectionTaskId:
-          type: string
-        CreatedOn:
-          type: string
-          format: date-time
-        UpdatedOn:
-          type: string
-          format: date-time
-        VersionNumber:
-          type: integer
-          format: int32
-        RentReview:
-          type: number
-          format: double
-        WaterMeter:
-          type: integer
-          format: int64
-        PublishOn:
-          type: string
-          format: date-time
-        PublishToTenant:
-          type: boolean
-        Notes:
-          type: string
-        FollowUpActions:
-          type: array
-          items:
-            type: string
-        Areas:
-          type: array
-          items:
-            $ref: '#/components/schemas/InspectionReportArea'
-        EntryInspectionTaskId:
-          type: string
-        InspectionReportTemplateId:
-          type: string
-        CopiedFromReportDate:
-          type: string
-          format: date-time
-        IsDeleted:
-          type: boolean
-        CopiedReportId:
-          type: string
-        FrontSection:
-          type: string
-        MemberSignatureId:
-          type: string
-        IncludeMemberImageSignatureOnEachPage:
-          type: boolean
-      description: InspectionReport
-      type: object
-    InspectionDataTableRow:
-      title: InspectionDataTableRow
-      properties:
-        Id:
-          type: string
-        CustomerId:
-          type: string
-        DueDate:
-          type: string
-          format: date-time
-        ClosedOn:
-          type: string
-          format: date-time
-        StartTime:
-          type: string
-          format: date-time
-        Type:
-          type: string
-        PublishOn:
-          type: string
-          format: date-time
-        Summary:
-          type: string
-        LotReference:
-          type: string
-        TenantReference:
-          type: string
-        ManagerName:
-          type: string
-        MemberFirstName:
-          type: string
-        MemberLastName:
-          type: string
-        Status:
-          type: string
-        IsPublished:
-          type: boolean
-        StartTimeText:
-          type: string
-        StatusText:
-          type: string
-        AssignedToTenantDate:
-          type: string
-          format: date-time
-        TenantReturnDueDate:
-          type: string
-          format: date-time
-        TenantProgress:
-          type: string
-        TenantReturnDate:
-          type: string
-          format: date-time
-        DaysPastOrRemaining:
-          type: integer
-          format: int32
-        Labels:
-          type: string
-        GeneratedPdfId:
-          type: string
-        GeneratedPdfFileName:
-          type: string
-        GeneratedPdfStatus:
-          type: string
-      description: InspectionDataTableRow
-      type: object
-    FrontSectionBase:
-      title: FrontSectionBase
-      properties:
-        Version:
-          type: integer
-          format: int32
-        Region:
-          type: string
-        InspectionType:
-          type: string
-      description: FrontSectionBase
-      type: object
-    TaskChecklistMobile:
-      title: TaskChecklistMobile
-      properties:
-        AutomationStatus:
-          type: string
-        AutomationRuleData:
-          type: array
-          items:
-            $ref: '#/components/schemas/MobTaskChecklistAutomationActionData'
-        Id:
-          type: string
-        CustomerId:
-          type: string
-        CreatedOn:
-          type: string
-          format: date-time
-        CompletedOn:
-          type: string
-          format: date-time
-        TaskId:
-          type: string
-        Name:
-          type: string
-        Rank:
-          type: integer
-          format: int32
-        IsCompleted:
-          type: boolean
-        CreatedBy:
-          type: string
-        CompletedBy:
-          type: string
-        AutomationRuleId:
-          type: string
-        CompletedByUser:
-          type: string
-      description: TaskChecklistMobile
-      type: object
-    AddInspectionDocumentRequest:
-      title: AddInspectionDocumentRequest
+    ApproveJobTaskRequest:
+      title: ApproveJobTaskRequest
       required:
       - Id
       properties:
         Id:
-          description: Id of the inspection
+          description: Id of the job
           type: string
-        IsClientVisible:
-          description: Visible on the owner portal
-          type: boolean
       description: PropertyMe Rest API
-      type: object
-    InspectionTask:
-      title: InspectionTask
-      properties:
-        StartTime:
-          type: string
-          format: date-time
-        Duration:
-          type: integer
-          format: int32
-        Type:
-          type: string
-        Status:
-          type: string
-        ListingId:
-          type: string
-        TenantReturnDate:
-          type: string
-          format: date-time
-        AssignedToTenantDate:
-          type: string
-          format: date-time
-        InspectionSnapshotId:
-          type: string
-        StatusPriorToClosing:
-          type: string
-        Id:
-          type: string
-        CustomerId:
-          type: string
-        DueDate:
-          type: string
-          format: date-time
-        CreatedOn:
-          type: string
-          format: date-time
-        ClosedOn:
-          type: string
-          format: date-time
-        Summary:
-          type: string
-        Description:
-          type: string
-        LotId:
-          type: string
-        TenantContactId:
-          type: string
-        OwnerContactId:
-          type: string
-        ContactId:
-          type: string
-        ManagerMemberId:
-          type: string
-        Labels:
-          type: string
-        UpdatedOn:
-          type: string
-          format: date-time
-      description: InspectionTask
       type: object
   parameters:
     Accept:

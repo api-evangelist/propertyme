@@ -39,14 +39,6 @@ paths:
       security:
       - Bearer: []
 components:
-  schemas:
-    DisconnectResponse:
-      title: DisconnectResponse
-      properties:
-        Disconnected:
-          type: boolean
-      description: DisconnectResponse
-      type: object
   parameters:
     Accept:
       name: Accept
@@ -57,6 +49,14 @@ components:
         type: string
         enum:
         - application/json
+  schemas:
+    DisconnectResponse:
+      title: DisconnectResponse
+      properties:
+        Disconnected:
+          type: boolean
+      description: DisconnectResponse
+      type: object
   securitySchemes:
     Bearer:
       type: apiKey

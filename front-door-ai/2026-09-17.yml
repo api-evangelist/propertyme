@@ -1,0 +1,29 @@
+# Front Door AI Index — propertyme — 2026-09-17
+# AI vocabulary counted on the provider's root page. Generated; do not edit.
+# `score` is null unless ownership is `own` — see front_door_ai.py.
+front_door_ai:
+  slug: propertyme
+  lexicon_version: '1.0'
+  probed_at: '2026-09-17'
+  host: www.propertyme.com.au
+  final_host: www.propertyme.com.au
+  ownership: own
+  owner: propertyme
+  shares_host_with: null
+  inherited_from: null
+  verdict: scored
+  score: 19
+  host_score: 19
+  density: 14.08
+  words: 1349
+  tiers:
+    agentic: 2
+    core: 17
+    model: 0
+  ambiguous: 9
+  top_terms:
+    AI: 17
+    smart: 5
+    automation: 3
+    AI assistant: 2
+    agent: 1
