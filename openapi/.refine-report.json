@@ -4,12 +4,12 @@
     "_original/propertyme-openapi.json"
   ],
   "outputs": [
+    "propertyme-connection-api-openapi.yml",
     "propertyme-scope-activities-api-openapi.yml",
     "propertyme-scope-bills-api-openapi.yml",
     "propertyme-scope-contacts-api-openapi.yml",
     "propertyme-scope-messages-api-openapi.yml",
-    "propertyme-scope-properties-api-openapi.yml",
-    "propertyme-connection-api-openapi.yml"
+    "propertyme-scope-properties-api-openapi.yml"
   ],
   "archived": [],
   "errors": [],
@@ -17,6 +17,11 @@
   "notes": [
     "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
     "propertyme-openapi.json: upgraded swagger 2.0 -> OpenAPI 3.2.0",
+    "propertyme-openapi.json: declared missing tag: Scope: Activities",
+    "propertyme-openapi.json: declared missing tag: Scope: Bills",
+    "propertyme-openapi.json: declared missing tag: Scope: Contacts",
+    "propertyme-openapi.json: declared missing tag: Scope: Messages",
+    "propertyme-openapi.json: declared missing tag: Scope: Properties",
     "propertyme-openapi.json: multi-axis tagging (17 tags, 6 first tags, 2.14x duplication over 86 operations) \u2014 split on first tag, 79 operations narrowed",
     "apis.yml register: already-registered"
   ],

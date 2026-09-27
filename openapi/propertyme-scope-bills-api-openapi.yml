@@ -5,14 +5,14 @@ info:
 servers:
 - url: https://app.propertyme.com/api
 tags:
-- name: ' Scope: Bills'
+- name: 'Scope: Bills'
 paths:
   /v1/bills:
     parameters:
     - $ref: '#/components/parameters/Accept'
     post:
       tags:
-      - ' Scope: Bills'
+      - 'Scope: Bills'
       summary: Create a new bill including a document
       description: The auth token must contain a scope of transaction:write.
       operationId: AddBillRequestbills_Post
@@ -48,7 +48,7 @@ paths:
     - $ref: '#/components/parameters/Accept'
     get:
       tags:
-      - ' Scope: Bills'
+      - 'Scope: Bills'
       summary: Get activity dashboard item by type
       description: The auth token must contain a scope of transaction:read.
       operationId: TransactionDashboardRequestdashboardstransactionsType_Get
@@ -83,6 +83,12 @@ paths:
       - Bearer: []
 components:
   schemas:
+    Dictionary_String_String_:
+      title: Dictionary<String,String>
+      additionalProperties:
+        type: string
+      description: Dictionary<String,String>
+      type: object
     ValueWidget:
       title: ValueWidget
       properties:
@@ -105,11 +111,22 @@ components:
           type: string
       description: ValueWidget
       type: object
-    Dictionary_String_String_:
-      title: Dictionary<String,String>
-      additionalProperties:
-        type: string
-      description: Dictionary<String,String>
+    ResponseStatus:
+      title: ResponseStatus
+      properties:
+        ErrorCode:
+          type: string
+        Message:
+          type: string
+        StackTrace:
+          type: string
+        Errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ResponseError'
+        Meta:
+          $ref: '#/components/schemas/Dictionary_String_String_'
+      description: ResponseStatus
       type: object
     DetailWidget:
       title: DetailWidget
@@ -145,32 +162,6 @@ components:
           format: int32
       description: DetailWidget
       type: object
-    FinancialResponse:
-      title: FinancialResponse
-      properties:
-        TrackingIds:
-          type: array
-          items:
-            type: string
-        ResponseStatus:
-          $ref: '#/components/schemas/ResponseStatus'
-        IsSuccessful:
-          type: boolean
-      description: FinancialResponse
-      type: object
-    ResponseError:
-      title: ResponseError
-      properties:
-        ErrorCode:
-          type: string
-        FieldName:
-          type: string
-        Message:
-          type: string
-        Meta:
-          $ref: '#/components/schemas/Dictionary_String_String_'
-      description: ResponseError
-      type: object
     DashboardResponse:
       title: DashboardResponse
       properties:
@@ -192,22 +183,31 @@ components:
           type: boolean
       description: DashboardResponse
       type: object
-    ResponseStatus:
-      title: ResponseStatus
+    ResponseError:
+      title: ResponseError
       properties:
         ErrorCode:
           type: string
+        FieldName:
+          type: string
         Message:
           type: string
-        StackTrace:
-          type: string
-        Errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ResponseError'
         Meta:
           $ref: '#/components/schemas/Dictionary_String_String_'
-      description: ResponseStatus
+      description: ResponseError
+      type: object
+    FinancialResponse:
+      title: FinancialResponse
+      properties:
+        TrackingIds:
+          type: array
+          items:
+            type: string
+        ResponseStatus:
+          $ref: '#/components/schemas/ResponseStatus'
+        IsSuccessful:
+          type: boolean
+      description: FinancialResponse
       type: object
   parameters:
     Accept:

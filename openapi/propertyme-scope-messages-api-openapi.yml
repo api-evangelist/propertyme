@@ -5,14 +5,14 @@ info:
 servers:
 - url: https://app.propertyme.com/api
 tags:
-- name: ' Scope: Messages'
+- name: 'Scope: Messages'
 paths:
   /v1/dashboards/communications/{Type}:
     parameters:
     - $ref: '#/components/parameters/Accept'
     get:
       tags:
-      - ' Scope: Messages'
+      - 'Scope: Messages'
       summary: Get communication dashboard item by type
       description: The auth token must contain a scope of activity:read.
       operationId: CommunicationDashboardRequestdashboardscommunicationsType_Get
@@ -47,6 +47,12 @@ paths:
       - Bearer: []
 components:
   schemas:
+    Dictionary_String_String_:
+      title: Dictionary<String,String>
+      additionalProperties:
+        type: string
+      description: Dictionary<String,String>
+      type: object
     ValueWidget:
       title: ValueWidget
       properties:
@@ -69,11 +75,22 @@ components:
           type: string
       description: ValueWidget
       type: object
-    Dictionary_String_String_:
-      title: Dictionary<String,String>
-      additionalProperties:
-        type: string
-      description: Dictionary<String,String>
+    ResponseStatus:
+      title: ResponseStatus
+      properties:
+        ErrorCode:
+          type: string
+        Message:
+          type: string
+        StackTrace:
+          type: string
+        Errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ResponseError'
+        Meta:
+          $ref: '#/components/schemas/Dictionary_String_String_'
+      description: ResponseStatus
       type: object
     DetailWidget:
       title: DetailWidget
@@ -109,19 +126,6 @@ components:
           format: int32
       description: DetailWidget
       type: object
-    ResponseError:
-      title: ResponseError
-      properties:
-        ErrorCode:
-          type: string
-        FieldName:
-          type: string
-        Message:
-          type: string
-        Meta:
-          $ref: '#/components/schemas/Dictionary_String_String_'
-      description: ResponseError
-      type: object
     DashboardResponse:
       title: DashboardResponse
       properties:
@@ -143,22 +147,18 @@ components:
           type: boolean
       description: DashboardResponse
       type: object
-    ResponseStatus:
-      title: ResponseStatus
+    ResponseError:
+      title: ResponseError
       properties:
         ErrorCode:
           type: string
+        FieldName:
+          type: string
         Message:
           type: string
-        StackTrace:
-          type: string
-        Errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ResponseError'
         Meta:
           $ref: '#/components/schemas/Dictionary_String_String_'
-      description: ResponseStatus
+      description: ResponseError
       type: object
   parameters:
     Accept:

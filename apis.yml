@@ -51,7 +51,7 @@ accessModel:
   method: derived
 image: https://www.propertyme.com.au/wp-content/themes/PropertyMe/assets/dist/favicons/android-icon-192x192.png
 tags:
-- Real-Estate
+- Real Estate
 - Australia
 - Property Management
 - Rentals
@@ -76,6 +76,7 @@ tags_raw:
 - Documents
 - Payments
 - New Zealand
+- Real-Estate
 created: '2026-07-26'
 modified: '2026-07-26'
 specificationVersion: '0.23'
