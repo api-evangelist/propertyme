@@ -517,51 +517,27 @@ paths:
       - Bearer: []
 components:
   schemas:
-    MobContactData:
-      title: MobContactData
+    AdditionalEmail:
+      title: AdditionalEmail
+      properties:
+        Email:
+          type: string
+        AllScope:
+          type: boolean
+      description: AdditionalEmail
+      type: object
+    ContactGridData:
+      title: ContactGridData
       properties:
         Id:
           type: string
         CustomerId:
           type: string
-        SpecialType:
-          type: string
-        Roles:
-          type: array
-          items:
-            type: string
-        ArchivedOn:
-          type: string
-          format: date-time
-        AccountDetails:
-          type: array
-          items:
-            $ref: '#/components/schemas/FolioAccount'
         Reference:
           type: string
-        Website:
-          type: string
-        ABN:
-          type: string
-        PersonMigrated:
-          type: boolean
         Labels:
           type: string
-        Notes:
-          type: string
-        NameText:
-          type: string
-        PostalAddressText:
-          type: string
-        PhysicalAddressText:
-          type: string
-        CreatedOn:
-          type: string
-          format: date-time
-        UpdatedOn:
-          type: string
-          format: date-time
-        TradeName:
+        PrimaryPerson:
           type: string
         HomePhone:
           type: string
@@ -569,46 +545,26 @@ components:
           type: string
         CellPhone:
           type: string
-        Email:
+        ContactPersonText:
           type: string
-        SupplierChartAccountId:
+        SupplierFolioNumber:
+          type: integer
+          format: int32
+        PostalAddressText:
           type: string
-        IsArchived:
-          type: boolean
-        IsSupplier:
-          type: boolean
-        IsTenant:
-          type: boolean
-        IsOwner:
-          type: boolean
-        IsSeller:
-          type: boolean
-        PhoneText:
+        PhysicalAddressText:
           type: string
-        WorkPhoneText:
-          type: string
-        ContactPhone:
-          type: string
-        ContactPersons:
+        Roles:
           type: array
           items:
-            $ref: '#/components/schemas/MobContactPersonData'
-        PrimaryContactPerson:
-          $ref: '#/components/schemas/MobContactPersonData'
-        Timestamp:
-          type: integer
-          format: int64
-        PrimaryPerson:
+            type: string
+        RolesString:
+          type: string
+        SupplierFolioCode:
           type: string
         Phone:
           type: string
-        PrimaryPostalAddress:
-          type: string
-        PrimaryPhysicalAddress:
-          type: string
-        RolesString:
-          type: string
-      description: MobContactData
+      description: ContactGridData
       type: object
     Dictionary_String_String_:
       title: Dictionary<String,String>
@@ -652,9 +608,73 @@ components:
           type: boolean
       description: FolioAccount
       type: object
-    ContactPerson:
-      title: ContactPerson
+    QueryDocumentData:
+      title: QueryDocumentData
       properties:
+        LotId:
+          type: string
+        ContactId:
+          type: string
+        TenantInvoiceId:
+          type: string
+        InspectionTaskId:
+          type: string
+        IsClientVisible:
+          type: boolean
+        DocumentLinkId:
+          type: string
+        TenantInvoiceNumber:
+          type: integer
+          format: int32
+        ChartAccountName:
+          type: string
+        JobTaskId:
+          type: string
+        TaskId:
+          type: string
+        JobTaskSummary:
+          type: string
+        Number:
+          type: integer
+          format: int32
+        FolioType:
+          type: string
+        LotReference:
+          type: string
+        Id:
+          type: string
+        CustomerId:
+          type: string
+        CreatedOn:
+          type: string
+          format: date-time
+        MimeType:
+          type: string
+        FileType:
+          type: string
+        FileName:
+          type: string
+        Size:
+          type: integer
+          format: int64
+        ThumbnailsFileSize:
+          type: integer
+          format: int64
+        Status:
+          type: string
+        IsReadOnly:
+          type: boolean
+        DocumentType:
+          type: string
+        DocumentArea:
+          type: string
+      description: QueryDocumentData
+      type: object
+    MobContactPersonData:
+      title: MobContactPersonData
+      properties:
+        IsChatAvailable:
+          type: boolean
         Id:
           type: string
         CustomerId:
@@ -698,7 +718,20 @@ components:
           type: string
         CombinedPhones:
           type: string
-      description: ContactPerson
+      description: MobContactPersonData
+      type: object
+    ResponseError:
+      title: ResponseError
+      properties:
+        ErrorCode:
+          type: string
+        FieldName:
+          type: string
+        Message:
+          type: string
+        Meta:
+          $ref: '#/components/schemas/Dictionary_String_String_'
+      description: ResponseError
       type: object
     AddContactDocumentRequest:
       title: AddContactDocumentRequest
@@ -710,72 +743,35 @@ components:
           type: string
       description: PropertyMe Rest API
       type: object
-    AdditionalEmail:
-      title: AdditionalEmail
-      properties:
-        Email:
-          type: string
-        AllScope:
-          type: boolean
-      description: AdditionalEmail
+    HashSet_CommunicationType_:
+      title: HashSet`1
+      properties: {}
+      description: HashSet<CommunicationType>
       type: object
-    OwnerQueryData:
-      title: OwnerQueryData
+    GetContactResponse:
+      title: GetContactResponse
       properties:
-        BillsDue:
-          type: number
-          format: double
-        Balance:
-          type: number
-          format: double
-        IsPmDirectEnabled:
-          type: boolean
-        Id:
-          type: string
-        CustomerId:
-          type: string
-        Reference:
-          type: string
-        Labels:
-          type: string
-        PrimaryPerson:
-          type: string
-        HomePhone:
-          type: string
-        WorkPhone:
-          type: string
-        CellPhone:
-          type: string
-        PostalAddressText:
-          type: string
-        PhysicalAddressText:
-          type: string
-        Roles:
+        Contact:
+          $ref: '#/components/schemas/Contact'
+        ContactPersons:
           type: array
           items:
-            type: string
-        RolesString:
+            $ref: '#/components/schemas/ContactPersonInfo'
+        Code:
           type: string
-        Phone:
+        FolioId:
           type: string
-      description: OwnerQueryData
-      type: object
-    ResponseStatus:
-      title: ResponseStatus
-      properties:
-        ErrorCode:
+        PaymentPriority:
+          type: integer
+          format: int32
+        AutoApproveBill:
+          type: boolean
+        TenantInvoiceChartAccountId:
           type: string
-        Message:
-          type: string
-        StackTrace:
-          type: string
-        Errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ResponseError'
-        Meta:
-          $ref: '#/components/schemas/Dictionary_String_String_'
-      description: ResponseStatus
+        ReminderCount:
+          type: integer
+          format: int32
+      description: GetContactResponse
       type: object
     CustomerMemberData:
       title: CustomerMemberData
@@ -878,9 +874,162 @@ components:
           type: string
       description: QuerySuppliersResponse
       type: object
-    ContactGridData:
-      title: ContactGridData
+    MobContactData:
+      title: MobContactData
       properties:
+        Id:
+          type: string
+        CustomerId:
+          type: string
+        SpecialType:
+          type: string
+        Roles:
+          type: array
+          items:
+            type: string
+        ArchivedOn:
+          type: string
+          format: date-time
+        AccountDetails:
+          type: array
+          items:
+            $ref: '#/components/schemas/FolioAccount'
+        Reference:
+          type: string
+        Website:
+          type: string
+        ABN:
+          type: string
+        PersonMigrated:
+          type: boolean
+        Labels:
+          type: string
+        Notes:
+          type: string
+        NameText:
+          type: string
+        PostalAddressText:
+          type: string
+        PhysicalAddressText:
+          type: string
+        CreatedOn:
+          type: string
+          format: date-time
+        UpdatedOn:
+          type: string
+          format: date-time
+        TradeName:
+          type: string
+        HomePhone:
+          type: string
+        WorkPhone:
+          type: string
+        CellPhone:
+          type: string
+        Email:
+          type: string
+        SupplierChartAccountId:
+          type: string
+        IsArchived:
+          type: boolean
+        IsSupplier:
+          type: boolean
+        IsTenant:
+          type: boolean
+        IsOwner:
+          type: boolean
+        IsSeller:
+          type: boolean
+        PhoneText:
+          type: string
+        WorkPhoneText:
+          type: string
+        ContactPhone:
+          type: string
+        ContactPersons:
+          type: array
+          items:
+            $ref: '#/components/schemas/MobContactPersonData'
+        PrimaryContactPerson:
+          $ref: '#/components/schemas/MobContactPersonData'
+        Timestamp:
+          type: integer
+          format: int64
+        PrimaryPerson:
+          type: string
+        Phone:
+          type: string
+        PrimaryPostalAddress:
+          type: string
+        PrimaryPhysicalAddress:
+          type: string
+        RolesString:
+          type: string
+      description: MobContactData
+      type: object
+    ContactPersonInfo:
+      title: ContactPersonInfo
+      properties:
+        MemberAccessRole:
+          type: string
+        IsChatAvailable:
+          type: boolean
+        Id:
+          type: string
+        CustomerId:
+          type: string
+        ContactId:
+          type: string
+        Salutation:
+          type: string
+        FirstName:
+          type: string
+        LastName:
+          type: string
+        CompanyName:
+          type: string
+        Email:
+          type: string
+        SecondaryEmailAddresses:
+          type: array
+          items:
+            $ref: '#/components/schemas/AdditionalEmail'
+        HomePhone:
+          type: string
+        WorkPhone:
+          type: string
+        CellPhone:
+          type: string
+        NormalisedMobilePhone:
+          type: string
+        CommunicationPreferences:
+          $ref: '#/components/schemas/HashSet_CommunicationType_'
+        PhysicalAddress:
+          $ref: '#/components/schemas/AddressDetail'
+        PostalAddress:
+          $ref: '#/components/schemas/AddressDetail'
+        IsPrimary:
+          type: boolean
+        SortOrder:
+          type: integer
+          format: int32
+        FullName:
+          type: string
+        CombinedPhones:
+          type: string
+      description: ContactPersonInfo
+      type: object
+    OwnerQueryData:
+      title: OwnerQueryData
+      properties:
+        BillsDue:
+          type: number
+          format: double
+        Balance:
+          type: number
+          format: double
+        IsPmDirectEnabled:
+          type: boolean
         Id:
           type: string
         CustomerId:
@@ -897,11 +1046,6 @@ components:
           type: string
         CellPhone:
           type: string
-        ContactPersonText:
-          type: string
-        SupplierFolioNumber:
-          type: integer
-          format: int32
         PostalAddressText:
           type: string
         PhysicalAddressText:
@@ -912,103 +1056,57 @@ components:
             type: string
         RolesString:
           type: string
-        SupplierFolioCode:
-          type: string
         Phone:
           type: string
-      description: ContactGridData
+      description: OwnerQueryData
       type: object
-    HashSet_CommunicationType_:
-      title: HashSet`1
-      properties: {}
-      description: HashSet<CommunicationType>
-      type: object
-    QueryDocumentData:
-      title: QueryDocumentData
+    ContactPerson:
+      title: ContactPerson
       properties:
-        LotId:
-          type: string
-        ContactId:
-          type: string
-        TenantInvoiceId:
-          type: string
-        InspectionTaskId:
-          type: string
-        IsClientVisible:
-          type: boolean
-        DocumentLinkId:
-          type: string
-        TenantInvoiceNumber:
-          type: integer
-          format: int32
-        ChartAccountName:
-          type: string
-        JobTaskId:
-          type: string
-        TaskId:
-          type: string
-        JobTaskSummary:
-          type: string
-        Number:
-          type: integer
-          format: int32
-        FolioType:
-          type: string
-        LotReference:
-          type: string
         Id:
           type: string
         CustomerId:
           type: string
-        CreatedOn:
+        ContactId:
           type: string
-          format: date-time
-        MimeType:
+        Salutation:
           type: string
-        FileType:
+        FirstName:
           type: string
-        FileName:
+        LastName:
           type: string
-        Size:
-          type: integer
-          format: int64
-        ThumbnailsFileSize:
-          type: integer
-          format: int64
-        Status:
+        CompanyName:
           type: string
-        IsReadOnly:
-          type: boolean
-        DocumentType:
+        Email:
           type: string
-        DocumentArea:
-          type: string
-      description: QueryDocumentData
-      type: object
-    GetContactResponse:
-      title: GetContactResponse
-      properties:
-        Contact:
-          $ref: '#/components/schemas/Contact'
-        ContactPersons:
+        SecondaryEmailAddresses:
           type: array
           items:
-            $ref: '#/components/schemas/ContactPersonInfo'
-        Code:
+            $ref: '#/components/schemas/AdditionalEmail'
+        HomePhone:
           type: string
-        FolioId:
+        WorkPhone:
           type: string
-        PaymentPriority:
-          type: integer
-          format: int32
-        AutoApproveBill:
+        CellPhone:
+          type: string
+        NormalisedMobilePhone:
+          type: string
+        CommunicationPreferences:
+          $ref: '#/components/schemas/HashSet_CommunicationType_'
+        PhysicalAddress:
+          $ref: '#/components/schemas/AddressDetail'
+        PostalAddress:
+          $ref: '#/components/schemas/AddressDetail'
+        IsPrimary:
           type: boolean
-        TenantInvoiceChartAccountId:
-          type: string
-        ReminderCount:
+        SortOrder:
           type: integer
           format: int32
-      description: GetContactResponse
+        FullName:
+          type: string
+        CombinedPhones:
+          type: string
+      description: ContactPerson
       type: object
     AddressDetail:
       title: AddressDetail
@@ -1129,117 +1227,6 @@ components:
           $ref: '#/components/schemas/ContactPerson'
       description: Contact
       type: object
-    ContactPersonInfo:
-      title: ContactPersonInfo
-      properties:
-        MemberAccessRole:
-          type: string
-        IsChatAvailable:
-          type: boolean
-        Id:
-          type: string
-        CustomerId:
-          type: string
-        ContactId:
-          type: string
-        Salutation:
-          type: string
-        FirstName:
-          type: string
-        LastName:
-          type: string
-        CompanyName:
-          type: string
-        Email:
-          type: string
-        SecondaryEmailAddresses:
-          type: array
-          items:
-            $ref: '#/components/schemas/AdditionalEmail'
-        HomePhone:
-          type: string
-        WorkPhone:
-          type: string
-        CellPhone:
-          type: string
-        NormalisedMobilePhone:
-          type: string
-        CommunicationPreferences:
-          $ref: '#/components/schemas/HashSet_CommunicationType_'
-        PhysicalAddress:
-          $ref: '#/components/schemas/AddressDetail'
-        PostalAddress:
-          $ref: '#/components/schemas/AddressDetail'
-        IsPrimary:
-          type: boolean
-        SortOrder:
-          type: integer
-          format: int32
-        FullName:
-          type: string
-        CombinedPhones:
-          type: string
-      description: ContactPersonInfo
-      type: object
-    GetAgencyResponse:
-      title: GetAgencyResponse
-      properties:
-        Reference:
-          type: string
-        Name:
-          type: string
-      description: GetAgencyResponse
-      type: object
-    MobContactPersonData:
-      title: MobContactPersonData
-      properties:
-        IsChatAvailable:
-          type: boolean
-        Id:
-          type: string
-        CustomerId:
-          type: string
-        ContactId:
-          type: string
-        Salutation:
-          type: string
-        FirstName:
-          type: string
-        LastName:
-          type: string
-        CompanyName:
-          type: string
-        Email:
-          type: string
-        SecondaryEmailAddresses:
-          type: array
-          items:
-            $ref: '#/components/schemas/AdditionalEmail'
-        HomePhone:
-          type: string
-        WorkPhone:
-          type: string
-        CellPhone:
-          type: string
-        NormalisedMobilePhone:
-          type: string
-        CommunicationPreferences:
-          $ref: '#/components/schemas/HashSet_CommunicationType_'
-        PhysicalAddress:
-          $ref: '#/components/schemas/AddressDetail'
-        PostalAddress:
-          $ref: '#/components/schemas/AddressDetail'
-        IsPrimary:
-          type: boolean
-        SortOrder:
-          type: integer
-          format: int32
-        FullName:
-          type: string
-        CombinedPhones:
-          type: string
-      description: MobContactPersonData
-      type: object
     ResponseBase:
       title: ResponseBase
       properties:
@@ -1248,19 +1235,6 @@ components:
         IsSuccessful:
           type: boolean
       description: ResponseBase
-      type: object
-    ResponseError:
-      title: ResponseError
-      properties:
-        ErrorCode:
-          type: string
-        FieldName:
-          type: string
-        Message:
-          type: string
-        Meta:
-          $ref: '#/components/schemas/Dictionary_String_String_'
-      description: ResponseError
       type: object
     ContactAlert:
       title: ContactAlert
@@ -1288,6 +1262,32 @@ components:
           type: string
           format: date-time
       description: ContactAlert
+      type: object
+    ResponseStatus:
+      title: ResponseStatus
+      properties:
+        ErrorCode:
+          type: string
+        Message:
+          type: string
+        StackTrace:
+          type: string
+        Errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ResponseError'
+        Meta:
+          $ref: '#/components/schemas/Dictionary_String_String_'
+      description: ResponseStatus
+      type: object
+    GetAgencyResponse:
+      title: GetAgencyResponse
+      properties:
+        Reference:
+          type: string
+        Name:
+          type: string
+      description: GetAgencyResponse
       type: object
   parameters:
     Accept:
