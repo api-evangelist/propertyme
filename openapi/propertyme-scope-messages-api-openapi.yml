@@ -60,23 +60,6 @@ components:
           $ref: '#/components/schemas/Dictionary_String_String_'
       description: ResponseError
       type: object
-    ResponseStatus:
-      title: ResponseStatus
-      properties:
-        ErrorCode:
-          type: string
-        Message:
-          type: string
-        StackTrace:
-          type: string
-        Errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ResponseError'
-        Meta:
-          $ref: '#/components/schemas/Dictionary_String_String_'
-      description: ResponseStatus
-      type: object
     ValueWidget:
       title: ValueWidget
       properties:
@@ -98,33 +81,6 @@ components:
         AlertLevel:
           type: string
       description: ValueWidget
-      type: object
-    Dictionary_String_String_:
-      title: Dictionary<String,String>
-      additionalProperties:
-        type: string
-      description: Dictionary<String,String>
-      type: object
-    DashboardResponse:
-      title: DashboardResponse
-      properties:
-        ValueWidgets:
-          type: array
-          items:
-            $ref: '#/components/schemas/ValueWidget'
-        SpecialValues:
-          type: array
-          items:
-            $ref: '#/components/schemas/ValueWidget'
-        DetailWidgets:
-          type: array
-          items:
-            $ref: '#/components/schemas/DetailWidget'
-        ResponseStatus:
-          $ref: '#/components/schemas/ResponseStatus'
-        IsSuccessful:
-          type: boolean
-      description: DashboardResponse
       type: object
     DetailWidget:
       title: DetailWidget
@@ -159,6 +115,50 @@ components:
           type: integer
           format: int32
       description: DetailWidget
+      type: object
+    DashboardResponse:
+      title: DashboardResponse
+      properties:
+        ValueWidgets:
+          type: array
+          items:
+            $ref: '#/components/schemas/ValueWidget'
+        SpecialValues:
+          type: array
+          items:
+            $ref: '#/components/schemas/ValueWidget'
+        DetailWidgets:
+          type: array
+          items:
+            $ref: '#/components/schemas/DetailWidget'
+        ResponseStatus:
+          $ref: '#/components/schemas/ResponseStatus'
+        IsSuccessful:
+          type: boolean
+      description: DashboardResponse
+      type: object
+    ResponseStatus:
+      title: ResponseStatus
+      properties:
+        ErrorCode:
+          type: string
+        Message:
+          type: string
+        StackTrace:
+          type: string
+        Errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ResponseError'
+        Meta:
+          $ref: '#/components/schemas/Dictionary_String_String_'
+      description: ResponseStatus
+      type: object
+    Dictionary_String_String_:
+      title: Dictionary<String,String>
+      additionalProperties:
+        type: string
+      description: Dictionary<String,String>
       type: object
   parameters:
     Accept:
