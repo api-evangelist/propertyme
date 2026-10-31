@@ -1,4 +1,4 @@
-# PropertyMe (propertyme)
+# PropertyMe
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -64,269 +64,140 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-PropertyMe is an Australian cloud property management and trust accounting platform for residential real estate agencies, founded in 2013 and operated by MePay Holdings Pty Ltd (AFCA member ID 81095, AFS licence no. 528836), with roughly 1.7 million properties under management across Australia and New Zealand. In the Australian property value chain it sits on the PROPERTY MANAGEMENT rail rather than the listing or settlement rails — it does not operate a portal like REA Group's realestate.com.au or Domain, and it is not a PEXA conveyancing participant; it is the system of record for the rental portfolio, holding lots, tenancies, owners, tenants, suppliers, trust transactions, inspections, maintenance jobs and documents, plus its own MePay payments product and the Grow CRM and AiMe assistant products. Its API posture is unusually honest for this sector — the machine-readable contract is genuinely open while the credentials are not. A Swagger 2.0 document describing 75 paths, 86 operations and 296 definitions is served anonymously with no login at https://app.propertyme.com/api/openapi.json, rendered by a public Swagger UI at https://app.propertyme.com/api/swagger-ui/, and the OpenID Connect discovery document at https://login.propertyme.com is also served anonymously and advertises the full scope list. But no self-serve developer signup, app registration route or public client-credential issuance path exists anywhere on propertyme.com.au, app.propertyme.com or any developer/developers/docs/api subdomain (none of which resolve); a developer must approach PropertyMe to be issued an OAuth client_id and client_secret, and every call is additionally scoped to one customer's portfolio that the agency itself connects and can disconnect. RESO is absent — PropertyMe does not appear in the RESO certification directory, there is no OData service, no `$metadata` document and no Universal Property Identifier, which is the expected Australian answer because RESO is a North American NAR/MLS construct with no Australian counterpart. PropertyMe publishes no open data.
+PropertyMe is an Australian cloud property management and trust accounting platform for residential real estate agencies, founded in 2013 and operated by MePay Holdings Pty Ltd (AFCA member ID 81095, AFS licence no. 528836), with roughly 1.7 million properties under management across Australia and New Zealand. In the Australian property value chain it sits on the PROPERTY MANAGEMENT rail rather than the listing or settlement rails — it does not operate a portal like REA Group's realestate.com.au or Domain, and it is not a PEXA conveyancing participant; it is the system of record for the rental portfolio, holding lots, tenancies, owners, tenants, suppliers, trust transactions, inspections, maintenance jobs and documents, plus its own MePay payments product and the Grow CRM and AiMe assistant products. Its API posture is unusually honest for this sector — the machine-readable contract is genuinely open while the credentials are not. A Swagger 2.0 document describing 75 paths, 86 operations and 296 definitions is served anonymously with no login at https://app.propertyme.com/api/openapi.json, rendered by a public Swagger UI at https://app.propertyme.com/api/swagger-ui/, and the OpenID Connect discovery document at https://login.propertyme.com is also served anonymously and advertises the full scope list. But no self-serve developer signup, app registration route or public client-credential issuance path exists anywhere on propertyme.com.au, app.propertyme.com or any developer/developers/docs/api subdomain (none of which resolve); a developer must approach PropertyMe to be issued an OAuth client_id and client_secret, and every call is additionally scoped to one customer's portfolio that the agency itself connects and can disconnect. RESO is absent — PropertyMe does not appear in the RESO certification directory, there is no OData service, no $metadata document and no Universal Property Identifier, which is the expected Australian answer because RESO is a North American NAR/MLS construct with no Australian counterpart. PropertyMe publishes no open data.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/propertyme/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/propertyme/refs/heads/main/apis.yml)
+**Areas:** Real Estate · Australia · Property Management · Rentals · PropTech · Tenancy · Trust Accounting · Inspection · Maintenance · Documents · Payments · New Zealand
 
-## Tags
+## PropertyMe on APIs.io
 
-- Real Estate
-- Australia
-- Property Management
-- Rentals
-- PropTech
-- Tenancy
-- Trust Accounting
-- Inspections
-- Maintenance
-- Documents
-- Payments
-- New Zealand
+Everything profiled for PropertyMe is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/propertyme/](https://apis.io/providers/propertyme/)** — or go straight to one of the APIs or properties below.
 
-## Timestamps
+### APIs (6)
 
-- **Created:** 2026-07-26
-- **Modified:** 2026-07-26
+- [PropertyMe Connection API](https://apis.io/apis/propertyme/propertyme-connection-api/) — The Connection API from PropertyMe — 1 operation(s) for connection.
+- [PropertyMe Scope: Activities API](https://apis.io/apis/propertyme/propertyme-scope-activities-api/) — The Scope: Activities API from PropertyMe — 43 operation(s) for scope: activities.
+- [PropertyMe Scope: Bills API](https://apis.io/apis/propertyme/propertyme-scope-bills-api/) — The Scope: Bills API from PropertyMe — 2 operation(s) for scope: bills.
+- [PropertyMe Scope: Contacts API](https://apis.io/apis/propertyme/propertyme-scope-contacts-api/) — The Scope: Contacts API from PropertyMe — 11 operation(s) for scope: contacts.
+- [PropertyMe Scope: Messages API](https://apis.io/apis/propertyme/propertyme-scope-messages-api/) — The Scope: Messages API from PropertyMe — 1 operation(s) for scope: messages.
+- [PropertyMe Scope: Properties API](https://apis.io/apis/propertyme/propertyme-scope-properties-api/) — The Scope: Properties API from PropertyMe — 17 operation(s) for scope: properties.
 
-## APIs
+### Published properties
 
-### PropertyMe Contacts API
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-Read the contact records in a connected PropertyMe portfolio — owners, tenants, suppliers and the agency contact itself — with change-since-timestamp polling, contact alerts by type, images, and write access for comments and documents attached to a contact. Requires the `contact:read` scope; comment and document creation require `contact:write`.
+#### Arazzo workflows (3)
 
-- **Human URL:** [https://app.propertyme.com/api/swagger-ui/](https://app.propertyme.com/api/swagger-ui/)
-- **Base URL:** `https://app.propertyme.com/api`
+Multi-step workflows that chain operations into a business task.
 
-#### Tags
+- [Connect a PropertyMe portfolio and run a change-since sync](https://apis.io/arazzos/propertyme/propertyme-connect-and-sync/)
+- [Schedule, conduct, report and close a PropertyMe inspection](https://apis.io/arazzos/propertyme/propertyme-inspection-cycle/)
+- [Raise, quote, approve and complete a PropertyMe maintenance job](https://apis.io/arazzos/propertyme/propertyme-maintenance-job/)
 
-- Contacts
-- Owners
-- Tenants
-- Suppliers
+#### MCP servers (1)
 
-#### Properties
+Model Context Protocol servers that expose the API to agents.
 
-- [OpenAPI](openapi/propertyme-openapi.json) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [API Reference](https://app.propertyme.com/api/swagger-ui/)
-- [Authentication](authentication/propertyme-openid-configuration.json)
+- [propertyme](https://apis.io/servers/propertyme/propertyme/)
 
-### PropertyMe Properties API
+#### Agentic access (1)
 
-The lot (property) record in a connected PropertyMe portfolio — list all lots changed since a timestamp, or filter to rentals, active sales, vacancies and archived lots, retrieve lot detail, contact alerts, images and the managing member, and attach comments and documents to a lot or to an owner or tenant folio. Requires the `property:read` scope; writes require `property:write`.
+Which operations an agent can call, which act, and which need a human in the loop.
 
-- **Human URL:** [https://app.propertyme.com/api/swagger-ui/](https://app.propertyme.com/api/swagger-ui/)
-- **Base URL:** `https://app.propertyme.com/api`
+- [Propertyme Agentic Access](https://apis.io/agentic-access/propertyme/propertyme-agentic-access/)
 
-#### Tags
+#### Collections (1)
 
-- Properties
-- Lots
-- Rentals
-- Vacancy
+Postman and Open Collection request collections.
 
-#### Properties
+- [PropertyMe](https://apis.io/collections/propertyme/open-propertyme/)
 
-- [OpenAPI](openapi/propertyme-openapi.json) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [API Reference](https://app.propertyme.com/api/swagger-ui/)
-- [Authentication](authentication/propertyme-openid-configuration.json)
+#### Overlays (1)
 
-### PropertyMe Tenancies API
+OpenAPI overlays, including conversational phrasing for each operation.
 
-Read-only access to the tenancies in a connected PropertyMe portfolio and to tenancy balances, including a single tenancy balance record by id. This is the lettings ledger surface that most listing-oriented real estate APIs omit entirely. Requires the `property:read` scope.
+- [Propertyme Openapi Overlay](https://apis.io/overlays/propertyme/propertyme-openapi-overlay/)
 
-- **Human URL:** [https://app.propertyme.com/api/swagger-ui/](https://app.propertyme.com/api/swagger-ui/)
-- **Base URL:** `https://app.propertyme.com/api`
+#### Security (2)
 
-#### Tags
+Authentication, trust centre, and vulnerability disclosure.
 
-- Tenancies
-- Leases
-- Balances
+- [Propertyme Authentication](https://apis.io/security/propertyme/propertyme-authentication/)
+- [Propertyme Domain Security](https://apis.io/security/propertyme/propertyme-domain-security/)
 
-#### Properties
+#### OAuth scopes (1)
 
-- [OpenAPI](openapi/propertyme-openapi.json) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [API Reference](https://app.propertyme.com/api/swagger-ui/)
-- [Authentication](authentication/propertyme-openid-configuration.json)
+The permissions the API asks for.
 
-### PropertyMe Inspections API
+- [Propertyme Scopes](https://apis.io/scopes/propertyme/propertyme-scopes/)
 
-The full routine and entry/exit inspection lifecycle — create, query, search by contact or lot, filter by status, and drive an inspection through schedule, reschedule, inspect, close and reopen transitions, plus inspection reports, comments, documents, images and the assigned inspection manager. Requires `activity:read` and, for the state transitions, `activity:write`.
+## Where to find this API
 
-- **Human URL:** [https://app.propertyme.com/api/swagger-ui/](https://app.propertyme.com/api/swagger-ui/)
-- **Base URL:** `https://app.propertyme.com/api`
-
-#### Tags
-
-- Inspections
-- Reports
-- Compliance
-
-#### Properties
-
-- [OpenAPI](openapi/propertyme-openapi.json) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [API Reference](https://app.propertyme.com/api/swagger-ui/)
-- [Authentication](authentication/propertyme-openid-configuration.json)
-
-### PropertyMe Job Tasks API
-
-Maintenance work orders, in both a v1 and a newer v2 shape. Create and update jobs, search by due date, created date and status, move a job through approve, assign, complete, reject and reopen, manage supplier quotations and quotation documents, and attach comments, documents and images. The largest write surface in the API. Requires `activity:read` and `activity:write`.
-
-- **Human URL:** [https://app.propertyme.com/api/swagger-ui/](https://app.propertyme.com/api/swagger-ui/)
-- **Base URL:** `https://app.propertyme.com/api`
-
-#### Tags
-
-- Maintenance
-- Jobs
-- Work Orders
-- Quotations
-- Suppliers
-
-#### Properties
-
-- [OpenAPI](openapi/propertyme-openapi.json) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [API Reference](https://app.propertyme.com/api/swagger-ui/)
-- [Authentication](authentication/propertyme-openid-configuration.json)
-
-### PropertyMe Tasks API
-
-General property management tasks distinct from maintenance jobs — list tasks changed since a timestamp, create and update a task, find a task by id, read the assigned task manager, and attach comments, documents and images. Requires `activity:read` and `activity:write`.
-
-- **Human URL:** [https://app.propertyme.com/api/swagger-ui/](https://app.propertyme.com/api/swagger-ui/)
-- **Base URL:** `https://app.propertyme.com/api`
-
-#### Tags
-
-- Tasks
-- Workflow
-
-#### Properties
-
-- [OpenAPI](openapi/propertyme-openapi.json) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [API Reference](https://app.propertyme.com/api/swagger-ui/)
-- [Authentication](authentication/propertyme-openid-configuration.json)
-
-### PropertyMe Bills API
-
-Create a new bill in a connected PropertyMe portfolio, including the supporting document, against the trust accounting ledger. This is the only transaction-writing operation exposed in the published contract and it requires the `transaction:write` scope.
-
-- **Human URL:** [https://app.propertyme.com/api/swagger-ui/](https://app.propertyme.com/api/swagger-ui/)
-- **Base URL:** `https://app.propertyme.com/api`
-
-#### Tags
-
-- Bills
-- Trust Accounting
-- Transactions
-
-#### Properties
-
-- [OpenAPI](openapi/propertyme-openapi.json) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [API Reference](https://app.propertyme.com/api/swagger-ui/)
-- [Authentication](authentication/propertyme-openid-configuration.json)
-
-### PropertyMe Dashboards API
-
-Typed dashboard aggregates over a connected portfolio — activities, communications, lots and transactions, each retrieved by dashboard item type. The read model behind the PropertyMe dashboard, drawing on the activity, communication, property and transaction read scopes.
-
-- **Human URL:** [https://app.propertyme.com/api/swagger-ui/](https://app.propertyme.com/api/swagger-ui/)
-- **Base URL:** `https://app.propertyme.com/api`
-
-#### Tags
-
-- Dashboards
-- Reporting
-- Analytics
-
-#### Properties
-
-- [OpenAPI](openapi/propertyme-openapi.json) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [API Reference](https://app.propertyme.com/api/swagger-ui/)
-- [Authentication](authentication/propertyme-openid-configuration.json)
-
-### PropertyMe Documents and Images API
-
-The file surface, exposed as sub-resources rather than a standalone collection — create documents against contacts, lots, owner and tenant folios, inspections, tasks and jobs, and list images for contacts, lots, inspections, tasks and jobs. Document creation is governed by the write scope of the parent resource.
-
-- **Human URL:** [https://app.propertyme.com/api/swagger-ui/](https://app.propertyme.com/api/swagger-ui/)
-- **Base URL:** `https://app.propertyme.com/api`
-
-#### Tags
-
-- Documents
-- Images
-- Files
-
-#### Properties
-
-- [OpenAPI](openapi/propertyme-openapi.json) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [API Reference](https://app.propertyme.com/api/swagger-ui/)
-- [Authentication](authentication/propertyme-openid-configuration.json)
-
-### PropertyMe Members API
-
-The agency staff directory inside a connected portfolio — list all members, and resolve the responsible member for a lot, a task, a job or an inspection. Requires the `contact:read` scope.
-
-- **Human URL:** [https://app.propertyme.com/api/swagger-ui/](https://app.propertyme.com/api/swagger-ui/)
-- **Base URL:** `https://app.propertyme.com/api`
-
-#### Tags
-
-- Members
-- Property Managers
-- Staff
-
-#### Properties
-
-- [OpenAPI](openapi/propertyme-openapi.json) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [API Reference](https://app.propertyme.com/api/swagger-ui/)
-- [Authentication](authentication/propertyme-openid-configuration.json)
-
-### PropertyMe Portfolio Connection API
-
-The consent seam. A single `DELETE /v1/portfolios/disconnect` operation severs the integration's connection to the customer's current portfolio. Every other operation in the API is implicitly scoped to the one portfolio the agency connected, which is what makes this a per-customer, revocable integration rather than market-wide data access.
-
-- **Human URL:** [https://app.propertyme.com/api/swagger-ui/](https://app.propertyme.com/api/swagger-ui/)
-- **Base URL:** `https://app.propertyme.com/api`
-
-#### Tags
-
-- Connection
-- Portfolios
-- Consent
-
-#### Properties
-
-- [OpenAPI](openapi/propertyme-openapi.json) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [API Reference](https://app.propertyme.com/api/swagger-ui/)
-- [Authentication](authentication/propertyme-openid-configuration.json)
-
-## Common Properties
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
 
 - [Website](https://www.propertyme.com.au/)
-- [About](https://www.propertyme.com.au/about)
 - [Documentation](https://app.propertyme.com/api/swagger-ui/)
-- [API Reference](https://app.propertyme.com/api/swagger-ui/)
-- [OpenAPI](https://app.propertyme.com/api/openapi.json)
-- [Authentication](authentication/propertyme-openid-configuration.json)
-- [Sign Up](https://www.propertyme.com.au/request-a-demo)
+- [API reference](https://app.propertyme.com/api/swagger-ui/)
 - [Pricing](https://www.propertyme.com.au/pricing)
-- [Security](https://www.propertyme.com.au/security)
-- [Terms of Service](https://www.propertyme.com.au/terms)
-- [Privacy Policy](https://www.propertyme.com.au/privacy)
+- [Sign up](https://www.propertyme.com.au/request-a-demo)
 - [Support](https://support.propertyme.com/hc/en-us)
-- [Status Page](https://status.propertyme.com/)
 - [Blog](https://www.propertyme.com.au/blog)
-- [Blog RSS](https://www.propertyme.com.au/feed)
-- [Integrations](https://www.propertyme.com.au/integrations)
-- [Partners](https://www.propertyme.com.au/partner-directory)
-- [GitHub Organization](https://github.com/PropertyMe)
-- [Sample Code](https://github.com/PropertyMe/HelloPropertyMe.NET)
-- [LinkedIn](https://www.linkedin.com/company/propertyme)
-- [YouTube](https://www.youtube.com/channel/UC99HN1NFPAYyXvyKyRhHkJQ)
-- [Contact](https://www.propertyme.com.au/contact)
+- [Security](https://www.propertyme.com.au/security)
+- [Terms of service](https://www.propertyme.com.au/terms)
+- [Privacy policy](https://www.propertyme.com.au/privacy)
+- [GitHub](https://github.com/PropertyMe)
+- [Status](https://status.propertyme.com/)
 
-## Maintainers
+## API Evangelist rating
 
-- **Kin Lane** — kin@apievangelist.com
+**Kin Score 41.4** — developing · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 73.2 |
+| Contract quality | 49.1 |
+| Contract governance | 4.5 |
+| Operational transparency | 28.9 |
+| Developer ergonomics | 37.5 |
+| Access clarity | 44.7 |
+
+**Agent readiness 22.6** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | verified |
+| OpenAPI Examples | — |
+| Rate Limit Signal | — |
+| Event Surface Described | — |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | — |
+| Operation Distinctiveness | — |
+
+**Regulatory alignment 31.3** — Payments
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/propertyme/](https://apis.io/providers/propertyme/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for PropertyMe: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/propertyme/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
